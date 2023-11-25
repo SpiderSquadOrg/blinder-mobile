@@ -1,20 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import FirstLoginPage from "./screens/Main/FirstLoginPage";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Blinder</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <FirstLoginPage />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
