@@ -28,7 +28,15 @@ function FirstLoginPage() {
     setPassword(enteredPassword);
   }
 
-  function loginHandler() {}
+  function loginHandler() {
+    if (password.trim() === "") {
+      alert("Please enter password.");
+      return;
+    }
+
+    console.log(email);
+    console.log(password);
+  }
 
   return (
     <>
@@ -41,6 +49,7 @@ function FirstLoginPage() {
             <View style={styles.informationContainer}>
               <InputField
                 placeholder={"Email"}
+                keyboardType={"email-address"}
                 onAddInput={emailHandler}
               ></InputField>
               <PasswordField

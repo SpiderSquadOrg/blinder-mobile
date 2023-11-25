@@ -3,16 +3,12 @@ import React from "react";
 import Colors from "../../constansts/Colors";
 
 function InputField({ placeholder, onAddInput }) {
-  const [text, onChangeText] = React.useState("");
+  const [text, setEnteredText] = React.useState("");
   const [isVisible, setIsVisible] = React.useState(true);
 
   function inputHandler(enteredText) {
-    onChangeText(enteredText);
-  }
-
-  function addInputHandler() {
+    setEnteredText(enteredText);
     onAddInput(text);
-    onChangeText("");
   }
 
   function showPasswordHandler() {
