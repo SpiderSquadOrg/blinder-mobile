@@ -13,8 +13,6 @@ const styles = StyleSheet.create({
     fontSize: 35,
     color: Colors.primary600,
     textAlign: "center",
-    borderWidth: 2,
-    borderColor: "white",
     padding: 12,
     maxWidth: "80%",
   },
