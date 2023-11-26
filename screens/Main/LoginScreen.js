@@ -15,8 +15,9 @@ import InputField from "../../components/ui/InputField";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 import Colors from "../../constansts/Colors";
 import PasswordField from "../../components/ui/PasswordField";
+import TextButton from "../../components/Button/TextButton";
 
-function FirstLoginPage() {
+function FirstLoginPage({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,14 +29,15 @@ function FirstLoginPage() {
     setPassword(enteredPassword);
   }
 
+  function createAccountHandler() {
+    navigation.navigate("SignUpScreen");
+  }
+
   function loginHandler() {
     if (password.trim() === "") {
       alert("Please enter password.");
       return;
     }
-
-    console.log(email);
-    console.log(password);
   }
 
   return (
@@ -49,7 +51,6 @@ function FirstLoginPage() {
             <View style={styles.informationContainer}>
               <InputField
                 placeholder={"Email"}
-                keyboardType={"email-address"}
                 onAddInput={emailHandler}
               ></InputField>
               <PasswordField
@@ -57,7 +58,15 @@ function FirstLoginPage() {
                 onAddInput={passwordHandler}
               ></PasswordField>
             </View>
-
+            <View style={styles.textButtonContainer}>
+              <Text>Don't you have an account?</Text>
+              <TextButton
+                style={styles.createAccountButton}
+                onPress={createAccountHandler}
+              >
+                Create account
+              </TextButton>
+            </View>
             <View style={styles.buttonContainer}>
               <PrimaryButton style={styles.button} onPress={loginHandler}>
                 Log in
@@ -93,12 +102,18 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     alignItems: "center",
-    marginTop: 70,
+    marginTop: 10,
   },
   informationContainer: {
     marginVertical: 55,
   },
   buttonContainer: {
     paddingTop: 30,
+  },
+  createAccountButton: {
+    fontSize: 14,
+  },
+  textButtonContainer: {
+    flexDirection: "row",
   },
 });

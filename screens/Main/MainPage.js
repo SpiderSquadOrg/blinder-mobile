@@ -10,7 +10,7 @@ import PrimaryButton from "../../components/Button/PrimaryButton";
 function MainPage({ navigation }) {
   function googleLogInHandler() {}
   function mailLoginHandler() {
-    navigation.navigate("FirstLoginPage");
+    navigation.navigate("LoginScreen");
   }
   return (
     <>

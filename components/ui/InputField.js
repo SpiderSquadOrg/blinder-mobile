@@ -1,7 +1,7 @@
 import { TextInput, StyleSheet, View } from "react-native";
 import React from "react";
 
-function InputField({ placeholder, onAddInput, keyboardType }) {
+function InputField({ placeholder, onAddInput }) {
   const [text, setEnteredText] = React.useState("");
 
   function inputHandler(enteredText) {
@@ -16,7 +16,6 @@ function InputField({ placeholder, onAddInput, keyboardType }) {
         onChangeText={inputHandler}
         value={text}
         placeholder={placeholder}
-        keyboardType={keyboardType}
       />
     </View>
   );
