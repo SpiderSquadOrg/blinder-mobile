@@ -7,9 +7,11 @@ import SubTitle from "../../components/ui/SubTitle";
 import Card from "../../components/ui/Card";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 
-function MainPage() {
+function MainPage({ navigation }) {
   function googleLogInHandler() {}
-  function mailLoginHandler() {}
+  function mailLoginHandler() {
+    navigation.navigate("FirstLoginPage");
+  }
   return (
     <>
       <StatusBar style="auto" />
