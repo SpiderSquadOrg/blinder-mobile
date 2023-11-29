@@ -8,6 +8,7 @@ import SignUpScreen from "./screens/Main/SignUpScreen";
 import Colors from "./constansts/Colors";
 import RegistrationNameScreen from "./screens/Main/RegistrationScreens/RegistrationNameScreen";
 import RegistrationGenderScreen from "./screens/Main/RegistrationScreens/RegistrationGenderScreen";
+import RegistrationBirthDateScreen from "./screens/Main/RegistrationScreens/RegistrationBirthDateScreen";
 import FilterScreen from "./screens/Main/FilterScreen";
 
 const Stack = createNativeStackNavigator();
@@ -27,7 +28,7 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="Main Page"
+            name="MainPage"
             component={MainPage}
             options={{ title: "" }}
           />
@@ -49,6 +50,11 @@ export default function App() {
           <Stack.Screen
             name="RegistrationGenderScreen"
             component={RegistrationGenderScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="RegistrationBirthDateScreen"
+            component={RegistrationBirthDateScreen}
             options={{ title: "" }}
           />
           <Stack.Screen
