@@ -1,18 +1,46 @@
 import { View, StyleSheet, Pressable, Text } from "react-native";
 import Colors from "../../constansts/Colors";
 
-function PrimaryButton({ children, onPress, style }) {
+function PrimaryButton({
+  children,
+  onPress,
+  style,
+  backgroundColor,
+  textColor,
+  fontSize,
+}) {
   return (
     <View style={[styles.outerContainer, style]}>
       <Pressable
         style={({ pressed }) =>
           pressed
-            ? [styles.innerContainer, styles.pressed]
-            : styles.innerContainer
+            ? [
+                {
+                  ...styles.innerContainer,
+                  backgroundColor: backgroundColor
+                    ? backgroundColor
+                    : styles.innerContainer.backgroundColor,
+                },
+                styles.pressed,
+              ]
+            : {
+                ...styles.innerContainer,
+                backgroundColor: backgroundColor
+                  ? backgroundColor
+                  : styles.innerContainer.backgroundColor,
+              }
         }
         onPress={onPress}
       >
-        <Text style={styles.text}>{children}</Text>
+        <Text
+          style={{
+            ...styles.text,
+            color: textColor ? textColor : styles.text.color,
+            fontSize: fontSize ? fontSize : styles.text.fontSize,
+          }}
+        >
+          {children}
+        </Text>
       </Pressable>
     </View>
   );
@@ -25,6 +53,8 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     margin: 8,
     overflow: "hidden",
+    borderColor: "#DADCE0",
+    borderWidth: 1,
   },
   innerContainer: {
     backgroundColor: Colors.primary500,

@@ -8,7 +8,10 @@ import Card from "../../components/ui/Card";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 
 function MainPage({ navigation }) {
-  function googleLogInHandler() {}
+  function googleLogInHandler() {
+    //geçici olarak değiştirdim
+    navigation.navigate("FilterScreen");
+  }
   function mailLoginHandler() {
     navigation.navigate("LoginScreen");
   }
@@ -28,8 +31,10 @@ function MainPage({ navigation }) {
             <PrimaryButton
               style={styles.buttonContainer}
               onPress={googleLogInHandler}
+              textColor={"black"}
+              backgroundColor={"white"}
             >
-              <Ionicons name="logo-google" size={24} color="white" />
+              <Ionicons name="logo-google" size={24} color="black" marginRight={2} />
               {"   "}
               GOOGLE İLE GİRİŞ YAP
             </PrimaryButton>
@@ -72,5 +77,9 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     paddingTop: 90,
+    display: "flex",
+  },
+  buttonContainer: {
+    
   },
 });

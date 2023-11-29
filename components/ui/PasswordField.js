@@ -1,5 +1,6 @@
-import { TextInput, StyleSheet, View, Pressable, Text } from "react-native";
 import React from "react";
+import { TextInput, StyleSheet, View, Pressable } from "react-native";
+import { Octicons } from "@expo/vector-icons";
 import Colors from "../../constansts/Colors";
 
 function InputField({ placeholder, onAddInput }) {
@@ -16,24 +17,18 @@ function InputField({ placeholder, onAddInput }) {
   }
 
   return (
-    <>
-      <View>
-        <View>
-          <TextInput
-            onChangeText={inputHandler}
-            value={text}
-            placeholder={placeholder}
-            secureTextEntry={isVisible}
-            style={styles.inputContainer}
-          />
-        </View>
-      </View>
-      <View style={styles.showButton}>
-        <Pressable onPress={showPasswordHandler}>
-          <Text style={styles.showText}>Show Password</Text>
-        </Pressable>
-      </View>
-    </>
+    <View style={styles.inputContainer}>
+      <TextInput
+        onChangeText={inputHandler}
+        value={text}
+        placeholder={placeholder}
+        secureTextEntry={isVisible}
+        style={styles.input}
+      />
+      <Pressable style={styles.showButton} onPress={showPasswordHandler}>
+        <Octicons name={isVisible ? "eye" : "eye-closed"} size={24} color="black" />
+      </Pressable>
+    </View>
   );
 }
 
@@ -41,21 +36,20 @@ export default InputField;
 
 const styles = StyleSheet.create({
   inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 45,
     minWidth: "90%",
     margin: 12,
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "#BDBDBD",
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "flex-end",
+    paddingHorizontal: 10,
   },
-
-  showText: {
-    color: Colors.primary500,
+  input: {
+    flex: 1,
   },
   showButton: {
-    alignSelf: "center",
+    marginLeft: 8,
   },
 });

@@ -8,6 +8,7 @@ import SignUpScreen from "./screens/Main/SignUpScreen";
 import Colors from "./constansts/Colors";
 import RegistrationNameScreen from "./screens/Main/RegistrationScreens/RegistrationNameScreen";
 import RegistrationGenderScreen from "./screens/Main/RegistrationScreens/RegistrationGenderScreen";
+import FilterScreen from "./screens/Main/FilterScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +51,15 @@ export default function App() {
             component={RegistrationGenderScreen}
             options={{ title: "" }}
           />
+          <Stack.Screen
+            name="FilterScreen"
+            component={FilterScreen}
+            options={{
+              title: "Eşleşmeleri Filtrele",
+              headerTitleStyle: styles.headerTitleStyle,
+              headerBackTitle: "Geri",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
@@ -62,5 +72,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  headerTitleStyle: {
+    fontWeight: "medium",
+    fontSize: 20,
+    color: "black"
   },
 });
