@@ -4,7 +4,11 @@ import Colors from "../../constansts/Colors";
 function TextButton({ style, onPress, children }) {
   return (
     <View style={styles.showButton}>
-      <Pressable onPress={onPress}>
+      <Pressable
+        android_ripple={{ color: "#ccc" }}
+        style={({ pressed }) => (pressed ? styles.pressedButton : null)}
+        onPress={onPress}
+      >
         <Text style={[styles.showText, style]}>{children}</Text>
       </Pressable>
     </View>
@@ -19,5 +23,8 @@ const styles = StyleSheet.create({
   },
   showButton: {
     alignSelf: "center",
+  },
+  pressedButton: {
+    opacity: 0.75,
   },
 });

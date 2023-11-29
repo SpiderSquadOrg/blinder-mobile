@@ -6,7 +6,7 @@ function InputField({ placeholder, onAddInput }) {
 
   function inputHandler(enteredText) {
     setEnteredText(enteredText);
-    onAddInput(text);
+    onAddInput(enteredText);
   }
 
   return (

@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   screen: {
-    marginTop: 90,
+    marginTop: 10,
     alignItems: "center",
   },
   cardContainer: {

@@ -7,7 +7,9 @@ import {
   View,
   Pressable,
   Text,
+  Alert,
 } from "react-native";
+import { UserList } from "../../data/data";
 
 import Title from "../../components/ui/Title";
 import Card from "../../components/ui/Card";
@@ -34,9 +36,14 @@ function FirstLoginPage({ navigation }) {
   }
 
   function loginHandler() {
-    if (password.trim() === "") {
-      alert("Please enter password.");
-      return;
+    if (
+      UserList.some(
+        (user) => user.email === email && user.password === password
+      )
+    ) {
+      Alert.alert("Giriş Başarılı", "Hoşgeldiniz!");
+    } else {
+      Alert.alert("Hata", "Geçersiz email veya şifre");
     }
   }
 
@@ -111,6 +118,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   createAccountButton: {
+    paddingHorizontal: 5,
     fontSize: 14,
   },
   textButtonContainer: {
