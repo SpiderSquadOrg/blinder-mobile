@@ -16,7 +16,7 @@ function SignUpScreen({ navigation }) {
   function passwordHandler() {}
 
   function signUpHandler() {
-    navigation.navigate("");
+    navigation.navigate("RegistrationNameScreen");
   }
 
   return (
