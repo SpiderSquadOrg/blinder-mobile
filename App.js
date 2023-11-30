@@ -9,7 +9,7 @@ import Colors from "./constansts/Colors";
 import RegistrationNameScreen from "./screens/Main/RegistrationScreens/RegistrationNameScreen";
 import RegistrationGenderScreen from "./screens/Main/RegistrationScreens/RegistrationGenderScreen";
 import RegistrationBirthDateScreen from "./screens/Main/RegistrationScreens/RegistrationBirthDateScreen";
-import FilterScreen from "./screens/Main/FilterScreen";
+import FilterScreen from "./screens/Filter/FilterScreen";
 
 const Stack = createNativeStackNavigator();
 

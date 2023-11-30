@@ -8,6 +8,8 @@ function PrimaryButton({
   backgroundColor,
   textColor,
   fontSize,
+  height,
+  width
 }) {
   return (
     <View style={[styles.outerContainer, style]}>
@@ -20,6 +22,8 @@ function PrimaryButton({
                   backgroundColor: backgroundColor
                     ? backgroundColor
                     : styles.innerContainer.backgroundColor,
+                  height: height ? height : styles.innerContainer.height,
+                  width: width ? width : styles.innerContainer.width,
                 },
                 styles.pressed,
               ]
@@ -28,6 +32,8 @@ function PrimaryButton({
                 backgroundColor: backgroundColor
                   ? backgroundColor
                   : styles.innerContainer.backgroundColor,
+                  height: height ? height : styles.innerContainer.height,
+                  width: width ? width : styles.innerContainer.width,
               }
         }
         onPress={onPress}
@@ -58,6 +64,8 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     backgroundColor: Colors.primary500,
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 8,
     paddingHorizontal: 32,
     elevation: 2,
