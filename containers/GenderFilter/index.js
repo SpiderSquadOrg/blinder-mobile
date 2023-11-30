@@ -14,6 +14,10 @@ function GenderFilter() {
     );
   };
 
+  const getStatus = (value) => {
+    return status.includes(value) ? "checked" : "unchecked";
+  };
+
   return (
     <View style={styles.container}>
       <Header>Cinsiyet</Header>
@@ -22,10 +26,11 @@ function GenderFilter() {
           <ToggleButton
             icon={"gender-male"}
             value="male"
-            status={status.includes("male") ? "checked" : "unchecked"}
+            status={getStatus("male")}
             onPress={() => onButtonToggle("male")}
             size={50}
             style={styles.button}
+            rippleColor={"transparent"}
           />
           <Text style={{ marginTop: 5 }}>Erkek</Text>
         </View>
@@ -33,10 +38,11 @@ function GenderFilter() {
           <ToggleButton
             icon={"gender-female"}
             value="female"
-            status={status.includes("female") ? "checked" : "unchecked"}
+            status={getStatus("female")}
             onPress={() => onButtonToggle("female")}
             size={50}
             style={styles.button}
+            rippleColor={"transparent"}
           />
           <Text style={{ marginTop: 5 }}>Kadın</Text>
         </View>
@@ -44,10 +50,11 @@ function GenderFilter() {
           <ToggleButton
             icon={"gender-male-female-variant"}
             value="other"
-            status={status.includes("other") ? "checked" : "unchecked"}
+            status={getStatus("other")}
             onPress={() => onButtonToggle("other")}
             size={50}
             style={styles.button}
+            rippleColor={"transparent"}
           />
           <Text style={{ marginTop: 5 }}>Diğer</Text>
         </View>
