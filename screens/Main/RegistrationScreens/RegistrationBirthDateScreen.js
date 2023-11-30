@@ -1,4 +1,4 @@
-import { View, StyleSheet, Button, Text } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import { useState } from "react";
 
 import DateTimePickerModal from "@react-native-community/datetimepicker";
@@ -6,20 +6,17 @@ import DateTimePickerModal from "@react-native-community/datetimepicker";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import TextButton from "../../../components/Button/TextButton";
 
-function RegistrationBirthDateScreen() {
+function RegistrationBirthDateScreen({ navigation }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const year = selectedDate.getFullYear();
-  const month = selectedDate.getMonth() + 1;
-  const day = selectedDate.getDate();
-
-  function showDatePicker() {
-    setDatePickerVisibility(true);
-  }
-
   function nextPageHandler() {
-    console.log(birthDate);
+    const formattedDate = `${("0" + selectedDate.getDate()).slice(-2)}-${(
+      "0" +
+      (selectedDate.getMonth() + 1)
+    ).slice(-2)}-${selectedDate.getFullYear()}`;
+
+    navigation.navigate("RegistrationPartnerGenderScreen");
   }
 
   const toggle = () => showModal(!show);
@@ -28,7 +25,6 @@ function RegistrationBirthDateScreen() {
     <View>
       <RegistrationQueryText>DOĞUM TARİHİNİZ NEDİR ?</RegistrationQueryText>
       <View style={styles.dateContainer}>
-        <Button title="Show Date Picker" onPress={showDatePicker} />
         <DateTimePickerModal
           value={selectedDate}
           onChange={(event, date) => {
@@ -36,16 +32,13 @@ function RegistrationBirthDateScreen() {
               const correctedDate = new Date(
                 date.getTime() + date.getTimezoneOffset() * 60 * 1000
               );
-              const formattedDate = correctedDate.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-              });
+
               setSelectedDate(correctedDate);
             }
           }}
           show={isDatePickerVisible}
           toggle={toggle}
+          style={styles}
         />
       </View>
 
