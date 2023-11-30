@@ -12,6 +12,7 @@ import RegistrationBirthDateScreen from "./screens/Main/RegistrationScreens/Regi
 import RegistrationPartnerGenderScreen from "./screens/Main/RegistrationScreens/RegistrationPartnerGenderScreen";
 import RegistrationMusicTypeScreen from "./screens/Main/RegistrationScreens/RegistrationMusicTypeScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
+import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -78,6 +79,14 @@ export default function App() {
               headerBackTitle: "Geri",
             }}
           />
+          <Stack.Screen
+            name="LocationPreferencesScreen"
+            component={LocationPreferencesScreen}
+            options={{
+              title: "Konum Tercihiniz",
+              headerTitleStyle: styles.headerTitleStyle,
+              headerBackTitle: "Geri",
+            }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>
