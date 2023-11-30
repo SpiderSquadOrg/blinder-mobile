@@ -1,11 +1,13 @@
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
 import Title from "../../components/ui/Title";
 import SubTitle from "../../components/ui/SubTitle";
 import Card from "../../components/ui/Card";
 import PrimaryButton from "../../components/Button/PrimaryButton";
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function MainPage({ navigation }) {
   function googleLogInHandler() {
@@ -34,7 +36,12 @@ function MainPage({ navigation }) {
               textColor={"black"}
               backgroundColor={"white"}
             >
-              <Ionicons name="logo-google" size={24} color="black" marginRight={2} />
+              <Ionicons
+                name="logo-google"
+                size={24}
+                color="black"
+                marginRight={2}
+              />
               {"   "}
               GOOGLE İLE GİRİŞ YAP
             </PrimaryButton>
@@ -64,22 +71,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardContainer: {
-    width: 200,
-    height: 200,
-    marginBottom: 18,
+    width: screenWidth * 0.4,
+    height: screenWidth * 0.4,
+    marginBottom: screenHeight * 0.023,
   },
   textStyle: {
     fontWeight: "normal",
-    marginHorizontal: 70,
+    marginHorizontal: screenWidth * 0.15,
   },
   mainTitle: {
     fontSize: 45,
   },
   buttonsContainer: {
-    paddingTop: 90,
+    paddingTop: screenHeight * 0.05,
+    paddingBottom: screenHeight * 0.05,
     display: "flex",
   },
-  buttonContainer: {
-    
-  },
+  buttonContainer: {},
 });

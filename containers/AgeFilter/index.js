@@ -3,15 +3,15 @@ import { View, StyleSheet } from "react-native";
 import Header from "../../components/ui/Header";
 import RangeSlider from "../../components/ui/RangeSlider";
 
-function AgeFilter() {
+function AgeFilter({ style }) {
   const [values, setValues] = useState([25, 45]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.headers}>
-        <Header>Yaş Aralığınız</Header>
+        <Header>Yaş Aralığı</Header>
         <Header>
-          {values[0]} - {values[1]!==75?values[1]:values[1]+"+"}
+          {values[0]} - {values[1] !== 75 ? values[1] : values[1] + "+"}
         </Header>
       </View>
 
@@ -22,8 +22,10 @@ function AgeFilter() {
         max={75}
         step={1}
         length={300}
-        isWithStepText={true}
-        steps={[18, 25, 35, 45, 55, 65, "75+"]}
+        minRangeText={"18"}
+        maxRangeText={"75+"}
+        /*isWithStepText={true}
+        steps={[18, 25, 35, 45, 55, 65, "75+"]}*/ // Removed
       />
     </View>
   );
