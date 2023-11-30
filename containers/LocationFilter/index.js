@@ -4,8 +4,10 @@ import Header from "../../components/ui/Header";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 import { Ionicons } from "@expo/vector-icons";
 
-function LocationFilter({ style }) {
-  const [selectedLocation, setSelectedLocation] = useState("Yok"); // ["Ankara", "İstanbul", "İzmir"]
+function LocationFilter({ style,selectedLocation,navigation }) {
+  const onPress = () => {
+    navigation.navigate("LocationPreferencesScreen");
+  };
   return (
     <View style={[styles.container, style]}>
       <View style={styles.headers}>
@@ -15,10 +17,10 @@ function LocationFilter({ style }) {
             fontWeight: 400,
           }}
         >
-          {selectedLocation}
+          {selectedLocation.name ? selectedLocation.name : ""}
         </Header>
       </View>
-      <PrimaryButton style={{ marginTop: 20 }}>
+      <PrimaryButton style={{ marginTop: 20 }} onPress={()=>onPress()}>
         <Ionicons name="earth" size={24} color="white" />
         {"   "}
         Konum Seç
