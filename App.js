@@ -9,6 +9,7 @@ import Colors from "./constansts/Colors";
 import RegistrationNameScreen from "./screens/Main/RegistrationScreens/RegistrationNameScreen";
 import RegistrationGenderScreen from "./screens/Main/RegistrationScreens/RegistrationGenderScreen";
 import RegistrationBirthDateScreen from "./screens/Main/RegistrationScreens/RegistrationBirthDateScreen";
+import RegistrationPartnerGenderScreen from "./screens/Main/RegistrationScreens/RegistrationPartnerGenderScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,11 @@ export default function App() {
             options={{ title: "" }}
           />
           <Stack.Screen
+            name="RegistrationPartnerGenderScreen"
+            component={RegistrationPartnerGenderScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
             name="FilterScreen"
             component={FilterScreen}
             options={{
@@ -83,6 +89,6 @@ const styles = StyleSheet.create({
   headerTitleStyle: {
     fontWeight: "medium",
     fontSize: 20,
-    color: "black"
+    color: "black",
   },
 });
