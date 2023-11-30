@@ -10,6 +10,7 @@ import RegistrationNameScreen from "./screens/Main/RegistrationScreens/Registrat
 import RegistrationGenderScreen from "./screens/Main/RegistrationScreens/RegistrationGenderScreen";
 import RegistrationBirthDateScreen from "./screens/Main/RegistrationScreens/RegistrationBirthDateScreen";
 import RegistrationPartnerGenderScreen from "./screens/Main/RegistrationScreens/RegistrationPartnerGenderScreen";
+import RegistrationMusicTypeScreen from "./screens/Main/RegistrationScreens/RegistrationMusicTypeScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 
 const Stack = createNativeStackNavigator();
@@ -61,6 +62,11 @@ export default function App() {
           <Stack.Screen
             name="RegistrationPartnerGenderScreen"
             component={RegistrationPartnerGenderScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="RegistrationMusicTypeScreen"
+            component={RegistrationMusicTypeScreen}
             options={{ title: "" }}
           />
           <Stack.Screen

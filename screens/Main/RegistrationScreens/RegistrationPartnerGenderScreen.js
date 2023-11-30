@@ -7,7 +7,9 @@ import TextButton from "../../../components/Button/TextButton";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationPartnerGenderScreen({ navigation }) {
-  function nextPageHandler() {}
+  function nextPageHandler() {
+    navigation.navigate("RegistrationMusicTypeScreen");
+  }
 
   return (
     <View>
