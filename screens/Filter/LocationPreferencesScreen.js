@@ -222,9 +222,6 @@ function LocationPreferencesScreen({ navigation }) {
 export default LocationPreferencesScreen;
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
   container: {
     backgroundColor: "#fff",
     alignItems: "center",

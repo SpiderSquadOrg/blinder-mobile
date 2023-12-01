@@ -8,9 +8,6 @@ import PrimaryButton from "../../components/Button/PrimaryButton";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function FilterScreen({ navigation, route }) {
-  useEffect(() => {
-    console.log(route.params?.selectedLocation);
-  }, [route.params?.selectedLocation]);
   return (
     <View style={styles.container}>
       <View style={styles.filterContainer}>
