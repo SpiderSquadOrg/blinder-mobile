@@ -1,7 +1,7 @@
 import MatchScreen from "../../screens/Home/MatchScreen";
 import LikesScreen from "../../screens/Home/LikesScreen";
 import ChatScreen from "../../screens/Home/ChatScreen";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
@@ -10,38 +10,6 @@ import { DefaultTheme, Provider } from "react-native-paper";
 
 const Tab = createMaterialBottomTabNavigator();
 
-const CustomTabBarButton = ({ children, onPress }) => (
-  <TouchableOpacity
-    style={{
-      top: -40,
-      position: "absolute",
-      justifyContent: "center",
-      alignItems: "center",
-      shadowColor: "#7F5DF0",
-      shadowOffset: {
-        width: 0,
-        height: 10,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.5,
-      elevation: 5,
-    }}
-    onPress={onPress}
-  >
-    <View
-      style={{
-        width: 94,
-        height: 94,
-        borderRadius: 47,
-        backgroundColor: Colors.primary800,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {children}
-    </View>
-  </TouchableOpacity>
-);
 
 function BottomNavigation() {
   return (

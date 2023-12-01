@@ -112,7 +112,7 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={BottomNavigation}
-            options={{
+            options={({ navigation, route }) => ({
               title: "",
               headerShadowVisible: false,
               headerLeft: () => (
@@ -128,10 +128,10 @@ export default function App() {
                   icon="filter-variant"
                   iconColor={Colors.primary600}
                   size={32}
-                  onPress={() => console.log("Pressed")}
+                  onPress={() => navigation.navigate("FilterScreen")}
                 />
               ),
-            }}
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>
