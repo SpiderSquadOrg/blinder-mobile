@@ -17,6 +17,9 @@ import RegistrationFavoriteMusicScreen from "./screens/Main/RegistrationScreens/
 import FilterScreen from "./screens/Filter/FilterScreen";
 import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
 
+import { IconButton } from "react-native-paper";
+import BottomNavigation from "./containers/BottomNavigation";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -104,6 +107,30 @@ export default function App() {
               title: "Konum Tercihiniz",
               headerTitleStyle: styles.headerTitleStyle,
               headerBackTitle: "Geri",
+            }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={BottomNavigation}
+            options={{
+              title: "",
+              headerShadowVisible: false,
+              headerLeft: () => (
+                <IconButton
+                  icon="menu"
+                  iconColor={Colors.primary600}
+                  size={32}
+                  onPress={() => console.log("Pressed")}
+                />
+              ),
+              headerRight: () => (
+                <IconButton
+                  icon="filter-variant"
+                  iconColor={Colors.primary600}
+                  size={32}
+                  onPress={() => console.log("Pressed")}
+                />
+              ),
             }}
           />
         </Stack.Navigator>

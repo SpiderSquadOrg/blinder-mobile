@@ -12,7 +12,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function MainPage({ navigation }) {
   function googleLogInHandler() {
     //geçici olarak değiştirdim
-    navigation.navigate("FilterScreen");
+    navigation.navigate("Home");
   }
   function mailLoginHandler() {
     navigation.navigate("LoginScreen");
