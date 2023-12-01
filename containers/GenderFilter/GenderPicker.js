@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { ToggleButton } from "react-native-paper";
 
-function GenderPicker() {
+function GenderPicker({onGenderSelect}) {
   const [selectedGender, setSelectedGender] = useState(null);
+
+  useEffect(() => {
+    onGenderSelect(selectedGender);
+  }, [selectedGender]);
+
 
   const onButtonToggle = (value) => {
     setSelectedGender(value === selectedGender ? null : value);
@@ -12,6 +17,8 @@ function GenderPicker() {
   const getStatus = (value) => {
     return selectedGender === value ? "checked" : "unchecked";
   };
+
+  
 
   return (
     <View style={styles.container}>
@@ -40,6 +47,18 @@ function GenderPicker() {
           />
           <Text style={{ marginTop: 5 }}>Erkek</Text>
         </View>
+        <View style={styles.buttonContainer}>
+          <ToggleButton
+            icon={"gender-male-female-variant"}
+            value="other"
+            status={getStatus("other")}
+            onPress={() => onButtonToggle("other")}
+            size={50}
+            style={styles.button}
+            rippleColor={"transparent"}
+          />
+          <Text style={{ marginTop: 5 }}>Diğer</Text>
+        </View>
       </View>
     </View>
   );
@@ -60,7 +79,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 25,
+    marginHorizontal: 10,
   },
   button: {
     width: 70,
