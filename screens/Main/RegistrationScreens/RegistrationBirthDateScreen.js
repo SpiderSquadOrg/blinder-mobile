@@ -1,10 +1,11 @@
-import { View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet, Button, Text } from "react-native";
 import { useState } from "react";
 
-import DateTimePickerModal from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import TextButton from "../../../components/Button/TextButton";
+import PrimaryButton from "../../../components/Button/PrimaryButton";
 
 function RegistrationBirthDateScreen({ navigation }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -21,24 +22,36 @@ function RegistrationBirthDateScreen({ navigation }) {
 
   const toggle = () => showModal(!show);
 
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    setSelectedDate(date);
+    hideDatePicker();
+  };
+
   return (
     <View>
       <RegistrationQueryText>DOĞUM TARİHİNİZ NEDİR ?</RegistrationQueryText>
       <View style={styles.dateContainer}>
-        <DateTimePickerModal
-          value={selectedDate}
-          onChange={(event, date) => {
-            if (date instanceof Date) {
-              const correctedDate = new Date(
-                date.getTime() + date.getTimezoneOffset() * 60 * 1000
-              );
+        <Text style={styles.selectedDateText}>
+          {selectedDate.toLocaleDateString()}
+        </Text>
+        <PrimaryButton onPress={() => setDatePickerVisibility(true)}>
+          Tarih Seç
+        </PrimaryButton>
 
-              setSelectedDate(correctedDate);
-            }
-          }}
-          show={isDatePickerVisible}
-          toggle={toggle}
-          style={styles}
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+          textColor="black"
+          locale="tr_TR"
+          cancelTextIOS="İptal"
+          confirmTextIOS="Tamam"
         />
       </View>
 
@@ -59,9 +72,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedDateText: {
-    fontSize: 15,
-    marginTop: 30,
-    alignItems: "center",
+    fontSize: 18,
+    fontWeight: "500",
+    marginBottom: 20,
   },
   buttonContainer: {
     marginTop: 55,
