@@ -1,12 +1,19 @@
 import { View, StyleSheet, Dimensions } from "react-native";
+import { useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
-import GenderFilter from "../../../containers/GenderFilter";
+import GenderPicker from "../../../containers/GenderFilter/GenderPicker";
 import TextButton from "../../../components/Button/TextButton";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationPartnerGenderScreen({ navigation }) {
+  const [gender, setGender] = useState();
+
+  const genderHandler = (gender) => {
+    setGender(gender);
+  };
+
   function nextPageHandler() {
     navigation.navigate("RegistrationMusicTypeScreen");
   }
@@ -15,7 +22,7 @@ function RegistrationPartnerGenderScreen({ navigation }) {
     <View>
       <RegistrationQueryText>KİMİNLE TANIŞMAK İSTERSİN ?</RegistrationQueryText>
       <View style={styles.genderContainer}>
-        <GenderFilter />
+        <GenderPicker onGenderSelect={genderHandler} />
       </View>
       <View style={styles.buttonContainer}>
         <TextButton onPress={nextPageHandler} style={styles.textButton}>

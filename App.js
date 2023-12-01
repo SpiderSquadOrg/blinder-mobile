@@ -11,6 +11,9 @@ import RegistrationGenderScreen from "./screens/Main/RegistrationScreens/Registr
 import RegistrationBirthDateScreen from "./screens/Main/RegistrationScreens/RegistrationBirthDateScreen";
 import RegistrationPartnerGenderScreen from "./screens/Main/RegistrationScreens/RegistrationPartnerGenderScreen";
 import RegistrationMusicTypeScreen from "./screens/Main/RegistrationScreens/RegistrationMusicTypeScreen";
+import RegistrationMovieTypeScreen from "./screens/Main/RegistrationScreens/RegistrationMovieTypeScreen";
+import RegistrationSeriesTypeScreen from "./screens/Main/RegistrationScreens/RegistrationSeriesTypeScreen";
+import RegistrationFavoriteMusicScreen from "./screens/Main/RegistrationScreens/RegistrationFavoriteMusicScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
 
@@ -71,6 +74,21 @@ export default function App() {
             options={{ title: "" }}
           />
           <Stack.Screen
+            name="RegistrationMovieTypeScreen"
+            component={RegistrationMovieTypeScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="RegistrationSeriesTypeScreen"
+            component={RegistrationSeriesTypeScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="RegistrationFavoriteMusicScreen"
+            component={RegistrationFavoriteMusicScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
             name="FilterScreen"
             component={FilterScreen}
             options={{
@@ -86,7 +104,8 @@ export default function App() {
               title: "Konum Tercihiniz",
               headerTitleStyle: styles.headerTitleStyle,
               headerBackTitle: "Geri",
-            }}/>
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>

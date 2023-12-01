@@ -10,6 +10,10 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationGenderScreen({ navigation }) {
   const [gender, setGender] = useState();
 
+  const genderHandler = (gender) => {
+    setGender(gender);
+  };
+
   function nextPageHandler() {
     navigation.navigate("RegistrationBirthDateScreen");
   }
@@ -18,7 +22,7 @@ function RegistrationGenderScreen({ navigation }) {
     <View>
       <RegistrationQueryText>CİNSİYETİNİZ NEDİR ?</RegistrationQueryText>
       <View style={styles.genderContainer}>
-        <GenderPicker />
+        <GenderPicker onGenderSelect={genderHandler} />
       </View>
       <View style={styles.buttonContainer}>
         <TextButton onPress={nextPageHandler} style={styles.textButton}>
