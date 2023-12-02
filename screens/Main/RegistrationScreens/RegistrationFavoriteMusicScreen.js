@@ -1,21 +1,28 @@
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
+import MusicOptionsSearchBar from "../../../components/ui/MusicOptionsSearchBar";
 import MusicCard from "../../../components/ui/MusicCard";
-import OptionSearchBar from "../../../components/ui/OptionSearchBar";
 import { MusicList } from "../../../data/data";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationFavoriteMusicScreen({ navigation }) {
+  const [selectedMusicList, setSelectedMusicList] = useState([]);
+
+  function selectedMusicHandler(musicList) {
+    setSelectedMusicList(musicList);
+  }
+
   function nextPageHandler() {
     navigation.navigate("RegistrationMovieTypeScreen");
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <RegistrationQueryText style={styles.title}>
         SEVDİĞİNİZ MÜZİKLER
       </RegistrationQueryText>
@@ -27,18 +34,24 @@ function RegistrationFavoriteMusicScreen({ navigation }) {
         <SubTitle>0/3+</SubTitle>
       </View>
       <View>
-        <OptionSearchBar type={"şarkı"} musicData={MusicList} />
-      </View>
-      <View>
-        <MusicCard musicList={MusicList} />
+        <SubTitle style={styles.musicListTitle}>Seçilen Müzikler</SubTitle>
+        <View>
+          <MusicCard musicList={selectedMusicList} />
+        </View>
       </View>
 
+      <View>
+        <MusicOptionsSearchBar
+          musicData={MusicList}
+          onSelected={selectedMusicHandler}
+        />
+      </View>
       <View style={styles.buttonContainer}>
         <TextButton onPress={nextPageHandler} style={styles.textButton}>
           İleri
         </TextButton>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -46,7 +59,7 @@ export default RegistrationFavoriteMusicScreen;
 
 const styles = StyleSheet.create({
   title: {
-    marginTop: 20,
+    marginTop: 2,
   },
   subtitle: {
     fontWeight: "normal",
@@ -61,5 +74,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     paddingRight: 28,
+  },
+  musicListTitle: {
+    marginTop: screenHeight * 0.04,
+    marginHorizontal: screenWidth * 0.06,
+    fontSize: 17,
   },
 });

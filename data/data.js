@@ -18,6 +18,11 @@ export let UserList = [
 
 export let MusicList = [
   new Music(
+    "Sen Ağlama",
+    "Sezen Aksu",
+    "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg"
+  ),
+  new Music(
     "Zalim",
     "Sezen Aksu",
     "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg"
@@ -43,9 +48,14 @@ export let MusicList = [
     "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg"
   ),
   new Music(
-    "Sen Ağlama",
-    "Sezen Aksu",
-    "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg"
+    "Bana Öyle Bakma",
+    "Teoman",
+    "https://i.scdn.co/image/ab67616d0000b273d4ebc347832506c4b02068aa"
+  ),
+  new Music(
+    "İki Yabancı",
+    "Teoman",
+    "https://i.scdn.co/image/ab67616d0000b273d4ebc347832506c4b02068aa"
   ),
   new Music(
     "Keskin Bıçak",
@@ -61,5 +71,10 @@ export let MusicList = [
     "Hata",
     "Sezen Aksu",
     "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg"
+  ),
+  new Music(
+    "Kupa Kızı ve Sinek Valesi",
+    "Teoman",
+    "https://i.scdn.co/image/ab67616d0000b273d4ebc347832506c4b02068aa"
   ),
 ];
