@@ -190,6 +190,7 @@ function LocationPreferencesScreen({ navigation }) {
           ]}
           value={selectedTab}
           setValue={setselectedTab}
+          style={{width:screenWidth*0.9}}
         />
       </View>
       <Header style={styles.header}>{getHeader()}</Header>
