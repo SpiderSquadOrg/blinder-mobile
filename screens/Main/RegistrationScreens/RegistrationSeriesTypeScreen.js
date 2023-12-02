@@ -77,9 +77,7 @@ function RegistrationSeriesTypeScreen() {
     setSelectedSeriesTypes(selectedTypes);
   };
 
-  function nextPageHandler() {
-    console.log(selectedSeriesTypes);
-  }
+  function nextPageHandler() {}
 
   return (
     <ScrollView>
