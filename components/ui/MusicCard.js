@@ -1,10 +1,17 @@
-import { View, StyleSheet, Dimensions, Image, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+  Text,
+  ScrollView,
+} from "react-native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function MusicCard({ musicList }) {
   return (
-    <View>
+    <ScrollView horizontal>
       {musicList.map((music, index) => (
         <View key={index} style={styles.container}>
           <Image source={{ uri: music.imageUrl }} style={styles.musicImage} />
@@ -14,7 +21,7 @@ function MusicCard({ musicList }) {
           </View>
         </View>
       ))}
-    </View>
+    </ScrollView>
   );
 }
 

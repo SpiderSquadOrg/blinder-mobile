@@ -27,7 +27,6 @@ function RegistrationBirthDateScreen({ navigation }) {
   };
 
   const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
     setSelectedDate(date);
     hideDatePicker();
   };
