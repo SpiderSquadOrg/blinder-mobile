@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../components/ui/Card";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import Swiper from "react-native-deck-swiper";
-import { AntDesign } from "@expo/vector-icons";
-import Colors from "../../constansts/Colors";
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+import UserCard from "../UserCards/UserCard";
 
 function MatchCard({ style }) {
   const [cardIndex, setCardIndex] = useState(0);
@@ -63,31 +59,13 @@ function MatchCard({ style }) {
         { name: "Smith" },
       ]} // replace with your actual data
       renderCard={(card, index) => (
-        <Card style={styles.cardContainer}>
-          <Text>{card.name}</Text>
-          <View style={styles.iconContainer}>
-            {index === topCardIndex && (
-              <View style={styles.iconContainer}>
-                {isLikeIconActive && (
-                  <AntDesign
-                    style={styles.likeIcon}
-                    name="heart"
-                    size={52}
-                    color={Colors.primary800}
-                  />
-                )}
-                {isDislikeIconActive && (
-                  <AntDesign
-                    style={styles.dislikeIcon}
-                    name="close"
-                    size={52}
-                    color={"black"}
-                  />
-                )}
-              </View>
-            )}
-          </View>
-        </Card>
+        <UserCard
+          card={card}
+          index={index}
+          topCardIndex={topCardIndex}
+          isDislikeIconActive={isDislikeIconActive}
+          isLikeIconActive={isLikeIconActive}
+        />
       )}
       backgroundColor={"transparent"}
       onSwiped={handleSwipe}
@@ -103,11 +81,6 @@ function MatchCard({ style }) {
 }
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    width: screenWidth * 0.8,
-    height: screenHeight * 0.6,
-    marginBottom: screenHeight * 0.023,
-  },
   swiper: {
     position: "absolute",
     backgroundColor: "transparent",
@@ -115,19 +88,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  iconContainer: {
-    position: "absolute",
-    bottom: 40,
-    width: "100%",
-  },
-  likeIcon: {
-    position: "absolute",
-    right: 15,
-  },
-  dislikeIcon: {
-    position: "absolute",
-    left: 15,
   },
 });
 
