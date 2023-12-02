@@ -1,5 +1,6 @@
 import User from "../models/user";
 import Music from "../models/music";
+import Movie from "../models/movie";
 
 export let UserList = [
   new User(
@@ -76,5 +77,48 @@ export let MusicList = [
     "Kupa Kızı ve Sinek Valesi",
     "Teoman",
     "https://i.scdn.co/image/ab67616d0000b273d4ebc347832506c4b02068aa"
+  ),
+];
+
+export let MovieList = [
+  new Movie(
+    "Harry Potter ve Felsefe Taşı",
+    2001,
+    "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg"
+  ),
+  new Movie(
+    "Harry Potter ve Sırlar Odası",
+    2002,
+    "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg"
+  ),
+  new Movie(
+    "Harry Potter ve Azkaban Tutsağı",
+    2004,
+    "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg"
+  ),
+  new Movie(
+    "Harry Potter ve Ateş Kadehi",
+    2005,
+    "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg"
+  ),
+  new Movie(
+    "Harry Potter ve Zümrüdüanka Yoldaşlığı",
+    2007,
+    "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg"
+  ),
+  new Movie(
+    "Harry Potter ve Melez Prens",
+    2009,
+    "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg"
+  ),
+  new Movie(
+    "Harry Potter ve Ölüm Yadigarları Bölüm 1",
+    2010,
+    "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg"
+  ),
+  new Movie(
+    "Harry Potter ve Ölüm Yadigarları Bölüm 2",
+    2011,
+    "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg"
   ),
 ];

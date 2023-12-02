@@ -81,7 +81,7 @@ function RegistrationMovieTypeScreen({ navigation }) {
   };
 
   function nextPageHandler() {
-    navigation.navigate("RegistrationSeriesTypeScreen");
+    navigation.navigate("RegistrationFavoriteMovieScreen");
   }
 
   return (
