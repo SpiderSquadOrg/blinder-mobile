@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
+import Title from "../../components/ui/Title";
 import Tabs from "../../components/ui/Tabs";
-import { Appbar } from "react-native-paper";
+import { Divider } from "react-native-paper";
 import LikesCards from "../../containers/LikesCards";
-import Colors from "../../constansts/Colors";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -52,14 +52,6 @@ function LikesScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.appbar}>
-        <Appbar.Action
-          icon="menu"
-          iconColor={Colors.primary600}
-          size={32}
-          onPress={() => console.log("Pressed")}
-        />
-      </View>
       <View style={styles.tabs}>
         <Tabs
           buttons={[
@@ -77,12 +69,8 @@ function LikesScreen({ navigation, route }) {
           style={{ width: screenWidth * 0.9 }}
         />
       </View>
-      {selectedTab === "whoLikesMe" && (
-        <LikesCards users={whoLikesMeList} withHeart={true} />
-      )}
-      {selectedTab === "whoILike" && (
-        <LikesCards users={whoILikeList} withTakeBack={true} />
-      )}
+      {selectedTab === "whoLikesMe" && (<LikesCards users={whoLikesMeList} withHeart={true} />)}
+      {selectedTab === "whoILike" && (<LikesCards users={whoILikeList} withTakeBack={true} />)}
     </View>
   );
 }
@@ -101,13 +89,5 @@ const styles = StyleSheet.create({
     height: screenHeight * 0.05,
     backgroundColor: "#ffffff",
     alignItems: "center",
-  },
-  appbar: {
-    marginTop: screenHeight * 0.04,
-    width: "100%",
-    height: 50,
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
   },
 });

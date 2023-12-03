@@ -10,6 +10,7 @@ import { DefaultTheme, Provider } from "react-native-paper";
 
 const Tab = createMaterialBottomTabNavigator();
 
+
 function BottomNavigation() {
   return (
     <Provider theme={theme}>
@@ -23,7 +24,7 @@ function BottomNavigation() {
           backgroundColor: Colors.primary600,
           height: 65,
         }}
-        screenOptions={({ navigation, route, options }) => ({
+        screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             let size = 30;
             let color = focused ? "white" : Colors.accent500;

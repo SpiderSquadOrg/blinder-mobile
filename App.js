@@ -112,9 +112,26 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={BottomNavigation}
-            options={{
-              headerShown: false,
-            }}
+            options={({ navigation, route }) => ({
+              title: "",
+              headerShadowVisible: false,
+              headerLeft: () => (
+                <IconButton
+                  icon="menu"
+                  iconColor={Colors.primary600}
+                  size={32}
+                  onPress={() => console.log("Pressed")}
+                />
+              ),
+              headerRight: () => (
+                <IconButton
+                  icon="filter-variant"
+                  iconColor={Colors.primary600}
+                  size={32}
+                  onPress={() => navigation.navigate("FilterScreen")}
+                />
+              ),
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>
