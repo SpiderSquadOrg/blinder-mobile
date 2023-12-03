@@ -5,7 +5,7 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import TextButton from "../../../components/Button/TextButton";
 import SubTitle from "../../../components/ui/SubTitle";
 import { MovieList } from "../../../data/data";
-import FilmCard from "../../../components/Card/FilmCard";
+import MovieCard from "../../../components/Card/MovieCard";
 import MovieOptionsSearch from "../../../components/Search/MovieOptionsSearch";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -13,9 +13,12 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationFavoriteMovieScreen({ navigation }) {
   const [selectedMovieList, setSelectedMovieList] = useState([]);
 
-  function selectedMovieHandler(movieList) {
-    setSelectedMovieList(movieList);
+  function removeItemHandler(removeItemId) {
+    setSelectedMovieList(
+      selectedMovieList.filter((movie) => movie.id !== removeItemId)
+    );
   }
+
   function nextPageHandler() {
     navigation.navigate("RegistrationSeriesTypeScreen");
   }
@@ -30,18 +33,22 @@ function RegistrationFavoriteMovieScreen({ navigation }) {
           Profilinize en az 3 film ekleyin. Bu sayede sizinle aynı fikirde olan
           kişilerle etkileşim kurabilecek ve tanışabileceksiniz.{" "}
         </SubTitle>
-        <SubTitle>0/3+</SubTitle>
       </View>
 
       <View>
         <SubTitle style={styles.movieListTitle}>Seçilen Fimler</SubTitle>
+        <SubTitle>{selectedMovieList.length}</SubTitle>
         <View>
-          <FilmCard movieList={selectedMovieList} />
+          <MovieCard
+            movieList={selectedMovieList}
+            onRemoveItemId={removeItemHandler}
+          />
         </View>
       </View>
       <MovieOptionsSearch
         movieData={MovieList}
-        onSelected={selectedMovieHandler}
+        selectedMovieList={selectedMovieList}
+        setSelectedMovielist={setSelectedMovieList}
       />
       <View style={styles.buttonContainer}>
         <TextButton onPress={nextPageHandler} style={styles.textButton}>

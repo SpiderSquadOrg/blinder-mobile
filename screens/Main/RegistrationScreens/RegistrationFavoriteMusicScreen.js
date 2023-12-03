@@ -1,5 +1,5 @@
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
@@ -13,8 +13,10 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationFavoriteMusicScreen({ navigation }) {
   const [selectedMusicList, setSelectedMusicList] = useState([]);
 
-  function selectedMusicHandler(musicList) {
-    setSelectedMusicList(musicList);
+  function removeItemHandler(removeItemId) {
+    setSelectedMusicList(
+      selectedMusicList.filter((music) => music.id !== removeItemId)
+    );
   }
 
   function nextPageHandler() {
@@ -31,19 +33,23 @@ function RegistrationFavoriteMusicScreen({ navigation }) {
           Profilinize en az 3 müzik ekleyin. Bu sayede sizinle aynı fikirde olan
           kişilerle etkileşim kurabilecek ve tanışabileceksiniz.
         </SubTitle>
-        <SubTitle>0/3+</SubTitle>
       </View>
       <View>
         <SubTitle style={styles.musicListTitle}>Seçilen Müzikler</SubTitle>
+        <SubTitle>{selectedMusicList.length}</SubTitle>
         <View>
-          <MusicCard musicList={selectedMusicList} />
+          <MusicCard
+            musicList={selectedMusicList}
+            onRemoveItemId={removeItemHandler}
+          />
         </View>
       </View>
 
       <View>
         <MusicOptionsSearchBar
           musicData={MusicList}
-          onSelected={selectedMusicHandler}
+          selectedMusicList={selectedMusicList}
+          setSelectedMusicList={setSelectedMusicList}
         />
       </View>
       <View style={styles.buttonContainer}>

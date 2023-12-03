@@ -12,27 +12,30 @@ import {
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function OptionSearchBar({ musicData, onSelected }) {
+function OptionSearchBar({
+  musicData,
+  selectedMusicList,
+  setSelectedMusicList,
+}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredMusic, setFilteredMusic] = useState(musicData.slice(0, 9));
-  const [selectedMusicList, setSelectedMusicList] = useState([]);
-  const [selectedMusic, setSelectedMusic] = useState(null);
-
-  useEffect(() => {
-    onSelected(selectedMusicList);
-  }, [selectedMusicList]);
 
   const handleSearch = (query) => {
     const filtered = musicData.filter((music) =>
       music.title.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredMusic(filtered.slice(0, 9));
-    //setFilteredMusic(filtered);
     setSearchQuery(query);
   };
 
   const handleMusicSelect = (selectedMusic) => {
-    setSelectedMusicList((prevList) => [...prevList, selectedMusic]);
+    const isMusicAlreadySelected = selectedMusicList.some(
+      (music) => music.id === selectedMusic.id
+    );
+
+    if (!isMusicAlreadySelected) {
+      setSelectedMusicList([...selectedMusicList, selectedMusic]);
+    }
   };
 
   return (
@@ -58,7 +61,7 @@ function OptionSearchBar({ musicData, onSelected }) {
             onPress={() => handleMusicSelect(music)}
             style={[
               styles.musicContainer,
-              selectedMusic === music ? styles.selectedMusic : null,
+              selectedMusicList.includes(music) ? styles.selectedMusic : null,
             ]}
           >
             <View style={styles.listItems}>
@@ -66,9 +69,9 @@ function OptionSearchBar({ musicData, onSelected }) {
                 <Image
                   source={{ uri: music.imageUrl }}
                   style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
+                    width: 60,
+                    height: 60,
+                    borderRadius: 12,
                     marginRight: screenWidth * 0.03,
                   }}
                 />

@@ -1,5 +1,6 @@
 class Movie {
-  constructor(name, year, imageUrl) {
+  constructor(id, name, year, imageUrl) {
+    this.id = id;
     this.name = name;
     this.year = year;
     this.imageUrl = imageUrl;

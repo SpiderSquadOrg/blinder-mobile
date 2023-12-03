@@ -12,15 +12,13 @@ import {
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function SeriesOptionsSearch({ seiresData, onSelected }) {
+function SeriesOptionsSearch({
+  seiresData,
+  selectedSeriesList,
+  setSelectedSeriesList,
+}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSeries, setFilteredSeries] = useState(seiresData.slice(0, 9));
-  const [selectedSeriesList, setSelectedSeriesList] = useState([]);
-  const [selectedSeries, setSelectedSeries] = useState(null);
-
-  useEffect(() => {
-    onSelected(selectedSeriesList);
-  }, [selectedSeriesList]);
 
   const handleSearch = (query) => {
     const filtered = seiresData.filter((series) =>
@@ -31,7 +29,13 @@ function SeriesOptionsSearch({ seiresData, onSelected }) {
   };
 
   const handleSeriesList = (selectedSeries) => {
-    setSelectedSeriesList((prevList) => [...prevList, selectedSeries]);
+    const isSeriesAlreadySelected = selectedSeriesList.some(
+      (series) => series.id === selectedSeries.id
+    );
+
+    if (!isSeriesAlreadySelected) {
+      setSelectedSeriesList((prevList) => [...prevList, selectedSeries]);
+    }
   };
 
   return (
@@ -57,7 +61,9 @@ function SeriesOptionsSearch({ seiresData, onSelected }) {
             onPress={() => handleSeriesList(series)}
             style={[
               styles.seriesContainer,
-              selectedSeries === series ? styles.selectedSeries : null,
+              selectedSeriesList.includes(series)
+                ? styles.selectedSeries
+                : null,
             ]}
           >
             <View style={styles.listItems}>
@@ -65,9 +71,9 @@ function SeriesOptionsSearch({ seiresData, onSelected }) {
                 <Image
                   source={{ uri: series.imageUrl }}
                   style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
+                    width: 60,
+                    height: 60,
+                    borderRadius: 12,
                     marginRight: screenWidth * 0.03,
                   }}
                 />

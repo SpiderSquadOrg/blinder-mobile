@@ -5,20 +5,28 @@ import {
   Image,
   Text,
   ScrollView,
+  Pressable,
 } from "react-native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function MusicCard({ musicList }) {
+function MusicCard({ musicList, onRemoveItemId }) {
+  function handleRemoveMusic(id) {
+    onRemoveItemId(id);
+  }
+
   return (
     <ScrollView horizontal>
       {musicList.map((music, index) => (
-        <View key={index} style={styles.container}>
+        <View key={music.id} style={styles.container}>
           <Image source={{ uri: music.imageUrl }} style={styles.musicImage} />
           <View style={styles.textContainer}>
             <Text style={styles.title}>{music.title}</Text>
             <Text style={styles.artist}>{music.artist}</Text>
           </View>
+          <Pressable onPress={() => handleRemoveMusic(music.id)}>
+            <Text style={styles.removeButton}>×</Text>
+          </Pressable>
         </View>
       ))}
     </ScrollView>
@@ -36,10 +44,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
   },
   musicImage: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     marginRight: screenWidth * 0.05,
-    borderRadius: 12,
+    borderRadius: 50,
   },
   textContainer: {
     flex: 1,
@@ -51,5 +59,10 @@ const styles = StyleSheet.create({
   artist: {
     fontSize: 14,
     color: "#666",
+  },
+  removeButton: {
+    fontSize: 30,
+    color: "red",
+    marginLeft: 10,
   },
 });

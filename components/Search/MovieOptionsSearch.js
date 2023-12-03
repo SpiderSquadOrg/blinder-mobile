@@ -12,15 +12,13 @@ import {
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function MovieOptionsSearch({ movieData, onSelected }) {
+function MovieOptionsSearch({
+  movieData,
+  selectedMovieList,
+  setSelectedMovielist,
+}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredMovie, setFilteredMovie] = useState(movieData.slice(0, 9));
-  const [selectedMovieList, setSelectedMovieList] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-
-  useEffect(() => {
-    onSelected(selectedMovieList);
-  }, [selectedMovieList]);
 
   const handleSearch = (query) => {
     const filtered = movieData.filter((movie) =>
@@ -31,7 +29,13 @@ function MovieOptionsSearch({ movieData, onSelected }) {
   };
 
   const handleMovieSelect = (selectedMovie) => {
-    setSelectedMovieList((prevList) => [...prevList, selectedMovie]);
+    const isMovieAlreadySelected = selectedMovieList.some(
+      (movie) => movie.id === selectedMovie.id
+    );
+
+    if (!isMovieAlreadySelected) {
+      setSelectedMovielist((prevList) => [...prevList, selectedMovie]);
+    }
   };
 
   return (
@@ -57,7 +61,7 @@ function MovieOptionsSearch({ movieData, onSelected }) {
             onPress={() => handleMovieSelect(movie)}
             style={[
               styles.movieContainer,
-              selectedMovie === movie ? styles.selectedMovie : null,
+              selectedMovieList.includes(movie) ? styles.selectedMovie : null,
             ]}
           >
             <View style={styles.listItems}>
@@ -65,9 +69,9 @@ function MovieOptionsSearch({ movieData, onSelected }) {
                 <Image
                   source={{ uri: movie.imageUrl }}
                   style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
+                    width: 60,
+                    height: 60,
+                    borderRadius: 12,
                     marginRight: screenWidth * 0.03,
                   }}
                 />
