@@ -1,4 +1,5 @@
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
@@ -12,12 +13,14 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationFavoriteSeriesScreen({ navigation }) {
   const [selectedSeriesList, setSelectedSeriesList] = useState([]);
 
-  function selectedSeriesHandler(seriesList) {
-    setSelectedSeriesList(seriesList);
+  function removeItemHandler(removeItemId) {
+    setSelectedSeriesList(
+      selectedSeriesList.filter((series) => series.id !== removeItemId)
+    );
   }
 
   function nextPageHandler() {
-    //navigation.navigate("");
+    navigation.navigate("RegistrationBookTypeScreen");
   }
 
   return (
@@ -30,20 +33,24 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
           Profilinize en az 3 dizi ekleyin. Bu sayede sizinle aynı fikirde olan
           kişilerle etkileşim kurabilecek ve tanışabileceksiniz.
         </SubTitle>
-        <SubTitle>0/3+</SubTitle>
       </View>
 
       <View>
         <SubTitle style={styles.seriesListTitle}>Seçilen Diziler</SubTitle>
+        <SubTitle>{selectedSeriesList.length}</SubTitle>
         <View>
-          <SeriesCard seriesList={selectedSeriesList} />
+          <SeriesCard
+            seriesList={selectedSeriesList}
+            onRemoveItemId={removeItemHandler}
+          />
         </View>
       </View>
 
       <View>
         <SeriesOptionsSearch
           seiresData={SeriesList}
-          onSelected={selectedSeriesHandler}
+          selectedSeriesList={selectedSeriesList}
+          setSelectedSeriesList={setSelectedSeriesList}
         />
       </View>
 
@@ -68,7 +75,7 @@ const styles = StyleSheet.create({
     marginHorizontal: screenWidth * 0.06,
   },
   seriesListTitle: {
-    arginTop: screenHeight * 0.04,
+    marginTop: screenHeight * 0.04,
     marginHorizontal: screenWidth * 0.06,
     fontSize: 17,
   },

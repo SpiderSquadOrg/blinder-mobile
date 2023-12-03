@@ -1,5 +1,6 @@
 class Music {
-  constructor(title, artist, imageUrl) {
+  constructor(id, title, artist, imageUrl) {
+    this.id = id;
     this.title = title;
     this.artist = artist;
     this.imageUrl = imageUrl;

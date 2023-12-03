@@ -15,6 +15,8 @@ import RegistrationMovieTypeScreen from "./screens/Main/RegistrationScreens/Regi
 import RegistrationSeriesTypeScreen from "./screens/Main/RegistrationScreens/RegistrationSeriesTypeScreen";
 import RegistrationFavoriteMusicScreen from "./screens/Main/RegistrationScreens/RegistrationFavoriteMusicScreen";
 import RegistrationFavoriteMovieScreen from "./screens/Main/RegistrationScreens/RegistrationFavoriteMovieScreen";
+import RegistrationFavoriteSeriesScreen from "./screens/Main/RegistrationScreens/RegistrationFavoriteSeriesScreen";
+import RegistrationBookTypeScreen from "./screens/Main/RegistrationScreens/RegistrationBookTypeScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
 
@@ -95,6 +97,16 @@ export default function App() {
           <Stack.Screen
             name="RegistrationFavoriteMovieScreen"
             component={RegistrationFavoriteMovieScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="RegistrationFavoriteSeriesScreen"
+            component={RegistrationFavoriteSeriesScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="RegistrationBookTypeScreen"
+            component={RegistrationBookTypeScreen}
             options={{ title: "" }}
           />
           <Stack.Screen

@@ -5,11 +5,16 @@ import {
   ScrollView,
   Image,
   Text,
+  Pressable,
 } from "react-native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function FilmCard({ movieList }) {
+function FilmCard({ movieList, onRemoveItemId }) {
+  function handleRemoveMovie(id) {
+    onRemoveItemId(id);
+  }
+
   return (
     <ScrollView horizontal>
       {movieList.map((movie, index) => (
@@ -19,6 +24,9 @@ function FilmCard({ movieList }) {
             <Text style={styles.name}>{movie.name}</Text>
             <Text style={styles.year}>{movie.year}</Text>
           </View>
+          <Pressable onPress={() => handleRemoveMovie(movie.id)}>
+            <Text style={styles.removeButton}>×</Text>
+          </Pressable>
         </View>
       ))}
     </ScrollView>
@@ -36,10 +44,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
   },
   movieImage: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     marginRight: screenWidth * 0.05,
-    borderRadius: 12,
+    borderRadius: 50,
   },
   textContainer: {
     flex: 1,
@@ -51,5 +59,10 @@ const styles = StyleSheet.create({
   year: {
     fontSize: 14,
     color: "#666",
+  },
+  removeButton: {
+    fontSize: 30,
+    color: "red",
+    marginLeft: 10,
   },
 });
