@@ -1,6 +1,7 @@
 import User from "../models/user";
 import Music from "../models/music";
 import Movie from "../models/movie";
+import Series from "../models/series";
 
 export let UserList = [
   new User(
@@ -120,5 +121,58 @@ export let MovieList = [
     "Harry Potter ve Ölüm Yadigarları Bölüm 2",
     2011,
     "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg"
+  ),
+];
+
+export let SeriesList = [
+  new Series(
+    "Walking Dead",
+    2001,
+    "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg"
+  ),
+  new Series(
+    "Breaking Bad",
+    2008,
+    "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg"
+  ),
+  new Series(
+    "Stranger Things",
+    2016,
+    "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg"
+  ),
+  new Series(
+    "Game of Thrones",
+    2011,
+    "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg"
+  ),
+  new Series(
+    "The Simpsons",
+    1989,
+    "https://upload.wikimedia.org/wikipedia/en/a/ab/Simpsons_-_Opening_Sequence.jpg"
+  ),
+  new Series(
+    "Friends",
+    1994,
+    "https://upload.wikimedia.org/wikipedia/en/thumb/9/9a/Friends_Season_1_cast.png/339px-Friends_Season_1_cast.png"
+  ),
+  new Series(
+    "The Office",
+    2005,
+    "https://upload.wikimedia.org/wikipedia/en/thumb/8/8e/The_Office%2C_US_TV_series%2C_title_card.jpg/324px-The_Office%2C_US_TV_series%2C_title_card.jpg"
+  ),
+  new Series(
+    "Black Mirror",
+    2011,
+    "https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/Black_Mirror_logo.jpg/250px-Black_Mirror_logo.jpg"
+  ),
+  new Series(
+    "Sherlock",
+    2010,
+    "https://upload.wikimedia.org/wikipedia/en/e/e8/Sherlock_titlecard.jpg"
+  ),
+  new Series(
+    "Westworld",
+    2016,
+    "https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/Westworld_title_card.jpg/250px-Westworld_title_card.jpg"
   ),
 ];
