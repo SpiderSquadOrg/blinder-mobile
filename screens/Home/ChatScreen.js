@@ -20,9 +20,7 @@ function ChatScreen({ navigation, route }) {
   const [message, setMessage] = useState("");
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
-  const [userInChat, setUserInChat] = useState({
-    name: "Nine Tailed Fox",
-  });
+  const [userInChat, setUserInChat] = useState(route.params.user);
 
   const [messages, setMessages] = useState([
     { text: "Lorem ipsum dolor sit amet", isMe: true, timestamp: new Date() },
@@ -71,14 +69,7 @@ function ChatScreen({ navigation, route }) {
   }, []);
 
   return (
-    <View
-      style={[
-        styles.container,
-        isKeyboardOpen && Platform.OS === "android"
-          ? { marginBottom: 0 }
-          : undefined,
-      ]}
-    >
+    <View style={[styles.container]}>
       <View style={styles.appbar}>
         <Appbar.BackAction
           color={Colors.primary600}
@@ -86,7 +77,7 @@ function ChatScreen({ navigation, route }) {
           onPress={() => navigation.navigate("MatchScreen")}
         />
         <Text style={styles.username}>{userInChat.name}</Text>
-        <Avatar.Image size={48} source={{}} style={styles.avatar} />
+        <Avatar.Image size={40} source={{}} style={styles.avatar} />
       </View>
       <View style={styles.chatDialog}>
         <ChatDialog messages={messages} />
@@ -131,7 +122,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-end",
-    marginBottom: 65, // Adjust this value based on your design
   },
   appbar: {
     marginTop: screenHeight * 0.04,
