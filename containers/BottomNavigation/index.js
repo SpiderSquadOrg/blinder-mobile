@@ -1,6 +1,6 @@
 import MatchScreen from "../../screens/Home/MatchScreen";
 import LikesScreen from "../../screens/Home/LikesScreen";
-import ChatScreen from "../../screens/Home/ChatScreen";
+import ChatsScreen from "../../screens/Home/ChatsScreen";
 import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -112,7 +112,7 @@ function BottomNavigation() {
       >
         <Tab.Screen name="LikesScreen" component={LikesScreen} />
         <Tab.Screen name="MatchScreen" component={MatchScreen} />
-        <Tab.Screen name="ChatScreen" component={ChatScreen} />
+        <Tab.Screen name="ChatScreen" component={ChatsScreen} />
       </Tab.Navigator>
     </Provider>
   );

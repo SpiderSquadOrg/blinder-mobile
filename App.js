@@ -19,9 +19,8 @@ import RegistrationFavoriteSeriesScreen from "./screens/Main/RegistrationScreens
 import RegistrationBookTypeScreen from "./screens/Main/RegistrationScreens/RegistrationBookTypeScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
-
-import { IconButton } from "react-native-paper";
 import BottomNavigation from "./containers/BottomNavigation";
+import ChatScreen from "./screens/Home/ChatScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,7 +53,7 @@ export default function App() {
             component={SignUpScreen}
             options={{ title: "" }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="RegistrationNameScreen"
             component={RegistrationNameScreen}
             options={{ title: "" }}
@@ -125,6 +124,13 @@ export default function App() {
               title: "Konum Tercihiniz",
               headerTitleStyle: styles.headerTitleStyle,
               headerBackTitle: "Geri",
+            }}
+          />
+          <Stack.Screen
+            name="ChattingScreen"
+            component={ChatScreen}
+            options={{
+              headerShown: false,
             }}
           />
           <Stack.Screen
