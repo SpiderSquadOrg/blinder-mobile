@@ -17,6 +17,10 @@ function MainPage({ navigation }) {
   function mailLoginHandler() {
     navigation.navigate("LoginScreen");
   }
+  function profileHandler() {
+    //SİLMEYİ UNUTMAAA 
+    navigation.navigate("ProfileScreen");
+  }
   return (
     <>
       <StatusBar style="auto" />
@@ -52,6 +56,14 @@ function MainPage({ navigation }) {
               <Ionicons name="mail" size={24} color="white" />
               {"   "}
               E-POSTA İLE GİRİŞ YAP
+            </PrimaryButton>
+            <PrimaryButton
+              style={styles.buttonContainer}
+              onPress={profileHandler}
+            >
+              <Ionicons name="log-in-outline" size={24} color="white" />
+              {"   "}
+              Profil
             </PrimaryButton>
           </View>
         </View>

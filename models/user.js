@@ -10,7 +10,14 @@ class User {
     birthDate,
     location,
     imageUrl,
-    possibleMatches
+    musicTypes,
+    favoriteMusic,
+    movieTypes,
+    favoriteMovies,
+    seriesTypes,
+    favoriteSeries,
+    hobbies,
+
   ) {
     this.id = id;
     this.email = email;
@@ -22,7 +29,13 @@ class User {
     this.birthDate = birthDate;
     this.location = location;
     this.imageUrl = imageUrl;
-    this.possibleMatches = possibleMatches;
+    this.musicTypes = musicTypes;
+    this.favoriteMusic = favoriteMusic;
+    this.movieTypes = movieTypes;
+    this.favoriteMovies = favoriteMovies;
+    this.seriesTypes = seriesTypes;
+    this.favoriteSeries = favoriteSeries;
+    this.hobbies = hobbies;
   }
 }
 
