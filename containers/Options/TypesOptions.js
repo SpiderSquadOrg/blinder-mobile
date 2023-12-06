@@ -27,7 +27,7 @@ function TypesOptions({ onTypeSelect, options }) {
 
   return (
     <View style={styles.rootContainer}>
-      {chunkArray(options, 3).map((row, rowIndex) => (
+      {chunkArray(options, 2).map((row, rowIndex) => (
         <View key={rowIndex} style={styles.rowContainer}>
           {row.map((option) => (
             <TouchableOpacity

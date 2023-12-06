@@ -16,11 +16,13 @@ import RegistrationSeriesTypeScreen from "./screens/Main/RegistrationScreens/Reg
 import RegistrationFavoriteMusicScreen from "./screens/Main/RegistrationScreens/RegistrationFavoriteMusicScreen";
 import RegistrationFavoriteMovieScreen from "./screens/Main/RegistrationScreens/RegistrationFavoriteMovieScreen";
 import RegistrationFavoriteSeriesScreen from "./screens/Main/RegistrationScreens/RegistrationFavoriteSeriesScreen";
-import RegistrationBookTypeScreen from "./screens/Main/RegistrationScreens/RegistrationBookTypeScreen";
+import RegistrationHobbyTypeScreen from "./screens/Main/RegistrationScreens/RegistrationHobbyTypeScreen";
+import RegistrationLocationScreen from "./screens/Main/RegistrationScreens/RegistrationLocationScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
 import BottomNavigation from "./containers/BottomNavigation";
 import ChatScreen from "./screens/Home/ChatScreen";
+import ProfileScreen from "./screens/Profile/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -104,8 +106,13 @@ export default function App() {
             options={{ title: "" }}
           />
           <Stack.Screen
-            name="RegistrationBookTypeScreen"
-            component={RegistrationBookTypeScreen}
+            name="RegistrationHobbyTypeScreen"
+            component={RegistrationHobbyTypeScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="RegistrationLocationScreen"
+            component={RegistrationLocationScreen}
             options={{ title: "" }}
           />
           <Stack.Screen
@@ -139,6 +146,11 @@ export default function App() {
             options={{
               headerShown: false,
             }}
+          />
+          <Stack.Screen
+            name="ProfileScreen"
+            component={ProfileScreen}
+            options={{ title: "" }}
           />
         </Stack.Navigator>
       </NavigationContainer>

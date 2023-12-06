@@ -14,8 +14,78 @@ export let UserList = [
     "1234",
     "female",
     "23-02-2000",
-    "Eskişehir",
-    "https://cdn1.iconfinder.com/data/icons/user-pictures/100/female1-512.png"
+    "Eskişehir. Turkey",
+    "https://i.pinimg.com/474x/15/25/f9/1525f94766ba26d502220effe8981689.jpg",
+    ["Pop", "Rock", "Jazz", "Hip-Hop"],
+    [
+      {
+        title: "Sen Ağlama",
+        artist: "Sezen Aksu",
+        image:
+          "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg",
+      },
+      {
+        title: "Unuttun Mu Beni",
+        artist: "Sezen Aksu",
+        image:
+          "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg",
+      },
+      {
+        title: "Yalnızca Sitem",
+        artist: "Sezen Aksu",
+        image:
+          "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg",
+      },
+      {
+        title: "İki Yabancı",
+        artist: "Teoman",
+        image:
+          "https://i.scdn.co/image/ab67616d0000b273d4ebc347832506c4b02068aa",
+      },
+    ],
+    ["Aksiyon", "Macera", "Komedi", "Animasyon"],
+    [
+      {
+        name: "Harry Potter ve Felsefe Taşı",
+        year: 2001,
+        image:
+          "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg",
+      },
+      {
+        name: "Harry Potter ve Azkaban Tutsağı",
+        year: 2003,
+        image:
+          "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg",
+      },
+      {
+        name: "Harry Potter ve Zümrüdüanka Yoldaşlığı",
+        year: 2005,
+        image:
+          "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg",
+      },
+    ],
+    ["Komedi", "Aksiyon", "Romantik", "Gerilim", "Korku", "Gizem"],
+    [
+      {
+        name: "Walking Dead",
+        year: 2001,
+        image:
+          "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg",
+      },
+      {
+        name: "Game of Thrones",
+        year: 2001,
+        image:
+          "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg",
+      },
+      {
+        name: "The Simpsons",
+        year: 2001,
+        image:
+          "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg",
+      },
+    ],
+    ["Resim Yapma", "Müzik Dinleme", "Yazı Yazma", "Dil Öğrenme", "Şiir Yazma"]
   ),
 ];
 
@@ -270,3 +340,87 @@ export let BookList = [
     "https://i.dr.com.tr/cache/500x400-0/originals/0001785575001-1.jpg"
   ),
 ];
+
+
+export let user1 = new User(
+  "1",
+  "user@gmail.com",
+  "userBlinder",
+  "User",
+  "Surname",
+  "1234",
+  "female",
+  "23-02-2000",
+  "Eskişehir, Turkey",
+  "https://i.pinimg.com/474x/15/25/f9/1525f94766ba26d502220effe8981689.jpg",
+  ["Pop", "Rock", "Jazz", "Hip-Hop"],
+  [
+    {
+      title: "Sen Ağlama",
+      artist: "Sezen Aksu",
+      image:
+        "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg",
+    },
+    {
+      title: "Unuttun Mu Beni",
+      artist: "Sezen Aksu",
+      image:
+        "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg",
+    },
+    {
+      title: "Yalnızca Sitem",
+      artist: "Sezen Aksu",
+      image:
+        "https://images.genius.com/b539a3d1bdfe8268ac0cc512c5df4806.1000x1000x1.jpg",
+    },
+    {
+      title: "İki Yabancı",
+      artist: "Teoman",
+      image:
+        "https://i.scdn.co/image/ab67616d0000b273d4ebc347832506c4b02068aa",
+    },
+  ],
+  ["Aksiyon", "Macera", "Komedi", "Animasyon"],
+  [
+    {
+      name: "Harry Potter ve Felsefe Taşı",
+      year: 2001,
+      image:
+        "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg",
+    },
+    {
+      name: "Harry Potter ve Azkaban Tutsağı",
+      year: 2003,
+      image:
+        "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg",
+    },
+    {
+      name: "Harry Potter ve Zümrüdüanka Yoldaşlığı",
+      year: 2005,
+      image:
+        "https://i.dr.com.tr/cache/600x600-0/originals/0000000105599-1.jpg",
+    },
+  ],
+  ["Komedi", "Aksiyon", "Romantik", "Gerilim", "Korku", "Gizem"],
+  [
+    {
+      name: "Walking Dead",
+      year: 2001,
+      image:
+        "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg",
+    },
+    {
+      name: "Game of Thrones",
+      year: 2001,
+      image:
+        "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg",
+    },
+    {
+      name: "The Simpsons",
+      year: 2001,
+      image:
+        "https://upload.wikimedia.org/wikipedia/ru/1/19/The_Walking_Dead_%28season_2%29.jpg",
+    },
+  ],
+  ["Resim Yapma", "Müzik Dinleme", "Yazı Yazma", "Dil Öğrenme", "Şiir Yazma"]
+);

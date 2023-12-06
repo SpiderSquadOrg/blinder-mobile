@@ -20,7 +20,7 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
   }
 
   function nextPageHandler() {
-    navigation.navigate("RegistrationBookTypeScreen");
+    navigation.navigate("RegistrationHobbyTypeScreen");
   }
 
   return (
