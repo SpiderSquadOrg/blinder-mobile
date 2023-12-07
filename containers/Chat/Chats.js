@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -7,21 +7,42 @@ import {
   StyleSheet,
 } from "react-native";
 import { Avatar } from "react-native-paper";
+import fetchChats from "../../api/chat/fetchChats";
+import {
+  storeData,
+  getData,
+  removeData,
+  clearAllData,
+} from "../../utils/storage";
 
 function Chats({ navigation, route }) {
-  const [chats, setChats] = useState([
-    {
-      id: 1,
-      user: {
-        name: "Nine Tailed Fox",
-      },
-      lastMessage: {
-        text: "Lorem ipsum dolor sit amet",
-        timestamp: new Date(),
-      },
-    },
-    // Diğer chat verileri buraya eklenebilir
-  ]);
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    storeData(
+      "token",
+      "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoibm9ybWFsIiwidXNlcklkIjoiM2Y1MDEyOWQtMTQ4Yy00ZDZjLTg3MDAtNzU3MTViNWM4NDM4IiwiZW1haWwiOiJhc2Rhc2FhYWFhQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoibmluZSB0YWlsZWQgZm94Iiwic3ViIjoibmluZSB0YWlsZWQgZm94IiwiaWF0IjoxNzAxOTA3MzEwLCJleHAiOjE3MDE5OTM3MTB9.x0jNCS1bDHbXnL8dVuqfMMSirNtDPo5vvXhld7dD4zM"
+    );
+
+    const fetchData = async () => {
+      const data = await fetchChats();
+
+      const newChats = data?.map((chat) => ({
+        id: chat._id,
+        user: {
+          name: chat.users[1].username,
+        },
+        lastMessage: {
+          text: chat?.latestMessage.content ? chat?.latestMessage.content : "",
+          timestamp: chat?.latestMessage.updatedAt ? chat?.latestMessage.updatedAt : ""
+        },
+      }));
+
+      setChats(newChats);
+    };
+
+    fetchData();
+  }, []);
 
   function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
@@ -91,7 +112,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    minWidth: "70%",
+    minWidth: "50%",
   },
   avatar: {
     marginRight: 16,
