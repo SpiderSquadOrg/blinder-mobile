@@ -128,6 +128,69 @@ export default function App() {
                 options={{ title: "" }}
               />
               <Stack.Screen
+                name="UpdateMusicOptionsScreen"
+                component={UpdateMusicOptionsScreen}
+                options={{
+                  title: "Müzik Listen",
+                  headerBackTitle: "Geri",
+                  headerTitleStyle: styles.headerTitleStyle,
+              }}
+              />
+              <Stack.Screen
+                name="UpdateMovieOptionsScreen"
+                component={UpdateMovieOptionsScreen}
+                options={{
+                  title: "Film Listen",
+                  headerBackTitle: "Geri",
+                  headerTitleStyle: styles.headerTitleStyle,
+            }}
+               />
+              <Stack.Screen
+                name="UpdateSeriesOptionsScreen"
+                component={UpdateSeriesOptionsScreen}
+                options={{
+                  title: "Dizi Listen",
+                  headerBackTitle: "Geri",
+                  headerTitleStyle: styles.headerTitleStyle,
+                }}
+              />
+              <Stack.Screen
+                name="UpdateMusicCategoryScreen"
+                component={UpdateMusicCategoryScreen}
+                options={{
+                  title: "Müzik Türlerin",
+                  headerBackTitle: "Geri",
+                  headerTitleStyle: styles.headerTitleStyle,
+                }}
+              />
+              <Stack.Screen
+                name="UpdateMovieCategoryScreen"
+                component={UpdateMovieCategoryScreen}
+                options={{
+                  title: "Film Türlerin",
+                  headerBackTitle: "Geri",
+                  headerTitleStyle: styles.headerTitleStyle,
+                }}
+              />
+              <Stack.Screen
+                name="UpdateSeriesCategoryScreen"
+                component={UpdateSeriesCategoryScreen}
+                options={{
+                  title: "Dizi Türlerin",
+                  headerBackTitle: "Geri",
+                  headerTitleStyle: styles.headerTitleStyle,
+                }}
+              />
+              <Stack.Screen
+                name="UpdateHobbyScreen"
+                component={UpdateHobbyScreen}
+                options={{
+                  title: "Hobilerin",
+                  headerBackTitle: "Geri",
+                  headerTitleStyle: styles.headerTitleStyle,
+                }}
+              />
+              <Stack.Screen
                 name="FilterScreen"
                 component={FilterScreen}
                 options={{
