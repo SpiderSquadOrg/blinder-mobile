@@ -1,10 +1,10 @@
 import axios from "axios";
-import { CHAT_API } from "@env";
+//import { CHAT_API } from "@env";
 import header from "../header";
 import env from "../../constansts/env_variables";
 
-const fetchChats = async () => {
-  const url = `${env.CHAT_API}/chats`;
+const getUserByUserName = async (username) => {
+  const url = `${env.CHAT_API}/users/${username}`;
   const headers = await header();
  
   // Ensure headers are ready before making the request
@@ -16,7 +16,7 @@ const fetchChats = async () => {
 
       return response.data;
     } catch (error) {
-      console.error("Error fetching chats:", error.message);
+      console.error("Error fetching user:", error.message);
       if (error.response) {
         console.error("Error response data:", error.response.data);
         console.error("Error response status:", error.response.status);
@@ -27,4 +27,4 @@ const fetchChats = async () => {
   }
 };
 
-export default fetchChats;
+export default getUserByUserName;

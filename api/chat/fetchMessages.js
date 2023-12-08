@@ -3,23 +3,15 @@ import header from "../header";
 import { CHAT_API } from "@env";
 import env from "../../constansts/env_variables";
 
-const accessChats = async (username) => {
-  const url = `${env.CHAT_API}/chats`;
+const fetchMessages = async (chatId) => {
+  const url = `${env.CHAT_API}/messages/${chatId}`;
   const headers = await header();
 
-  // Ensure headers are ready before making the request
   if (headers) {
     try {
-      const response = await axios.post(
-        url,
-        {
-          username: username,
-        },
-        {
-          headers: headers,
-        }
-      );
-
+      const response = await axios.get(url, {
+        headers: headers,
+      });
       return response.data;
     } catch (error) {
       console.error("Error accessing chats:", error.message);
@@ -28,4 +20,4 @@ const accessChats = async (username) => {
   }
 };
 
-export default accessChats;
+export default fetchMessages;

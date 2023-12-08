@@ -23,6 +23,8 @@ import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScree
 import BottomNavigation from "./containers/BottomNavigation";
 import ChatScreen from "./screens/Home/ChatScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
+import { UserProvider } from "./contexts/UserContext";
+import { ActiveChatProvider } from "./contexts/ActiveChatContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,128 +33,132 @@ export default function App() {
     <>
       <StatusBar style="dark" />
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "#ffffff",
-            },
-            headerTintColor: Colors.primary600,
-            contentStyle: { backgroundColor: "#ffffff" },
-          }}
-        >
-          <Stack.Screen
-            name="MainPage"
-            component={MainPage}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="LoginScreen"
-            component={LoginScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="SignUpScreen"
-            component={SignUpScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationNameScreen"
-            component={RegistrationNameScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationGenderScreen"
-            component={RegistrationGenderScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationBirthDateScreen"
-            component={RegistrationBirthDateScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationPartnerGenderScreen"
-            component={RegistrationPartnerGenderScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationMusicTypeScreen"
-            component={RegistrationMusicTypeScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationMovieTypeScreen"
-            component={RegistrationMovieTypeScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationSeriesTypeScreen"
-            component={RegistrationSeriesTypeScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationFavoriteMusicScreen"
-            component={RegistrationFavoriteMusicScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationFavoriteMovieScreen"
-            component={RegistrationFavoriteMovieScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationFavoriteSeriesScreen"
-            component={RegistrationFavoriteSeriesScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationHobbyTypeScreen"
-            component={RegistrationHobbyTypeScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="RegistrationLocationScreen"
-            component={RegistrationLocationScreen}
-            options={{ title: "" }}
-          />
-          <Stack.Screen
-            name="FilterScreen"
-            component={FilterScreen}
-            options={{
-              title: "Eşleşmeleri Filtrele",
-              headerTitleStyle: styles.headerTitleStyle,
-              headerBackTitle: "Geri",
-            }}
-          />
-          <Stack.Screen
-            name="LocationPreferencesScreen"
-            component={LocationPreferencesScreen}
-            options={{
-              title: "Konum Tercihiniz",
-              headerTitleStyle: styles.headerTitleStyle,
-              headerBackTitle: "Geri",
-            }}
-          />
-          <Stack.Screen
-            name="ChattingScreen"
-            component={ChatScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={BottomNavigation}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="ProfileScreen"
-            component={ProfileScreen}
-            options={{ title: "" }}
-          />
-        </Stack.Navigator>
+        <UserProvider>
+          <ActiveChatProvider>
+            <Stack.Navigator
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: "#ffffff",
+                },
+                headerTintColor: Colors.primary600,
+                contentStyle: { backgroundColor: "#ffffff" },
+              }}
+            >
+              <Stack.Screen
+                name="MainPage"
+                component={MainPage}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="LoginScreen"
+                component={LoginScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="SignUpScreen"
+                component={SignUpScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationNameScreen"
+                component={RegistrationNameScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationGenderScreen"
+                component={RegistrationGenderScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationBirthDateScreen"
+                component={RegistrationBirthDateScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationPartnerGenderScreen"
+                component={RegistrationPartnerGenderScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationMusicTypeScreen"
+                component={RegistrationMusicTypeScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationMovieTypeScreen"
+                component={RegistrationMovieTypeScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationSeriesTypeScreen"
+                component={RegistrationSeriesTypeScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationFavoriteMusicScreen"
+                component={RegistrationFavoriteMusicScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationFavoriteMovieScreen"
+                component={RegistrationFavoriteMovieScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationFavoriteSeriesScreen"
+                component={RegistrationFavoriteSeriesScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationHobbyTypeScreen"
+                component={RegistrationHobbyTypeScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationLocationScreen"
+                component={RegistrationLocationScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="FilterScreen"
+                component={FilterScreen}
+                options={{
+                  title: "Eşleşmeleri Filtrele",
+                  headerTitleStyle: styles.headerTitleStyle,
+                  headerBackTitle: "Geri",
+                }}
+              />
+              <Stack.Screen
+                name="LocationPreferencesScreen"
+                component={LocationPreferencesScreen}
+                options={{
+                  title: "Konum Tercihiniz",
+                  headerTitleStyle: styles.headerTitleStyle,
+                  headerBackTitle: "Geri",
+                }}
+              />
+              <Stack.Screen
+                name="ChattingScreen"
+                component={ChatScreen}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="Home"
+                component={BottomNavigation}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="ProfileScreen"
+                component={ProfileScreen}
+                options={{ title: "" }}
+              />
+            </Stack.Navigator>
+          </ActiveChatProvider>
+        </UserProvider>
       </NavigationContainer>
     </>
   );

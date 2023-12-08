@@ -18,6 +18,8 @@ import PrimaryButton from "../../components/Button/PrimaryButton";
 import Colors from "../../constansts/Colors";
 import PasswordField from "../../components/ui/PasswordField";
 import TextButton from "../../components/Button/TextButton";
+import login from "../../api/auth/login";
+import { storeData } from "../../utils/storage";
 
 function FirstLoginPage({ navigation }) {
   const [email, setEmail] = useState("");
@@ -26,7 +28,7 @@ function FirstLoginPage({ navigation }) {
   function emailHandler(enteredMail) {
     setEmail(enteredMail);
   }
-
+  
   function passwordHandler(enteredPassword) {
     setPassword(enteredPassword);
   }
@@ -35,14 +37,13 @@ function FirstLoginPage({ navigation }) {
     navigation.navigate("SignUpScreen");
   }
 
-  function loginHandler() {
-    if (
-      UserList.some(
-        (user) => user.email === email && user.password === password
-      )
-    ) {
+  async function loginHandler() {
+    try {
+      const { token } = await login(email, password);
+      storeData("userInfo", token);
+      navigation.navigate("Home");
       Alert.alert("Giriş Başarılı", "Hoşgeldiniz!");
-    } else {
+    } catch (error) {
       Alert.alert("Hata", "Geçersiz email veya şifre");
     }
   }
