@@ -12,7 +12,7 @@ function ChatDialog({ messages }) {
   useEffect(() => {
     setTimeout(() => {
       flatListRef.current?.scrollToEnd({ animated: false });
-    }, 50);
+    }, 2000);
   }, []);
 
   return (

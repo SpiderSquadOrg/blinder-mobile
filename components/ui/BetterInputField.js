@@ -1,9 +1,10 @@
 import { TextInput, StyleSheet, View } from "react-native";
 import React from "react";
 
-function BetterInputField({ placeholder, text, setText, style }) {
+function BetterInputField({ placeholder, text, setText, style, onChange }) {
   function inputHandler(enteredText) {
     setText(enteredText);
+    onChange(enteredText);
   }
   const multilineStyle = {
     minHeight: 80,
@@ -16,7 +17,7 @@ function BetterInputField({ placeholder, text, setText, style }) {
       <TextInput
         style={[
           styles.input,
-          text.includes("\n") ? {...multilineStyle} : undefined,
+          text.includes("\n") ? { ...multilineStyle } : undefined,
         ]}
         onChangeText={inputHandler}
         value={text}
