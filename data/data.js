@@ -278,7 +278,7 @@ export let SeriesList = [
   ),
 ];
 
-export let BookList = [
+/*export let BookList = [
   new Book(
     1,
     "Küçük Prens",
@@ -339,8 +339,7 @@ export let BookList = [
     "Franz Kafka",
     "https://i.dr.com.tr/cache/500x400-0/originals/0001785575001-1.jpg"
   ),
-];
-
+]; */
 
 export let user1 = new User(
   "1",
@@ -376,8 +375,7 @@ export let user1 = new User(
     {
       title: "İki Yabancı",
       artist: "Teoman",
-      image:
-        "https://i.scdn.co/image/ab67616d0000b273d4ebc347832506c4b02068aa",
+      image: "https://i.scdn.co/image/ab67616d0000b273d4ebc347832506c4b02068aa",
     },
   ],
   ["Aksiyon", "Macera", "Komedi", "Animasyon"],

@@ -23,6 +23,13 @@ import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScree
 import BottomNavigation from "./containers/BottomNavigation";
 import ChatScreen from "./screens/Home/ChatScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
+import UpdateMusicOptionsScreen from "./screens/UpdateOptions/UpdateMusicOptionsScreen";
+import UpdateMovieOptionsScreen from "./screens/UpdateOptions/UpdateMovieOptionsScreen";
+import UpdateSeriesOptionsScreen from "./screens/UpdateOptions/UpdateSeriesOptionsScreen";
+import UpdateMusicCategoryScreen from "./screens/UpdateOptions/UpdateMusicCategoryScreen";
+import UpdateMovieCategoryScreen from "./screens/UpdateOptions/UpdateMovieCategoryScreen";
+import UpdateSeriesCategoryScreen from "./screens/UpdateOptions/UpdateSeriesCategoryScreen";
+import UpdateHobbyScreen from "./screens/UpdateOptions/UpdateHobbyScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -114,6 +121,69 @@ export default function App() {
             name="RegistrationLocationScreen"
             component={RegistrationLocationScreen}
             options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="UpdateMusicOptionsScreen"
+            component={UpdateMusicOptionsScreen}
+            options={{
+              title: "Müzik Listen",
+              headerBackTitle: "Geri",
+              headerTitleStyle: styles.headerTitleStyle,
+            }}
+          />
+          <Stack.Screen
+            name="UpdateMovieOptionsScreen"
+            component={UpdateMovieOptionsScreen}
+            options={{
+              title: "Film Listen",
+              headerBackTitle: "Geri",
+              headerTitleStyle: styles.headerTitleStyle,
+            }}
+          />
+          <Stack.Screen
+            name="UpdateSeriesOptionsScreen"
+            component={UpdateSeriesOptionsScreen}
+            options={{
+              title: "Dizi Listen",
+              headerBackTitle: "Geri",
+              headerTitleStyle: styles.headerTitleStyle,
+            }}
+          />
+          <Stack.Screen
+            name="UpdateMusicCategoryScreen"
+            component={UpdateMusicCategoryScreen}
+            options={{
+              title: "Müzik Türlerin",
+              headerBackTitle: "Geri",
+              headerTitleStyle: styles.headerTitleStyle,
+            }}
+          />
+          <Stack.Screen
+            name="UpdateMovieCategoryScreen"
+            component={UpdateMovieCategoryScreen}
+            options={{
+              title: "Film Türlerin",
+              headerBackTitle: "Geri",
+              headerTitleStyle: styles.headerTitleStyle,
+            }}
+          />
+          <Stack.Screen
+            name="UpdateSeriesCategoryScreen"
+            component={UpdateSeriesCategoryScreen}
+            options={{
+              title: "Dizi Türlerin",
+              headerBackTitle: "Geri",
+              headerTitleStyle: styles.headerTitleStyle,
+            }}
+          />
+          <Stack.Screen
+            name="UpdateHobbyScreen"
+            component={UpdateHobbyScreen}
+            options={{
+              title: "Hobilerin",
+              headerBackTitle: "Geri",
+              headerTitleStyle: styles.headerTitleStyle,
+            }}
           />
           <Stack.Screen
             name="FilterScreen"

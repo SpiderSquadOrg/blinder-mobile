@@ -5,75 +5,14 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import SubTitle from "../../../components/ui/SubTitle";
 import TypesOptions from "../../../containers/Options/TypesOptions";
 import TextButton from "../../../components/Button/TextButton";
+import { musicTypes } from "../../../data/categoryData";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationMusicTypeScreen({ navigation }) {
   const [selectedMusicTypes, setSelectedMusicTypes] = useState([]);
 
-  const musicTypes = [
-    "Pop",
-    "Rock",
-    "Jazz",
-    "Klasik",
-    "Country",
-    "Hip-Hop",
-    "Rap",
-    "Elektronik",
-    "Blues",
-    "Reggae",
-    "Metal",
-    "R&B",
-    "Soul",
-    "Folk",
-    "Indie",
-    "Dance",
-    "Latin",
-    "Gospel",
-    "Funk",
-    "Disco",
-    "Ambient",
-    "Alternative",
-    "World",
-    "Opera",
-    "Chillout",
-    "House",
-    "Techno",
-    "Dubstep",
-    "Trap",
-    "EDM",
-    "Trance",
-    "Country Rock",
-    "Punk",
-    "Hard Rock",
-    "Ska",
-    "Reggaeton",
-    "Salsa",
-    "Kizomba",
-    "Bachata",
-    "Swing",
-    "Jive",
-    "Fusion",
-    "Experimental",
-    "Avant-Garde",
-    "Jungle",
-    "New Age",
-    "Grunge",
-    "Post-Rock",
-    "Psychedelic",
-    "Synthwave",
-    "Grime",
-    "Acid Jazz",
-    "Smooth Jazz",
-    "Klezmer",
-    "Cajun",
-    "Zydeco",
-    "Karib Müziği",
-    "Fado",
-    "Flamenco",
-    "Tango",
-    "Klasik Crossover",
-  ];
+
 
   const handleMusicTypeSelect = (selectedTypes) => {
     setSelectedMusicTypes(selectedTypes);

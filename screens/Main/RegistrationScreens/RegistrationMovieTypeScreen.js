@@ -5,76 +5,12 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import TypesOptions from "../../../containers/Options/TypesOptions";
+import { movieTypes } from "../../../data/categoryData";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationMovieTypeScreen({ navigation }) {
   const [selectedMovieTypes, setSelectedMovieTypes] = useState([]);
-
-  const movieTypes = [
-    "Aksiyon",
-    "Macera",
-    "Komedi",
-    "Drama",
-    "Korku",
-    "Bilim Kurgu",
-    "Fantastik",
-    "Romantik",
-    "Gerilim",
-    "Suç",
-    "Gizem",
-    "Belgesel",
-    "Animasyon",
-    "Biyografi",
-    "Tarih",
-    "Savaş",
-    "Western",
-    "Müzikal",
-    "Aile",
-    "Spor",
-    "Bilim ve Doğa",
-    "Kısa Film",
-    "Reality-TV",
-    "Talk Show",
-    "Game Show",
-    "Film-Noir",
-    "Musical",
-    "Experimental",
-    "Fan Film",
-    "Short",
-    "News",
-    "Adult",
-    "Eğlence",
-    "Geceyarısı Filmi",
-    "Riportaj",
-    "Din",
-    "Yarışma",
-    "Gerçeklik",
-    "Aşk",
-    "Sürükleyici",
-    "Efsanevi",
-    "Tarihi",
-    "Epik",
-    "Siyasi",
-    "Psikolojik",
-    "Çocuk",
-    "Gençlik",
-    "Sosyal",
-    "Deneysel",
-    "Kült",
-    "Bağımsız",
-    "Kara Mizah",
-    "Neo-Noir",
-    "Gangster",
-    "Kostüm",
-    "Kara Komedi",
-    "Poliisiye",
-    "Doğaüstü",
-    "Sürreal",
-    "Noir",
-    "Popüler Bilim",
-    "Retro-Futuristik",
-  ];
 
   const movieTypeHandler = (selectedTypes) => {
     setSelectedMovieTypes(selectedTypes);

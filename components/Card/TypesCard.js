@@ -1,11 +1,22 @@
-import { View, StyleSheet, Dimensions, ScrollView, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Text,
+  Pressable,
+} from "react-native";
 
+import { Ionicons } from "@expo/vector-icons";
 import SubTitle from "../ui/SubTitle";
 import Colors from "../../constansts/Colors";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function TypesCard({ typeList, title }) {
+function TypesCard({ typeList, title, handlePressable }) {
+  function handlePress() {
+    handlePressable();
+  }
   return (
     <View>
       <View style={styles.titleContainer}>
@@ -13,12 +24,15 @@ function TypesCard({ typeList, title }) {
       </View>
       <ScrollView horizontal>
         {typeList.map((type, index) => (
-          <View style={styles.outerContainer}>
-            <View key={index} style={styles.innerContainer}>
+          <View style={styles.outerContainer} key={index}>
+            <View style={styles.innerContainer}>
               <Text style={styles.title}>{type}</Text>
             </View>
           </View>
         ))}
+        <Pressable onPress={handlePress} style={styles.icon}>
+          <Ionicons name="md-pencil-sharp" size={18} color="gray" />
+        </Pressable>
       </ScrollView>
     </View>
   );
@@ -51,5 +65,9 @@ const styles = StyleSheet.create({
   titleContainer: {
     alignItems: "flex-start",
     marginLeft: screenWidth * 0.05,
+  },
+  icon: {
+    marginLeft: screenWidth * 0.02,
+    marginTop: screenHeight * 0.02,
   },
 });
