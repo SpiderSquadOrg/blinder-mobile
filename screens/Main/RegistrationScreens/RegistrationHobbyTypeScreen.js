@@ -5,33 +5,14 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import TypesOptions from "../../../containers/Options/TypesOptions";
+import { hobbyList } from "../../../data/categoryData";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationHobbyTypeScreen({ navigation }) {
   const [selectedHobbyTypes, setSelectedHobbyTypes] = useState([]);
 
-  const hobbyList = [
-    "Resim Yapma",
-    "Müzik Dinleme",
-    "Bahçe Çiçekleri Yetiştirme",
-    "Yemek Pişirme",
-    "Deniz Kabuğu Toplama",
-    "El Sanatları",
-    "Diksiyon Geliştirme",
-    "Astronomi İle İlgilenme",
-    "Koleksiyon Yapma",
-    "Ressamlık",
-    "Fotoğrafçılık",
-    "Seyahat Etme",
-    "Yazı Yazma",
-    "Felsefe Kitapları Okuma",
-    "Doğa Yürüyüşleri",
-    "Tarih Araştırmaları",
-    "Gönüllü Çalışma",
-    "Dil Öğrenme",
-    "Şiir Yazma",
-  ];
+  
 
   const hobbyTypesHandler = (selectedHobbies) => {
     setSelectedHobbyTypes(selectedHobbies);

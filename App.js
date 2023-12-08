@@ -23,6 +23,13 @@ import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScree
 import BottomNavigation from "./containers/BottomNavigation";
 import ChatScreen from "./screens/Home/ChatScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
+import UpdateMusicOptionsScreen from "./screens/UpdateOptions/UpdateMusicOptionsScreen";
+import UpdateMovieOptionsScreen from "./screens/UpdateOptions/UpdateMovieOptionsScreen";
+import UpdateSeriesOptionsScreen from "./screens/UpdateOptions/UpdateSeriesOptionsScreen";
+import UpdateMusicCategoryScreen from "./screens/UpdateOptions/UpdateMusicCategoryScreen";
+import UpdateMovieCategoryScreen from "./screens/UpdateOptions/UpdateMovieCategoryScreen";
+import UpdateSeriesCategoryScreen from "./screens/UpdateOptions/UpdateSeriesCategoryScreen";
+import UpdateHobbyScreen from "./screens/UpdateOptions/UpdateHobbyScreen";
 import { UserProvider } from "./contexts/UserContext";
 import { ActiveChatProvider } from "./contexts/ActiveChatContext";
 
@@ -33,6 +40,7 @@ export default function App() {
     <>
       <StatusBar style="dark" />
       <NavigationContainer>
+
         <UserProvider>
           <ActiveChatProvider>
             <Stack.Navigator
