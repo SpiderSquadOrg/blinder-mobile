@@ -19,16 +19,18 @@ import Colors from "../../constansts/Colors";
 import PasswordField from "../../components/ui/PasswordField";
 import TextButton from "../../components/Button/TextButton";
 import login from "../../api/auth/login";
-import { storeData } from "../../utils/storage";
+import { storeData, removeData } from "../../utils/storage";
+import { useUser } from "../../contexts/UserContext";
 
 function FirstLoginPage({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {resetUser} = useUser();
 
   function emailHandler(enteredMail) {
     setEmail(enteredMail);
   }
-  
+
   function passwordHandler(enteredPassword) {
     setPassword(enteredPassword);
   }
@@ -40,7 +42,9 @@ function FirstLoginPage({ navigation }) {
   async function loginHandler() {
     try {
       const { token } = await login(email, password);
+      removeData("userInfo");
       storeData("userInfo", token);
+      resetUser();
       navigation.navigate("Home");
       Alert.alert("Giriş Başarılı", "Hoşgeldiniz!");
     } catch (error) {

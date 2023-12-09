@@ -9,39 +9,81 @@ import {
 import { Avatar } from "react-native-paper";
 import fetchChats from "../../api/chat/fetchChats";
 import { useUser } from "../../contexts/UserContext";
+import io from "socket.io-client";
+import env from "../../constansts/env_variables";
+import getUserByUserName from "../../api/chat/getUserByUsername";
 
 function Chats({ navigation, route }) {
   const { user } = useUser();
   const [chats, setChats] = useState([]);
+  const [socket, setSocket] = useState(null);
+  const [chatUserId, setChatUserId] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchChats();
-      console.log(user.username);
-      const newChats = data?.map((chat) => ({
-        id: chat._id,
-        user: {
-          name: chat.users.filter((u) => u.username !== user.username)[0].username,
-        },
-        lastMessage: {
-          text: chat?.latestMessage.content ? chat?.latestMessage.content : "",
-          timestamp: chat?.latestMessage.updatedAt
-            ? chat?.latestMessage.updatedAt
-            : "",
-        },
-      }));
+    const newSocket = io(env.CHAT_API);
+    setSocket(newSocket);
 
-      setChats(newChats);
-    };
+    return () => newSocket.close();
+  }, [setSocket]);
 
-    fetchData();
-  }, []);
+  useEffect(() => {
+    if (!socket) return;
+
+    getUserId(user.username).then((userId) => {
+      setChatUserId(userId);
+    });
+
+    if (user && chatUserId) {
+      socket.emit("setup", { _id: chatUserId });
+    }
+  }, [user, chatUserId, socket]);
+
+  const getUserId = async (username) => {
+    let tempUser = await getUserByUserName(username);
+    return tempUser._id;
+  };
+
+  const fetchData = async () => {
+    const data = await fetchChats();
+    const newChats = data?.map((chat) => ({
+      id: chat._id,
+      user: {
+        name: chat.users.filter((u) => u.username !== user.username)[0]
+          .username,
+      },
+      lastMessage: {
+        text: chat?.latestMessage?.content ? chat?.latestMessage.content : "",
+        timestamp: chat?.latestMessage?.updatedAt
+          ? chat?.latestMessage?.updatedAt
+          : "",
+        isMe: chat?.latestMessage?.sender?.username === user.username,
+      },
+    }));
+
+    setChats(newChats);
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", fetchData);
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("message received", (newMessage) => {
+      fetchData();
+    });
+  }, [socket]);
 
   const onPressChatHandler = (chat) => {
     navigation.navigate("ChattingScreen", { chat });
   };
 
   function formatTimestamp(timestamp) {
+    if (!timestamp) {
+      return "";
+    }
     const date = new Date(timestamp);
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
@@ -59,6 +101,9 @@ function Chats({ navigation, route }) {
         <View>
           <Text style={styles.userName}>{item.user.name}</Text>
           <View style={styles.lastMessageContiner}>
+            <Text style={{ fontWeight: "500" }}>
+              {item.lastMessage.isMe ? "Siz: " : ""}
+            </Text>
             <Text
               style={styles.lastMessage}
               numberOfLines={1}

@@ -6,7 +6,7 @@ import env from "../../constansts/env_variables";
 const fetchChats = async () => {
   const url = `${env.CHAT_API}/chats`;
   const headers = await header();
- 
+
   // Ensure headers are ready before making the request
   if (headers) {
     try {

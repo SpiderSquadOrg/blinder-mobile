@@ -1,3 +1,4 @@
+import env from "../constansts/env_variables";
 import { storeData, getData, removeData, clearAllData } from "../utils/storage";
 import { CHAT_AUTHORIZATION } from "@env";
 
@@ -7,10 +8,11 @@ const header = async () => {
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
-    ChatAuthorization: CHAT_AUTHORIZATION,
+    ChatAuthorization: `${env.CHAT_AUTHORIZATION}`,
     "If-Modified-Since": "",
     "If-None-Match": "",
   };
+
 
   return headers;
 };
