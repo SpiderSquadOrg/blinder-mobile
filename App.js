@@ -32,6 +32,7 @@ import UpdateSeriesCategoryScreen from "./screens/UpdateOptions/UpdateSeriesCate
 import UpdateHobbyScreen from "./screens/UpdateOptions/UpdateHobbyScreen";
 import { UserProvider } from "./contexts/UserContext";
 import { ActiveChatProvider } from "./contexts/ActiveChatContext";
+import SettingsScreen from "./screens/Profile/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +41,6 @@ export default function App() {
     <>
       <StatusBar style="dark" />
       <NavigationContainer>
-
         <UserProvider>
           <ActiveChatProvider>
             <Stack.Navigator
@@ -134,7 +134,7 @@ export default function App() {
                   title: "Müzik Listen",
                   headerBackTitle: "Geri",
                   headerTitleStyle: styles.headerTitleStyle,
-              }}
+                }}
               />
               <Stack.Screen
                 name="UpdateMovieOptionsScreen"
@@ -143,8 +143,8 @@ export default function App() {
                   title: "Film Listen",
                   headerBackTitle: "Geri",
                   headerTitleStyle: styles.headerTitleStyle,
-            }}
-               />
+                }}
+              />
               <Stack.Screen
                 name="UpdateSeriesOptionsScreen"
                 component={UpdateSeriesOptionsScreen}
@@ -186,6 +186,15 @@ export default function App() {
                 component={UpdateHobbyScreen}
                 options={{
                   title: "Hobilerin",
+                  headerBackTitle: "Geri",
+                  headerTitleStyle: styles.headerTitleStyle,
+                }}
+              />
+              <Stack.Screen
+                name="SettingsScreen"
+                component={SettingsScreen}
+                options={{
+                  title: "Ayarlar",
                   headerBackTitle: "Geri",
                   headerTitleStyle: styles.headerTitleStyle,
                 }}
