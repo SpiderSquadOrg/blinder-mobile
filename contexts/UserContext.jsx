@@ -10,6 +10,7 @@ global.atob = decode;
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [trigger, resetUser] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -20,13 +21,12 @@ const UserProvider = ({ children }) => {
         navigation.navigate("MainPage");
         return;
       }
-
       setUser(jwtDecode(userInfo));
     };
     fetchUser();
-  }, [navigation]);
+  }, [navigation, trigger]);
 
-  const values = { user, setUser };
+  const values = { user, setUser, resetUser };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };
 

@@ -21,7 +21,8 @@ import { CHAT_API } from "@env";
 import io from "socket.io-client";
 import { useActiveChat } from "../../contexts/ActiveChatContext";
 import getUserByUserName from "../../api/chat/getUserByUsername";
-let socket, activeChatCompare;
+import env from "../../constansts/env_variables";
+let activeChatCompare;
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -32,31 +33,40 @@ function ChatScreen({ navigation, route }) {
   const [userInChat, setUserInChat] = useState(route.params.chat.user);
   const [messages, setMessages] = useState([]);
 
-  const { activeChat } = useActiveChat();
+  const [socket, setSocket] = useState(null);
+  const {activeChat, setActiveChat } = useActiveChat();
+  const [chatUserId, setChatUserId] = useState(null);
   const [socketConnected, setSocketConnected] = useState(false);
   const [prevActiveChatId, setPrevActiveChatId] = useState(null);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
-  //burası değişecek
   useEffect(() => {
-    const getUserId = async (username) => {
-      let tempUser = await getUserByUserName(username);
-      console.log(tempUser._id);
-      return tempUser._id;
-    };
-    if (user) {
-      socket = io(CHAT_API);
-      console.log(getUserId(user.username));
-      socket.emit("setup", { _id: getUserId(user.username) });
+    const newSocket = io(env.CHAT_API);
+    setSocket(newSocket);
+
+    return () => newSocket.close();
+  }, [setSocket]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    getUserId(user.username).then((userId) => {
+      setChatUserId(userId);
+    });
+
+    if (user && chatUserId) {
+      socket.emit("setup", { _id: chatUserId });
       socket.on("connected", () => {
         setSocketConnected(true);
       });
     }
-  }, [user]);
+  }, [user, chatUserId, socket]);
 
   useEffect(() => {
-    if (activeChat._id !== -1) {
+    if (!socket) return;
+
+    if (route.params.chat.id !== -1 || activeChat._id !== -1) {
       socket.emit("join chat", activeChat._id);
       setPrevActiveChatId(activeChat._id);
     }
@@ -66,7 +76,7 @@ function ChatScreen({ navigation, route }) {
     }
 
     activeChatCompare = activeChat;
-  }, [activeChat]);
+  }, [activeChat,socket]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,8 +85,8 @@ function ChatScreen({ navigation, route }) {
       const newMessages = data?.map((message) => ({
         id: message._id,
         text: message.content,
-        isMe: message.sender.username !== user.username, //change here
-        timestamp: message.chat.createdAt,
+        isMe: message.sender.username == user.username,
+        timestamp: message.createdAt,
       }));
 
       setMessages(newMessages);
@@ -86,6 +96,7 @@ function ChatScreen({ navigation, route }) {
   }, []);
 
   useEffect(() => {
+    if (!socket) return;
     if (user) {
       socket.on("typing", () => {
         setIsTyping(true);
@@ -94,7 +105,40 @@ function ChatScreen({ navigation, route }) {
         setIsTyping(false);
       });
     }
-  }, [user]);
+  }, [user,socket]);
+
+  useEffect(() => {
+    if (!socket) return;
+    if (socket) {
+      socket.on("message received", (newMessage) => {
+        if (
+          !activeChatCompare ||
+          activeChatCompare._id !== newMessage.chat._id
+        ) {
+          //setNotifications([...notifications, newMessage]);
+        } else {
+          let correctMessageFormat = {
+            id: newMessage._id,
+            text: newMessage.content,
+            isMe: newMessage.sender.username == user.username,
+            timestamp: new Date(),
+          };
+          setMessages([...messages, correctMessageFormat]);
+        }
+        //fetchChats();
+      });
+    }
+  });
+
+  useEffect(() => {
+    //console.log(isTyping + " " + user.username);
+  }, [isTyping]);
+
+  useEffect(() => {
+    if (activeChat._id !== -route.params.chat.id) {
+      setActiveChat({ _id: route.params.chat.id });
+    }
+  }, [route.params.chat.id]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -116,6 +160,11 @@ function ChatScreen({ navigation, route }) {
       keyboardDidHideListener.remove();
     };
   }, []);
+
+  const getUserId = async (username) => {
+    let tempUser = await getUserByUserName(username);
+    return tempUser._id;
+  };
 
   function onChangeInput() {
     if (!socketConnected) {
