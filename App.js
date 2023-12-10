@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -32,6 +33,7 @@ import UpdateSeriesCategoryScreen from "./screens/UpdateOptions/UpdateSeriesCate
 import UpdateHobbyScreen from "./screens/UpdateOptions/UpdateHobbyScreen";
 import { UserProvider } from "./contexts/UserContext";
 import { ActiveChatProvider } from "./contexts/ActiveChatContext";
+import DrawerContainer from "./containers/Drawer";
 import SettingsScreen from "./screens/Profile/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
@@ -226,15 +228,11 @@ export default function App() {
               />
               <Stack.Screen
                 name="Home"
-                component={BottomNavigation}
+                component={DrawerContainer}
                 options={{
                   headerShown: false,
+                  headerLeft: null,
                 }}
-              />
-              <Stack.Screen
-                name="ProfileScreen"
-                component={ProfileScreen}
-                options={{ title: "" }}
               />
             </Stack.Navigator>
           </ActiveChatProvider>
