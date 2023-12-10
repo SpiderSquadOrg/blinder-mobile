@@ -1,10 +1,11 @@
 import { View, StyleSheet, Dimensions, Text, Pressable } from "react-native";
 
 import Colors from "../../constansts/Colors";
+import { Appbar } from "react-native-paper";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function ProfileHeader({ settings, logOut }) {
+function ProfileHeader({ settings, logOut ,navigation }) {
   function settingsHandler() {
     settings();
   }
@@ -13,14 +14,13 @@ function ProfileHeader({ settings, logOut }) {
   }
   return (
     <View style={styles.rootContainer}>
-      <Pressable
-        onPress={settingsHandler}
-        style={({ pressed }) => (pressed ? styles.pressed : null)}
-        android_ripple={{ color: Colors.primary800 }}
-      >
-        <Text style={styles.textStyle}>Ayarlar</Text>
-      </Pressable>
-      
+      <Appbar.Action
+        icon="menu"
+        iconColor={"white"}
+        size={32}
+        onPress={() => navigation.openDrawer()}
+      />
+
       <Pressable
         onPress={logOutHandler}
         style={({ pressed }) => (pressed ? styles.pressed : null)}
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
+    paddingRight: 16,
     alignItems: "center",
   },
   pressed: {

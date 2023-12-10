@@ -15,7 +15,7 @@ function MatchScreen({ navigation, route }) {
           icon="menu"
           iconColor={Colors.primary600}
           size={32}
-          onPress={() => console.log("Pressed")}
+          onPress={() => navigation.openDrawer()}
         />
 
         <Appbar.Action

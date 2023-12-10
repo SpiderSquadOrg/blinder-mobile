@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -32,6 +33,7 @@ import UpdateSeriesCategoryScreen from "./screens/UpdateOptions/UpdateSeriesCate
 import UpdateHobbyScreen from "./screens/UpdateOptions/UpdateHobbyScreen";
 import { UserProvider } from "./contexts/UserContext";
 import { ActiveChatProvider } from "./contexts/ActiveChatContext";
+import DrawerContainer from "./containers/Drawer";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +42,6 @@ export default function App() {
     <>
       <StatusBar style="dark" />
       <NavigationContainer>
-
         <UserProvider>
           <ActiveChatProvider>
             <Stack.Navigator
@@ -134,7 +135,7 @@ export default function App() {
                   title: "Müzik Listen",
                   headerBackTitle: "Geri",
                   headerTitleStyle: styles.headerTitleStyle,
-              }}
+                }}
               />
               <Stack.Screen
                 name="UpdateMovieOptionsScreen"
@@ -143,8 +144,8 @@ export default function App() {
                   title: "Film Listen",
                   headerBackTitle: "Geri",
                   headerTitleStyle: styles.headerTitleStyle,
-            }}
-               />
+                }}
+              />
               <Stack.Screen
                 name="UpdateSeriesOptionsScreen"
                 component={UpdateSeriesOptionsScreen}
@@ -217,15 +218,11 @@ export default function App() {
               />
               <Stack.Screen
                 name="Home"
-                component={BottomNavigation}
+                component={DrawerContainer}
                 options={{
                   headerShown: false,
+                  headerLeft: null,
                 }}
-              />
-              <Stack.Screen
-                name="ProfileScreen"
-                component={ProfileScreen}
-                options={{ title: "" }}
               />
             </Stack.Navigator>
           </ActiveChatProvider>

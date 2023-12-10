@@ -7,7 +7,7 @@ import {
   RefreshControl,
 } from "react-native";
 
-import { newUser } from "../../data/userData";
+import { newUser, profileUser } from "../../data/userData";
 import Colors from "../../constansts/Colors";
 import ProfileHeader from "../../components/ui/ProfileHeader";
 import SubTitle from "../../components/ui/SubTitle";
@@ -16,17 +16,35 @@ import TypesCard from "../../components/Card/TypesCard";
 import ProfileMovieCard from "../../components/Card/ProfileMovieCard";
 import ProfileSeriesCard from "../../components/Card/ProfileSeriesCard";
 import React, { useState, useEffect } from "react";
+import { useUser } from "../../contexts/UserContext";
+import getMyProfile from "../../api/user/getMyProfile";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function ProfileScreen({ navigation }) {
+  const { user } = useUser();
+  const [profileUser, setProfileUser] = useState({
+    name: "",
+    surname: "",
+    birthDate: "",
+    location: "",
+    imageUrl: "",
+    favoriteMusic: [],
+    favoriteMovies: [],
+    favoriteSeries: [],
+    musicTypes: [],
+    movieTypes: [],
+    seriesTypes: [],
+    hobbies: [],
+  });
+
   const [refreshing, setRefreshing] = React.useState(false);
-  const [musicList, setMusicList] = useState(newUser.favoriteMusic);
-  const [movieList, setMovielist] = useState(newUser.favoriteMovies);
-  const [seriesList, setSeriesList] = useState(newUser.favoriteSeries);
-  const [musicType, setMusicType] = useState(newUser.musicTypes);
-  const [movieTypes, setMovieTypes] = useState(newUser.movieTypes);
-  const [seriesTypes, setSeriesTypes] = useState(newUser.seriesTypes);
+  const [musicList, setMusicList] = useState(profileUser.favoriteMusic);
+  const [movieList, setMovielist] = useState(profileUser.favoriteMovies);
+  const [seriesList, setSeriesList] = useState(profileUser.favoriteSeries);
+  const [musicType, setMusicType] = useState(profileUser.musicTypes);
+  const [movieTypes, setMovieTypes] = useState(profileUser.movieTypes);
+  const [seriesTypes, setSeriesTypes] = useState(profileUser.seriesTypes);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -34,21 +52,56 @@ function ProfileScreen({ navigation }) {
       setRefreshing(false);
     }, 2000);
   }, []);
+  let a = {
+    banned: false,
+    email: "asdasaaaaa@gmail.com",
+    gender: { id: "43cc164a-8a91-450f-b66f-b7acc46ebceb", name: "male" },
+    id: "3f50129d-148c-4d6c-8700-75715b5c8438",
+    images: ["string"],
+    location: { city: "string", country: "string", region: "string" },
+    matched: false,
+    name: "string",
+    phoneNumber: "strinaaaaaasdasdgasdaasd",
+    role: { id: "77ec5ce5-4296-4061-b3ec-09018fa79e2c", name: "normal" },
+    surname: "string",
+    username: "nine tailed fox",
+  };
+  useEffect(() => {
+    getMyProfile(user.userId).then((response) => {
+      console.log(response);
+      setProfileUser({ 
+        id: response.id,
+        email: response.email,
+        name: response.name,
+        surname: response.surname,
+        age: response.age,
+        location: `${response.location.city}, ${response.location.country}`,
+        imageUrl: newUser.imageUrl,
+        favoriteMusic: newUser.favoriteMusic,
+        favoriteMovies: newUser.favoriteMovies,
+        favoriteSeries: newUser.favoriteSeries,
+        musicTypes: newUser.musicTypes,
+        movieTypes: newUser.movieTypes,
+        seriesTypes: newUser.seriesTypes,
+        hobbies: newUser.hobbies,
+      });
+    });
+  }, [user]);
 
   useEffect(() => {
-    setMusicList(newUser.favoriteMusic);
-    setMovielist(newUser.favoriteMovies);
-    setSeriesList(newUser.favoriteSeries);
-    setMusicType(newUser.musicTypes);
-    setMovieTypes(newUser.movieTypes);
-    setSeriesTypes(newUser.seriesTypes);
+    setMusicList(profileUser.favoriteMusic);
+    setMovielist(profileUser.favoriteMovies);
+    setSeriesList(profileUser.favoriteSeries);
+    setMusicType(profileUser.musicTypes);
+    setMovieTypes(profileUser.movieTypes);
+    setSeriesTypes(profileUser.seriesTypes);
   }, [
-    newUser.favoriteMusic,
-    newUser.favoriteMovies,
-    newUser.favoriteSeries,
-    newUser.musicTypes,
-    newUser.movieTypes,
-    newUser.seriesTypes,
+    profileUser.favoriteMusic,
+    profileUser.favoriteMovies,
+    profileUser.favoriteSeries,
+    profileUser.musicTypes,
+    profileUser.movieTypes,
+    profileUser.seriesTypes,
   ]);
 
   function settingsHandler() {
@@ -60,43 +113,43 @@ function ProfileScreen({ navigation }) {
 
   function handlePress() {
     navigation.navigate("UpdateHobbyScreen", {
-      chosenHobbies: newUser.hobbies,
+      chosenHobbies: profileUser.hobbies,
     });
   }
 
   function handlePressSeriesCategory() {
     navigation.navigate("UpdateSeriesCategoryScreen", {
-      chosenSeriesTypes: newUser.seriesTypes,
+      chosenSeriesTypes: profileUser.seriesTypes,
     });
   }
 
   function handlePressMovieCategory() {
     navigation.navigate("UpdateMovieCategoryScreen", {
-      chosenMovieTypes: newUser.movieTypes,
+      chosenMovieTypes: profileUser.movieTypes,
     });
   }
 
   function handlePressMusicCategory() {
     navigation.navigate("UpdateMusicCategoryScreen", {
-      chosenMusicTypes: newUser.musicTypes,
+      chosenMusicTypes: profileUser.musicTypes,
     });
   }
 
   function handlePressMusicList() {
     navigation.navigate("UpdateMusicOptionsScreen", {
-      chosenMusicList: newUser.favoriteMusic,
+      chosenMusicList: profileUser.favoriteMusic,
     });
   }
 
   function handlePressMovieList() {
     navigation.navigate("UpdateMovieOptionsScreen", {
-      chosenMovieList: newUser.favoriteMovies,
+      chosenMovieList: profileUser.favoriteMovies,
     });
   }
 
   function handlePressSeriesList() {
     navigation.navigate("UpdateSeriesOptionsScreen", {
-      chosenSeriesList: newUser.favoriteSeries,
+      chosenSeriesList: profileUser.favoriteSeries,
     });
   }
 
@@ -108,19 +161,23 @@ function ProfileScreen({ navigation }) {
     >
       <View style={styles.profileUpContainer}>
         <View style={styles.headerContainer}>
-          <ProfileHeader settings={settingsHandler} logOut={logOutHandler} />
+          <ProfileHeader
+            settings={settingsHandler}
+            logOut={logOutHandler}
+            navigation={navigation}
+          />
         </View>
         <View style={styles.imageContainer}>
-          <Image source={{ uri: newUser.imageUrl }} style={styles.image} />
+          <Image source={{ uri: profileUser.imageUrl }} style={styles.image} />
         </View>
       </View>
 
       <View style={styles.profileDownContainer}>
         <SubTitle style={styles.name}>
-          {newUser.name} {newUser.surname}
+          {profileUser.name} {profileUser.surname}
         </SubTitle>
         <SubTitle>
-          {newUser.location} - {calculateAge(newUser.birthDate)}
+          {profileUser.location} - {profileUser.age}
         </SubTitle>
 
         <View style={styles.cardItem}>
@@ -164,7 +221,7 @@ function ProfileScreen({ navigation }) {
         </View>
         <View style={styles.cardItem}>
           <TypesCard
-            typeList={newUser.hobbies}
+            typeList={profileUser.hobbies}
             title={"Hobiler"}
             handlePressable={handlePress}
           />
