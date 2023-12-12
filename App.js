@@ -19,6 +19,8 @@ import RegistrationFavoriteMovieScreen from "./screens/Main/RegistrationScreens/
 import RegistrationFavoriteSeriesScreen from "./screens/Main/RegistrationScreens/RegistrationFavoriteSeriesScreen";
 import RegistrationHobbyTypeScreen from "./screens/Main/RegistrationScreens/RegistrationHobbyTypeScreen";
 import RegistrationLocationScreen from "./screens/Main/RegistrationScreens/RegistrationLocationScreen";
+import RegistrationPhoneNumberScreen from "./screens/Main/RegistrationScreens/RegistrationPhoneNumberScreen";
+import RegistrationSurnameScreen from "./screens/Main/RegistrationScreens/RegistrationSurnameScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
 import BottomNavigation from "./containers/BottomNavigation";
@@ -75,6 +77,11 @@ export default function App() {
                 options={{ title: "" }}
               />
               <Stack.Screen
+                name="RegistrationSurnameScreen"
+                component={RegistrationSurnameScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
                 name="RegistrationGenderScreen"
                 component={RegistrationGenderScreen}
                 options={{ title: "" }}
@@ -82,6 +89,11 @@ export default function App() {
               <Stack.Screen
                 name="RegistrationBirthDateScreen"
                 component={RegistrationBirthDateScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationPhoneNumberScreen"
+                component={RegistrationPhoneNumberScreen}
                 options={{ title: "" }}
               />
               <Stack.Screen

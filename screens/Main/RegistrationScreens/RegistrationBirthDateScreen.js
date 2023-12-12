@@ -17,7 +17,7 @@ function RegistrationBirthDateScreen({ navigation }) {
       (selectedDate.getMonth() + 1)
     ).slice(-2)}-${selectedDate.getFullYear()}`;
 
-    navigation.navigate("RegistrationPartnerGenderScreen");
+    navigation.navigate("RegistrationPhoneNumberScreen");
   }
 
   const toggle = () => showModal(!show);
