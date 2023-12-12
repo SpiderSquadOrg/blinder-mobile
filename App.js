@@ -21,9 +21,7 @@ import RegistrationHobbyTypeScreen from "./screens/Main/RegistrationScreens/Regi
 import RegistrationLocationScreen from "./screens/Main/RegistrationScreens/RegistrationLocationScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
-import BottomNavigation from "./containers/BottomNavigation";
 import ChatScreen from "./screens/Home/ChatScreen";
-import ProfileScreen from "./screens/Profile/ProfileScreen";
 import UpdateMusicOptionsScreen from "./screens/UpdateOptions/UpdateMusicOptionsScreen";
 import UpdateMovieOptionsScreen from "./screens/UpdateOptions/UpdateMovieOptionsScreen";
 import UpdateSeriesOptionsScreen from "./screens/UpdateOptions/UpdateSeriesOptionsScreen";
