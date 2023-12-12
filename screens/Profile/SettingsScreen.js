@@ -10,9 +10,9 @@ import Colors from "../../constansts/Colors";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function SettingsScreen() {
-  const [isDarkModeOn, setIDarkModeOn] = React.useState(false);
+  const [isDarkModeOn, setDarkModeOn] = React.useState(false);
 
-  const onToggleSwitch = () => setIDarkModeOn(!isDarkModeOn);
+  const onToggleSwitch = () => setDarkModeOn(!isDarkModeOn);
 
   return (
     <ScrollView>
