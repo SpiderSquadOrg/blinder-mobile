@@ -9,20 +9,20 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import InputField from "../../../components/ui/InputField";
 import TextButton from "../../../components/Button/TextButton";
 
-function RegistrationNameScreen({ navigation }) {
-  const [name, setName] = useState("");
-  function nameHandler(name) {
-    setName(name);
+function RegistrationSurnameScreen({ navigation }) {
+  const [surname, setSurname] = useState("");
+  function surnameHandler(surname) {
+    setSurname(surname);
   }
   function nextPageHandler() {
-    navigation.navigate("RegistrationSurnameScreen");
+    navigation.navigate("RegistrationGenderScreen");
   }
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View>
-        <RegistrationQueryText>İSMİN NE ?</RegistrationQueryText>
+        <RegistrationQueryText>SOYADIN NE ?</RegistrationQueryText>
         <View style={styles.inputFieldContainer}>
-          <InputField placeholder={"İsim"} onAddInput={nameHandler} />
+          <InputField placeholder={"Soyadı"} onAddInput={surnameHandler} />
         </View>
         <View style={styles.buttonContainer}>
           <TextButton onPress={nextPageHandler} style={styles.textButton}>
@@ -34,7 +34,7 @@ function RegistrationNameScreen({ navigation }) {
   );
 }
 
-export default RegistrationNameScreen;
+export default RegistrationSurnameScreen;
 
 const styles = StyleSheet.create({
   inputFieldContainer: {
