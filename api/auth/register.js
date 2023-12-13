@@ -1,17 +1,28 @@
 import axios from "axios";
 import { API } from "@env";
 import env from "../../constansts/env_variables";
-import header from "../header";
 
-const getMusicById = async (spotifyId) => {
-  const url = `${env.API}/musics/${spotifyId}`;
-  const headers = await header();
+const register = async (
+    username, 
+    password,
+    email,
+    name,
+    surname,
+    phoneNumber,
+    genderId,
+    birthDate,
+    images,
+    countryId,
+    stateId
+    ) => {
+  const url = `${env.API}/auth/register`;
 
   try {
-    const response = await axios.get(url, {
-      headers: headers,
+    const response = await axios.post(url, {
+      username: username,
+      password: password,
     });
-    
+
     return response.data;
   } catch (error) {
     console.error("Error:", error.message);
@@ -24,4 +35,4 @@ const getMusicById = async (spotifyId) => {
   }
 };
 
-export default getMusicById;
+export default register;

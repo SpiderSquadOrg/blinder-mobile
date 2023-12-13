@@ -26,7 +26,7 @@ function TypesCard({ typeList, title, handlePressable }) {
         {typeList.map((type, index) => (
           <View style={styles.outerContainer} key={index}>
             <View style={styles.innerContainer}>
-              <Text style={styles.title}>{type}</Text>
+              <Text style={styles.title}>{type.name}</Text>
             </View>
           </View>
         ))}
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderColor: Colors.accent500,
     borderWidth: 1,
-    backgroundColor: "#e6dcdc",
+    backgroundColor: Colors.primary800,
     marginTop: screenHeight * 0.02,
   },
   innerContainer: {
