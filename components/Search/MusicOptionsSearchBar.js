@@ -9,22 +9,29 @@ import {
   Dimensions,
   TextInput,
 } from "react-native";
+import searchMusics from "../../api/characteristics/searchMusics";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function OptionSearchBar({
-  musicData,
   selectedMusicList,
   setSelectedMusicList,
 }) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredMusic, setFilteredMusic] = useState(musicData.slice(0, 9));
+  const [searchQuery, setSearchQuery] = useState("");;
+  const [musicList, setMusicList] = useState([]);
+
+  useEffect(() => {
+    searchMusics(searchQuery, 10).then((data) => {
+      setMusicList(data.map((music)=>({
+          id: music.spotifyId,
+          title: music.name,
+          artist: music.artists[0],
+          imageUrl: music.image,
+      })));
+    });
+  }, [searchQuery]);
 
   const handleSearch = (query) => {
-    const filtered = musicData.filter((music) =>
-      music.title.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredMusic(filtered.slice(0, 9));
     setSearchQuery(query);
   };
 
@@ -55,7 +62,7 @@ function OptionSearchBar({
         onChangeText={handleSearch}
       />
       <ScrollView>
-        {filteredMusic.map((music, index) => (
+        {musicList.map((music, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => handleMusicSelect(music)}

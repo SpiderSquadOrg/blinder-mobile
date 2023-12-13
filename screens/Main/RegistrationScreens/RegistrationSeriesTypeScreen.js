@@ -1,18 +1,23 @@
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import TypesOptions from "../../../containers/Options/TypesOptions";
-import { seriesTypes } from "../../../data/categoryData";
+import getSeriesCategories from "../../../api/characteristics/getSeriesCategories";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationSeriesTypeScreen({ navigation }) {
   const [selectedSeriesTypes, setSelectedSeriesTypes] = useState([]);
+  const [seriesTypes, setSeriesTypes] = useState([]);
 
-  
+  useEffect(() => {
+    getSeriesCategories().then((data) => {
+      setSeriesTypes(data);
+    });
+  }, []);
 
   const seriesTypeHandler = (selectedTypes) => {
     setSelectedSeriesTypes(selectedTypes);
@@ -33,7 +38,7 @@ function RegistrationSeriesTypeScreen({ navigation }) {
             Profilinize en az 3 dizi türü ekleyin. Bu sayede sizinle aynı
             fikirde olan kişilerle etkileşim kurabilecek ve tanışabileceksiniz.
           </SubTitle>
-          <SubTitle>0/3+</SubTitle>
+          <SubTitle>{selectedSeriesTypes.length}/3+</SubTitle>
         </View>
         <View style={styles.seriesContainer}>
           <TypesOptions

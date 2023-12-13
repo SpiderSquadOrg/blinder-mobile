@@ -9,22 +9,30 @@ import {
   Dimensions,
   TextInput,
 } from "react-native";
+import searchMovies from "../../api/characteristics/searchMovies";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function MovieOptionsSearch({
-  movieData,
   selectedMovieList,
   setSelectedMovielist,
 }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredMovie, setFilteredMovie] = useState(movieData.slice(0, 9));
+  const [movieList, setMovieList] = useState([]);
 
+  useEffect(() => {
+    if(searchQuery.length < 3) return;
+    searchMovies(searchQuery, 10).then((data) => {
+      setMovieList(data.map((movie) => ({
+        id: movie.imdbId,
+        name: movie.name,
+        year: movie.year,
+        imageUrl: movie.image,
+      })));
+    });
+  }, [searchQuery]);
+  
   const handleSearch = (query) => {
-    const filtered = movieData.filter((movie) =>
-      movie.name.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredMovie(filtered.slice(0, 9));
     setSearchQuery(query);
   };
 
@@ -55,7 +63,7 @@ function MovieOptionsSearch({
         onChangeText={handleSearch}
       />
       <ScrollView>
-        {filteredMovie.map((movie, index) => (
+        {movieList.map((movie, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => handleMovieSelect(movie)}

@@ -9,22 +9,30 @@ import {
   Dimensions,
   TextInput,
 } from "react-native";
+import searchSeries from "../../api/characteristics/searchSeries";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function SeriesOptionsSearch({
-  seiresData,
   selectedSeriesList,
   setSelectedSeriesList,
 }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredSeries, setFilteredSeries] = useState(seiresData.slice(0, 9));
+  const [seriesList, setSeriesList] = useState([]);
+
+  useEffect(() => {
+    if(searchQuery.length < 3) return;
+    searchSeries(searchQuery, 10).then((data) => {
+      setSeriesList(data.map((series) => ({
+        id: series.imdbId,
+        name: series.name,
+        year: series.year,
+        imageUrl: series.image,
+      })));
+    });
+  }, [searchQuery]);
 
   const handleSearch = (query) => {
-    const filtered = seiresData.filter((series) =>
-      series.name.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredSeries(filtered.slice(0, 9));
     setSearchQuery(query);
   };
 
@@ -55,7 +63,7 @@ function SeriesOptionsSearch({
         onChangeText={handleSearch}
       />
       <ScrollView>
-        {filteredSeries.map((series, index) => (
+        {seriesList.map((series, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => handleSeriesList(series)}

@@ -6,12 +6,14 @@ import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import MusicOptionsSearchBar from "../../../components/Search/MusicOptionsSearchBar";
 import MusicCard from "../../../components/Card/MusicCard";
-import { MusicList } from "../../../data/data";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationFavoriteMusicScreen({ navigation }) {
   const [selectedMusicList, setSelectedMusicList] = useState([]);
+
+
+ 
 
   function removeItemHandler(removeItemId) {
     setSelectedMusicList(
@@ -47,7 +49,6 @@ function RegistrationFavoriteMusicScreen({ navigation }) {
 
       <View>
         <MusicOptionsSearchBar
-          musicData={MusicList}
           selectedMusicList={selectedMusicList}
           setSelectedMusicList={setSelectedMusicList}
         />

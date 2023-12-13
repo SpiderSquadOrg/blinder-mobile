@@ -6,7 +6,6 @@ import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import SeriesCard from "../../../components/Card/SeriesCard";
 import SeriesOptionsSearch from "../../../components/Search/SeriesOptionsSearch";
-import { SeriesList } from "../../../data/data";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -48,7 +47,6 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
 
       <View>
         <SeriesOptionsSearch
-          seiresData={SeriesList}
           selectedSeriesList={selectedSeriesList}
           setSelectedSeriesList={setSelectedSeriesList}
         />

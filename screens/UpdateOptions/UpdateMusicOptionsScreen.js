@@ -56,7 +56,6 @@ function UpdateMusicOptionsScreen({ navigation, route }) {
 
       <View>
         <MusicOptionsSearchBar
-          musicData={MusicList}
           selectedMusicList={selectedMusicList}
           setSelectedMusicList={setSelectedMusicList}
         />
