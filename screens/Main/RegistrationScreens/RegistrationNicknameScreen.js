@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -20,6 +20,10 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationNicknameScreen({ navigation }) {
   const [nickname, setNickname] = useState();
 
+  useEffect(() => {
+    setNickname(generateRandomCombination);
+  }, []);
+  
   generateRandomCombination = () => {
     const randomFirstWord =
       nicknameData1[Math.floor(Math.random() * nicknameData1.length)];

@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainPage from "./screens/Main/MainPage";
@@ -155,7 +155,22 @@ export default function App() {
               <Stack.Screen
                 name="RegistrationLocationScreen"
                 component={RegistrationLocationScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationMusicTypeScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="UpdateMusicOptionsScreen"
