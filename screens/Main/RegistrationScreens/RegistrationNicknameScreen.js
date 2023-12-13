@@ -13,37 +13,38 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import Colors from "../../../constansts/Colors";
 import TextButton from "../../../components/Button/TextButton";
 import SubTitle from "../../../components/ui/SubTitle";
-import { nicknameData } from "../../../data/nicknameData";
+import { nicknameData1, nicknameData2 } from "../../../data/nicknameData";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationNicknameScreen({ navigation }) {
-  const [nickname, setNickname] = useState(
-    nicknameData[generateRandomNumber()]
-  );
+  const [nickname, setNickname] = useState();
 
-  function generateRandomNumber() {
-    const min = 0;
-    const max = 372;
-    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-    return randomNum;
-  }
+  generateRandomCombination = () => {
+    const randomFirstWord =
+      nicknameData1[Math.floor(Math.random() * nicknameData1.length)];
+
+    const randomSecondWord =
+      nicknameData2[Math.floor(Math.random() * nicknameData2.length)];
+
+    const combinedWord = `${randomFirstWord} ${randomSecondWord}`;
+
+    return combinedWord;
+  };
 
   function nicknameHandler() {
-    let randomNum = generateRandomNumber();
-    setNickname(nicknameData[randomNum]);
+    setNickname(generateRandomCombination);
   }
   function nextPageHandler() {
+    console.log(nickname);
     navigation.navigate("RegistrationImageScreen");
   }
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View>
-        <RegistrationQueryText>RUMUZUNUZ NE ?</RegistrationQueryText>
+        <RegistrationQueryText>TAKMA ADINIZI SEÇİN</RegistrationQueryText>
         <View style={styles.nicknameContainer}>
-          <SubTitle>
-            {nickname.charAt(0).toUpperCase() + nickname.slice(1)}
-          </SubTitle>
+          <SubTitle>{nickname}</SubTitle>
         </View>
         <View style={styles.randomPickerContainer}>
           <Pressable
