@@ -4,7 +4,6 @@ import { useState } from "react";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import TextButton from "../../../components/Button/TextButton";
 import SubTitle from "../../../components/ui/SubTitle";
-import { MovieList } from "../../../data/data";
 import MovieCard from "../../../components/Card/MovieCard";
 import MovieOptionsSearch from "../../../components/Search/MovieOptionsSearch";
 
@@ -46,7 +45,6 @@ function RegistrationFavoriteMovieScreen({ navigation }) {
         </View>
       </View>
       <MovieOptionsSearch
-        movieData={MovieList}
         selectedMovieList={selectedMovieList}
         setSelectedMovielist={setSelectedMovieList}
       />
