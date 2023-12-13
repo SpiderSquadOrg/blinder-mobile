@@ -21,6 +21,7 @@ function OptionSearchBar({
   const [musicList, setMusicList] = useState([]);
 
   useEffect(() => {
+    if(searchQuery.length < 1) return;
     searchMusics(searchQuery, 10).then((data) => {
       setMusicList(data.map((music)=>({
           id: music.spotifyId,

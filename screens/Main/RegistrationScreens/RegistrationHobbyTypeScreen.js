@@ -19,7 +19,7 @@ function RegistrationHobbyTypeScreen({ navigation }) {
   };
 
   function nextPageHandler() {
-    navigation.navigate("RegistrationLocationScreen");
+
   }
 
   return (
