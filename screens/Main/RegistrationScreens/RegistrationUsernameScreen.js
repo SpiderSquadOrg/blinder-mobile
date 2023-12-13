@@ -9,20 +9,23 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import InputField from "../../../components/ui/InputField";
 import TextButton from "../../../components/Button/TextButton";
 
-function RegistrationSurnameScreen({ navigation }) {
-  const [surname, setSurname] = useState("");
-  function surnameHandler(surname) {
-    setSurname(surname);
+function RegistrationUsernameScreen({ navigation }) {
+  const [username, setUsername] = useState("");
+  function usernameHandler(username) {
+    setUsername(username);
   }
   function nextPageHandler() {
-    navigation.navigate("RegistrationUsernameScreen");
+    navigation.navigate("RegistrationNicknameScreen");
   }
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View>
-        <RegistrationQueryText>SOYADIN NE ?</RegistrationQueryText>
+        <RegistrationQueryText>KULLANICI ADIN NE ?</RegistrationQueryText>
         <View style={styles.inputFieldContainer}>
-          <InputField placeholder={"Soyadı"} onAddInput={surnameHandler} />
+          <InputField
+            placeholder={"Kullanıcı Adı"}
+            onAddInput={usernameHandler}
+          />
         </View>
         <View style={styles.buttonContainer}>
           <TextButton onPress={nextPageHandler} style={styles.textButton}>
@@ -34,7 +37,12 @@ function RegistrationSurnameScreen({ navigation }) {
   );
 }
 
-export default RegistrationSurnameScreen;
+export default RegistrationUsernameScreen;
+
+function getRandomElement(array) {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
 
 const styles = StyleSheet.create({
   inputFieldContainer: {

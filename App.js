@@ -21,6 +21,8 @@ import RegistrationHobbyTypeScreen from "./screens/Main/RegistrationScreens/Regi
 import RegistrationLocationScreen from "./screens/Main/RegistrationScreens/RegistrationLocationScreen";
 import RegistrationPhoneNumberScreen from "./screens/Main/RegistrationScreens/RegistrationPhoneNumberScreen";
 import RegistrationSurnameScreen from "./screens/Main/RegistrationScreens/RegistrationSurnameScreen";
+import RegistrationUsernameScreen from "./screens/Main/RegistrationScreens/RegistrationUsernameScreen";
+import RegistrationNicknameScreen from "./screens/Main/RegistrationScreens/RegistrationNicknameScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
 import ChatScreen from "./screens/Home/ChatScreen";
@@ -77,6 +79,16 @@ export default function App() {
               <Stack.Screen
                 name="RegistrationSurnameScreen"
                 component={RegistrationSurnameScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationUsernameScreen"
+                component={RegistrationUsernameScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationNicknameScreen"
+                component={RegistrationNicknameScreen}
                 options={{ title: "" }}
               />
               <Stack.Screen

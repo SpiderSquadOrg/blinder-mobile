@@ -2,7 +2,7 @@ import { View, StyleSheet, Dimensions } from "react-native";
 import { useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
-import GenderPicker from "../../../containers/GenderFilter/GenderPicker";
+import GenderPicker from "../../../containers/GenderFilter/index";
 import TextButton from "../../../components/Button/TextButton";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
