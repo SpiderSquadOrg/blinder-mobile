@@ -34,7 +34,7 @@ function RegistrationNicknameScreen({ navigation }) {
     setNickname(nicknameData[randomNum]);
   }
   function nextPageHandler() {
-    navigation.navigate("RegistrationGenderScreen");
+    navigation.navigate("RegistrationImageScreen");
   }
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
