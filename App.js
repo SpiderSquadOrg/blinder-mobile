@@ -23,6 +23,7 @@ import RegistrationPhoneNumberScreen from "./screens/Main/RegistrationScreens/Re
 import RegistrationSurnameScreen from "./screens/Main/RegistrationScreens/RegistrationSurnameScreen";
 import RegistrationUsernameScreen from "./screens/Main/RegistrationScreens/RegistrationUsernameScreen";
 import RegistrationNicknameScreen from "./screens/Main/RegistrationScreens/RegistrationNicknameScreen";
+import RegistrationImageScreen from "./screens/Main/RegistrationScreens/RegistrationImageScreen";
 import FilterScreen from "./screens/Filter/FilterScreen";
 import LocationPreferencesScreen from "./screens/Filter/LocationPreferencesScreen";
 import ChatScreen from "./screens/Home/ChatScreen";
@@ -89,6 +90,11 @@ export default function App() {
               <Stack.Screen
                 name="RegistrationNicknameScreen"
                 component={RegistrationNicknameScreen}
+                options={{ title: "" }}
+              />
+              <Stack.Screen
+                name="RegistrationImageScreen"
+                component={RegistrationImageScreen}
                 options={{ title: "" }}
               />
               <Stack.Screen
