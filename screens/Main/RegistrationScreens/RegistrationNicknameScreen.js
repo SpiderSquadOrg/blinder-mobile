@@ -23,7 +23,7 @@ function RegistrationNicknameScreen({ navigation }) {
   useEffect(() => {
     setNickname(generateRandomCombination);
   }, []);
-  
+
   generateRandomCombination = () => {
     const randomFirstWord =
       nicknameData1[Math.floor(Math.random() * nicknameData1.length)];
@@ -40,7 +40,6 @@ function RegistrationNicknameScreen({ navigation }) {
     setNickname(generateRandomCombination);
   }
   function nextPageHandler() {
-    console.log(nickname);
     navigation.navigate("RegistrationImageScreen");
   }
   return (
