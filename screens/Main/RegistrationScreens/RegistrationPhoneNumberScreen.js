@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
 import PhoneInput from "react-native-phone-input";
+
+import TextButton from "../../../components/Button/TextButton";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -11,6 +13,9 @@ function RegistrationPhoneNumberScreen({ navigation }) {
 
   useEffect(() => {}, [selectedCountry]);
 
+  const nextPageHandler = () => {
+    navigation.navigate("RegistrationPartnerGenderScreen");
+  };
 
   return (
     <ScrollView>
@@ -25,6 +30,11 @@ function RegistrationPhoneNumberScreen({ navigation }) {
             placeholder: "Enter a phone number...",
           }}
         />
+        <View style={styles.buttonContainer}>
+          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+            İleri
+          </TextButton>
+        </View>
       </View>
     </ScrollView>
   );
@@ -61,5 +71,14 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     width: "100%",
+  },
+  buttonContainer: {
+    marginTop: 55,
+    marginLeft: "auto",
+  },
+  textButton: {
+    fontWeight: "bold",
+    fontSize: 18,
+    paddingRight: 28,
   },
 });

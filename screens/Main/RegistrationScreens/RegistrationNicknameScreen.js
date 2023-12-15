@@ -12,6 +12,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import Colors from "../../../constansts/Colors";
 import SubTitle from "../../../components/ui/SubTitle";
+import TextButton from "../../../components/Button/TextButton";
 import { nicknameData1, nicknameData2 } from "../../../data/nicknameData";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -39,6 +40,10 @@ function RegistrationNicknameScreen({ navigation }) {
     setNickname(generateRandomCombination);
   }
 
+  function nextPageHandler() {
+    navigation.navigate("RegistrationImageScreen");
+  }
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View>
@@ -57,6 +62,12 @@ function RegistrationNicknameScreen({ navigation }) {
             <FontAwesome name="random" size={30} color="gray" />
           </Pressable>
         </View></View>
+
+        <View style={styles.buttonContainer}>
+          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+            İleri
+          </TextButton>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -88,5 +99,14 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.75,
+  },
+  textButton: {
+    fontWeight: "bold",
+    fontSize: 18,
+    paddingRight: 28,
+  },
+  buttonContainer: {
+    marginTop: 45,
+    marginLeft: "auto",
   },
 });

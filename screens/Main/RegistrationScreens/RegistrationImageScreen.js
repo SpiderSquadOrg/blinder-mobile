@@ -3,6 +3,7 @@ import { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
+import TextButton from "../../../components/Button/TextButton";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -21,6 +22,9 @@ function RegistrationImageScreen({ navigation }) {
     }
   };
 
+  function nextPageHandler() {
+    navigation.navigate("RegistrationGenderScreen");
+  }
   return (
     <View>
       <RegistrationQueryText>PROFİL FOTOĞRAFIN</RegistrationQueryText>
@@ -39,6 +43,12 @@ function RegistrationImageScreen({ navigation }) {
           )}
         </View>
       </View>
+
+      <View style={styles.buttonContainer}>
+        <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          İleri
+        </TextButton>
+      </View>
     </View>
   );
 }
@@ -46,6 +56,15 @@ function RegistrationImageScreen({ navigation }) {
 export default RegistrationImageScreen;
 
 const styles = StyleSheet.create({
+  textButton: {
+    fontWeight: "bold",
+    fontSize: 18,
+    paddingRight: 28,
+  },
+  buttonContainer: {
+    marginTop: 45,
+    marginLeft: "auto",
+  },
   imageContainer: {
     marginTop: screenHeight * 0.05,
   },
