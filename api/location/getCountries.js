@@ -1,16 +1,12 @@
 import axios from "axios";
 import { API } from "@env";
 import env from "../../constansts/env_variables";
-import header from "../header";
 
 const getCountries = async () => {
   const url = `${env.API}/locations/countries`;
-  const headers = await header();
 
   try {
-    const response = await axios.get(url, {
-      headers: headers,
-    });
+    const response = await axios.get(url);
     
     return response.data;
   } catch (error) {

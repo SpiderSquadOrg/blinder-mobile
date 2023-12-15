@@ -1,26 +1,39 @@
 import React, { useEffect, useState } from "react";
 import {
   Dimensions,
+  Modal,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
+  Text,
 } from "react-native";
 import { Searchbar } from "react-native-paper";
+import { AntDesign } from "@expo/vector-icons";
 import getStates from "../../../api/location/getStates";
-import { Text } from "react-native";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function SelectStateContainer({ ciso, setState, state }) {
+function SelectStateContainer({
+  ciso,
+  setState,
+  state,
+  stateModalVisible,
+  setStateModalVisible,
+}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [states, setStates] = useState([]);
   const [filteredStates, setFilteredStates] = useState([]);
 
   useEffect(() => {
-    getStates(ciso).then((data) => {
-      setStates(data);
-    });
-  }, []);
+    if (ciso) {
+      getStates(ciso).then((data) => {
+        const sortedData = data.sort((a, b) =>
+          a.stateName.localeCompare(b.stateName)
+        );
+        setStates(sortedData);
+      });
+    }
+  }, [ciso]);
 
   useEffect(() => {
     setFilteredStates(
@@ -32,32 +45,51 @@ function SelectStateContainer({ ciso, setState, state }) {
 
   const onChangeSearch = (query) => setSearchQuery(query);
   return (
-    <View style={styles.container}>
-      {state == null ? (
-        <View style={styles.searchbar}>
-          <Searchbar
-            placeholder={"Şehir adını giriniz"}
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
+    <Modal
+      style={styles.container}
+      animationType="slide"
+      transparent={true}
+      visible={stateModalVisible}
+      onRequestClose={() => {
+        setStateModalVisible(!stateModalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <TouchableOpacity
+            style={{ position: "absolute", right: 15, top: 15 }}
+            onPress={() => {
+              setStateModalVisible(false);
+              setSearchQuery("");
+            }}
+          >
+            <AntDesign name="close" size={24} color="black" />
+          </TouchableOpacity>
+          <View style={styles.searchbar}>
+            <Searchbar
+              placeholder={"Şehir adını giriniz"}
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+            />
+          </View>
+
+          <ScrollView style={{ width: "90%" }}>
+            {filteredStates.map((state, index) => (
+              <TouchableOpacity
+                style={styles.listItem}
+                key={index}
+                onPress={() => {
+                  setState(state);
+                  setStateModalVisible(false);
+                }}
+              >
+                <Text style={styles.listItemText}>{state.stateName}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
-      ) : null}
-      {state == null ? (
-        <View style={{ width: "90%" }}>
-          {filteredStates.slice(0, 5).map((state, index) => (
-            <TouchableOpacity
-              style={styles.listItem}
-              key={index}
-              onPress={() => {
-                setState(state)
-              }}
-            >
-              <Text style={styles.listItemText}>{state.stateName}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      ) : null}
-    </View>
+      </View>
+    </Modal>
   );
 }
 
@@ -100,5 +132,28 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     fontSize: 18,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    width: screenWidth * 0.9,
+    height: screenHeight * 0.6,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

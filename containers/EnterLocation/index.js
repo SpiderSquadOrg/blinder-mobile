@@ -11,21 +11,35 @@ function EnterLocationContainer({
   isLocationEnabled,
   setCountry,
   setState,
+  countryModalVisible,
+  setCountryModalVisible,
+  stateModalVisible,
+  setStateModalVisible,
 }) {
   const [ciso, setCiso] = useState(null);
 
+  useEffect(() => {
+    setState(null);
+  }
+  , [ciso]);
+
   return (
     <View style={styles.container}>
-      {country == null && (
-        <SelectCountryContainer
-          setCiso={setCiso}
-          setCountry={setCountry}
-          country={country}
-        />
-      )}
-      {(ciso!=null && state==null && country!=null) && (
-        <SelectStateContainer state={state} setState={setState} ciso={ciso} />
-      )}
+      <SelectCountryContainer
+        setCiso={setCiso}
+        setCountry={setCountry}
+        country={country}
+        countryModalVisible={countryModalVisible}
+        setCountryModalVisible={setCountryModalVisible}
+      />
+
+      <SelectStateContainer
+        state={state}
+        setState={setState}
+        ciso={ciso}
+        stateModalVisible={stateModalVisible}
+        setStateModalVisible={setStateModalVisible}
+      />
     </View>
   );
 }
