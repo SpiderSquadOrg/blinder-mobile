@@ -22,119 +22,144 @@ function RegistrationLocationScreen({ navigation }) {
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
   const [country, setCountry] = useState(null);
   const [state, setState] = useState(null);
+  const [countryModalVisible, setCountryModalVisible] = useState(false);
+  const [stateModalVisible, setStateModalVisible] = useState(false);
 
   function handleLocationButtonPress() {
     setIsLocationEnabled(!isLocationEnabled);
   }
 
+  function handleCountryButtonPress() {
+    setCountryModalVisible(true);
+  }
+
+  function handleStateButtonPress() {
+    if (country != null) {
+      setStateModalVisible(true);
+    }
+  }
+
+  function nextPageHandler() {
+    //if(country && state){}
+    navigation.navigate("RegistrationMusicTypeScreen");
+  }
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      flex={1}
-    >
-      <ScrollView>
-        <View style={styles.titleContainer}>
-          <SubTitle style={styles.subtitle}>Yakındaki kişilerle tanış</SubTitle>
-          <View style={styles.locationIcon}>
-            <Ionicons name="location-outline" size={24} color="white" />
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <SubTitle style={styles.subtitle}>Yakındaki kişilerle tanış</SubTitle>
+        <View style={styles.locationIcon}>
+          <Ionicons name="location-outline" size={24} color="white" />
+        </View>
+      </View>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.infoText}>Seçili Bilgiler</Text>
+
+        <View style={styles.infoItem}>
+          <Text style={styles.infoLabel}>Ülke:</Text>
+          <View style={styles.infoValueContainer}>
+            <Text style={styles.infoValue}>{country?.countryName}</Text>
+            <PrimaryButton onPress={handleCountryButtonPress}>
+              Ülke Seç
+            </PrimaryButton>
           </View>
-          {country != null ? (
-            <SubTitle style={{ color: "white" }}>Seçili Bilgiler</SubTitle>
-          ) : null}
-
-          {country != null ? (
-            <View style={styles.header}>
-              <Text
-                style={{ fontSize: 18, fontWeight: "bold", color: "white" }}
-              >
-                Ülke: {country.countryName}
-              </Text>
-              <PrimaryButton
-                onPress={() => {
-                  setCountry(null);
-                  setState(null);
-                }}
-              >
-                Ülkeyi Değiştir
-              </PrimaryButton>
-              {state != null ? (
-                <View style={styles.header}>
-                  <Text
-                    style={{ fontSize: 18, fontWeight: "bold", color: "white" }}
-                  >
-                    Şehir: {state.stateName}
-                  </Text>
-                  <PrimaryButton onPress={() => setState(null)}>
-                    Şehri Değiştir
-                  </PrimaryButton>
-                </View>
-              ) : null}
-            </View>
-          ) : null}
         </View>
 
-        <View style={styles.locationContainer}>
-          <EnterLocationContainer
-            country={country}
-            state={state}
-            isLocationEnabled={isLocationEnabled}
-            setCountry={setCountry}
-            setState={setState}
-          />
+        <View style={styles.infoItem}>
+          <Text style={styles.infoLabel}>Şehir:</Text>
+          <View style={styles.infoValueContainer}>
+            <Text style={styles.infoValue}>{state?.stateName}</Text>
+            <PrimaryButton onPress={handleStateButtonPress}>
+              Şehir Seç
+            </PrimaryButton>
+          </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          İleri
+        </TextButton>
+      </View>
+      <View style={styles.locationContainer}>
+        <EnterLocationContainer
+          country={country}
+          state={state}
+          isLocationEnabled={isLocationEnabled}
+          setCountry={setCountry}
+          setState={setState}
+          countryModalVisible={countryModalVisible}
+          setCountryModalVisible={setCountryModalVisible}
+          stateModalVisible={stateModalVisible}
+          setStateModalVisible={setStateModalVisible}
+        />
+      </View>
+      
+    </View>
   );
 }
 
 export default RegistrationLocationScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+
   titleContainer: {
     backgroundColor: Colors.primary600,
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
   },
   locationIcon: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: screenHeight * 0.03,
-    marginBottom: screenHeight * 0.03,
-  },
-  title: {
-    color: "white",
-    fontSize: 23,
-    marginTop: screenHeight * 0.1,
+    marginTop: 20,
+    marginBottom: 20,
   },
   subtitle: {
     color: "white",
-    marginTop: screenHeight * 0.02,
+  },
+  infoContainer: {
+    marginTop: 20,
+    backgroundColor: "#f0f0f0",
+    padding: 20,
+    borderRadius: 10,
+  },
+  infoText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  infoItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+  infoValueContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginLeft: 10,
+  },
+  infoLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  infoValue: {
+    fontSize: 16,
   },
   locationContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: screenHeight * 0.07,
-  },
-  locationText: {
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  locationButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 8,
-    margin: screenHeight * 0.02,
+    marginTop: 20,
   },
   buttonContainer: {
-    marginVertical: screenHeight * 0.15,
+    marginTop: 55,
     marginLeft: "auto",
-    marginBottom: screenHeight * 0.25,
   },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
-  },
-  header: {
-    marginBottom: screenHeight * 0.02,
-    alignItems: "center",
   },
 });

@@ -3,6 +3,7 @@ import {
   Button,
   Dimensions,
   FlatList,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,11 +11,18 @@ import {
   View,
 } from "react-native";
 import { Searchbar } from "react-native-paper";
+import { AntDesign } from "@expo/vector-icons";
 import getCountries from "../../../api/location/getCountries";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function SelectCountryContainer({ setCiso, setCountry, country }) {
+function SelectCountryContainer({
+  setCiso,
+  setCountry,
+  country,
+  countryModalVisible,
+  setCountryModalVisible,
+}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
@@ -35,37 +43,57 @@ function SelectCountryContainer({ setCiso, setCountry, country }) {
 
   const onChangeSearch = (query) => setSearchQuery(query);
 
+  const handleCountryButtonPress = (country) => {
+    setCiso(country.iso2);
+    setCountry(country);
+    setSearchQuery("");
+    setCountryModalVisible(false);
+  };
+
   return (
-    <View style={styles.container}>
-      {country == null ? (
-        <View style={styles.searchbar}>
-          <Searchbar
-            placeholder={"Ülke adını giriniz"}
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-            onPress={() => setCountry(null)}
-          />
+    <Modal
+      style={styles.container}
+      animationType="slide"
+      transparent={true}
+      visible={countryModalVisible}
+      onRequestClose={() => {
+        setCountryModalVisible(!countryModalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <TouchableOpacity
+            style={{ position: "absolute", right: 15, top: 15 }}
+            onPress={() => {
+              setCountryModalVisible(!countryModalVisible);
+              setSearchQuery("");
+            }}
+          >
+            <AntDesign name="close" size={24} color="black" />
+          </TouchableOpacity>
+
+          <View style={styles.searchbar}>
+            <Searchbar
+              placeholder={"Ülke adını giriniz"}
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+            />
+          </View>
+
+          <ScrollView style={{ width: "90%" }}>
+            {filteredCountries.map((country, index) => (
+              <TouchableOpacity
+                style={styles.listItem}
+                key={index}
+                onPress={() => handleCountryButtonPress(country)}
+              >
+                <Text style={styles.listItemText}>{country.countryName}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
-      ) : null}
-      {country == null ? (
-        <View style={{ width: "90%" }}>
-          {filteredCountries.slice(0, 5).map((country, index) => (
-            <TouchableOpacity
-              style={styles.listItem}
-              key={index}
-              onPress={() => {
-                setCiso(country.iso2);
-                setCountry(country);
-                setSearchQuery("");
-                setCountries([]);
-              }}
-            >
-              <Text style={styles.listItemText}>{country.countryName}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      ) : null}
-    </View>
+      </View>
+    </Modal>
   );
 }
 
@@ -106,5 +134,28 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     fontSize: 18,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    width: screenWidth * 0.9,
+    height: screenHeight * 0.6,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

@@ -155,21 +155,8 @@ export default function App() {
               <Stack.Screen
                 name="RegistrationLocationScreen"
                 component={RegistrationLocationScreen}
-                options={({ navigation }) => ({
+                options={() => ({
                   title: "",
-                  headerRight: () => (
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate("RegistrationMusicTypeScreen")
-                      }
-                    >
-                      <Text
-                        style={{ color: Colors.primary600, fontWeight: "600" }}
-                      >
-                        İleri
-                      </Text>
-                    </TouchableOpacity>
-                  ),
                 })}
               />
               <Stack.Screen
