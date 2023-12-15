@@ -53,12 +53,6 @@ function RegistrationBirthDateScreen({ navigation }) {
           confirmTextIOS="Tamam"
         />
       </View>
-
-      <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton}>
-          İleri
-        </TextButton>
-      </View>
     </View>
   );
 }
@@ -74,14 +68,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "500",
     marginBottom: 20,
-  },
-  buttonContainer: {
-    marginTop: 55,
-    marginLeft: "auto",
-  },
-  textButton: {
-    fontWeight: "bold",
-    fontSize: 18,
-    paddingRight: 28,
   },
 });

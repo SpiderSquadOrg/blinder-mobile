@@ -12,15 +12,11 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationHobbyTypeScreen({ navigation }) {
   const [selectedHobbyTypes, setSelectedHobbyTypes] = useState([]);
 
-  
-
   const hobbyTypesHandler = (selectedHobbies) => {
     setSelectedHobbyTypes(selectedHobbies);
   };
 
-  function nextPageHandler() {
-
-  }
+  function nextPageHandler() {}
 
   return (
     <ScrollView>
@@ -42,7 +38,7 @@ function RegistrationHobbyTypeScreen({ navigation }) {
 
         <View style={styles.buttonContainer}>
           <TextButton onPress={nextPageHandler} style={styles.textButton}>
-            İleri
+            Kaydı Tamamla
           </TextButton>
         </View>
       </View>

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
-import TextButton from "../../../components/Button/TextButton";
 import TypesOptions from "../../../containers/Options/TypesOptions";
 import getSeriesCategories from "../../../api/characteristics/getSeriesCategories";
 
@@ -23,9 +22,6 @@ function RegistrationSeriesTypeScreen({ navigation }) {
     setSelectedSeriesTypes(selectedTypes);
   };
 
-  function nextPageHandler() {
-    navigation.navigate("RegistrationFavoriteSeriesScreen");
-  }
 
   return (
     <ScrollView>
@@ -46,11 +42,6 @@ function RegistrationSeriesTypeScreen({ navigation }) {
             options={seriesTypes}
           />
         </View>
-        <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
-            İleri
-          </TextButton>
-        </View>
       </View>
     </ScrollView>
   );
@@ -69,14 +60,5 @@ const styles = StyleSheet.create({
   },
   seriesContainer: {
     marginTop: screenHeight * 0.03,
-  },
-  buttonContainer: {
-    marginVertical: screenHeight * 0.06,
-    marginLeft: "auto",
-  },
-  textButton: {
-    fontWeight: "bold",
-    fontSize: 18,
-    paddingRight: 28,
   },
 });
