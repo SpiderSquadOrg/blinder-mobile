@@ -49,19 +49,20 @@ function RegistrationNicknameScreen({ navigation }) {
       <View>
         <RegistrationQueryText>TAKMA ADINIZI SEÇİN</RegistrationQueryText>
         <View style={styles.mainContainer}>
-        <View style={styles.nicknameOuterContainer}>
-          <View style={styles.nicknameInnerContainer}>
-          <SubTitle style={{color: 'white'}}>{nickname}</SubTitle>
+          <View style={styles.nicknameOuterContainer}>
+            <View style={styles.nicknameInnerContainer}>
+              <SubTitle style={{ color: "white" }}>{nickname}</SubTitle>
+            </View>
+          </View>
+          <View style={styles.randomPickerContainer}>
+            <Pressable
+              style={({ pressed }) => (pressed ? styles.pressed : null)}
+              onPress={nicknameHandler}
+            >
+              <FontAwesome name="random" size={30} color="gray" />
+            </Pressable>
           </View>
         </View>
-        <View style={styles.randomPickerContainer}>
-          <Pressable
-            style={({ pressed }) => (pressed ? styles.pressed : null)}
-            onPress={nicknameHandler}
-          >
-            <FontAwesome name="random" size={30} color="gray" />
-          </Pressable>
-        </View></View>
 
         <View style={styles.buttonContainer}>
           <TextButton onPress={nextPageHandler} style={styles.textButton}>
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.5,
   },
   mainContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: screenHeight * 0.08,
     alignSelf: "center",
   },
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     paddingRight: 28,
   },
   buttonContainer: {
-    marginTop: 45,
+    marginTop: screenHeight * 0.1,
     marginLeft: "auto",
   },
 });

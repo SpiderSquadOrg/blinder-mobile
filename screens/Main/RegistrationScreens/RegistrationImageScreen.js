@@ -1,9 +1,18 @@
-import { View, StyleSheet, Dimensions, Button, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  Image,
+  Pressable,
+} from "react-native";
 import { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-
+import { FontAwesome } from "@expo/vector-icons";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import TextButton from "../../../components/Button/TextButton";
+import Colors from "../../../constansts/Colors";
+import BlackImg from "../../../assets/blackWallpaper.jpg";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -30,14 +39,43 @@ function RegistrationImageScreen({ navigation }) {
       <RegistrationQueryText>PROFİL FOTOĞRAFIN</RegistrationQueryText>
       <View style={styles.imageContainer}>
         <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Button title="Pick an image from camera roll" onPress={pickImage} />
+          <Text
+            style={{
+              color: "white",
+              fontSize: 17,
+              marginTop: screenHeight * 0.03,
+              marginBottom: screenHeight * 0.03,
+            }}
+          >
+            Film rulosundan bir resim seçin
+          </Text>
+          <Pressable
+            style={({ pressed }) => (pressed ? styles.pressed : null)}
+            onPress={pickImage}
+          >
+            <FontAwesome name="photo" size={24} color="white" />
+          </Pressable>
+
           {image && (
             <Image
               source={{ uri: image }}
               style={{
-                width: screenWidth * 0.5,
-                height: screenWidth * 0.5,
-                marginTop: screenHeight * 0.02,
+                width: 170,
+                height: 170,
+                borderRadius: 170,
+                marginTop: screenHeight * 0.04,
+              }}
+            />
+          )}
+          {!image && (
+            <Image
+              source={BlackImg}
+              style={{
+                width: 170,
+                height: 170,
+                borderRadius: 170,
+                borderWidth: 1,
+                marginTop: screenHeight * 0.04,
               }}
             />
           )}
@@ -62,10 +100,12 @@ const styles = StyleSheet.create({
     paddingRight: 28,
   },
   buttonContainer: {
-    marginTop: 45,
+    marginTop: screenHeight * 0.1,
     marginLeft: "auto",
   },
   imageContainer: {
     marginTop: screenHeight * 0.05,
+    height: screenHeight * 0.4,
+    backgroundColor: Colors.primary600,
   },
 });
