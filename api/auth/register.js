@@ -8,12 +8,13 @@ const register = async (
     email,
     name,
     surname,
+    nickname,
     phoneNumber,
     genderId,
     birthDate,
     images,
-    countryId,
-    stateId
+    countryIso2,
+    stateIso2
     ) => {
   const url = `${env.API}/auth/register`;
 
@@ -21,6 +22,18 @@ const register = async (
     const response = await axios.post(url, {
       username: username,
       password: password,
+      email: email,
+      name: name,
+      surname: surname,
+      nickname: nickname,
+      phoneNumber: phoneNumber,
+      genderId: genderId,
+      birthDate: birthDate,
+      images: images,
+      location: {
+        countryIso2: countryIso2,
+        stateIso2: stateIso2,
+      }
     });
 
     return response.data;
