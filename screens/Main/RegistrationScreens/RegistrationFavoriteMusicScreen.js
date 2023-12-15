@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
+import TextButton from "../../../components/Button/TextButton";
 import MusicOptionsSearchBar from "../../../components/Search/MusicOptionsSearchBar";
 import MusicCard from "../../../components/Card/MusicCard";
 
@@ -15,6 +16,10 @@ function RegistrationFavoriteMusicScreen({ navigation }) {
     setSelectedMusicList(
       selectedMusicList.filter((music) => music.id !== removeItemId)
     );
+  }
+
+  function nextPageHandler() {
+    navigation.navigate("RegistrationMovieTypeScreen");
   }
 
   return (
@@ -45,6 +50,12 @@ function RegistrationFavoriteMusicScreen({ navigation }) {
           setSelectedMusicList={setSelectedMusicList}
         />
       </View>
+
+      <View style={styles.buttonContainer}>
+        <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          İleri
+        </TextButton>
+      </View>
     </ScrollView>
   );
 }
@@ -64,5 +75,14 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.04,
     marginHorizontal: screenWidth * 0.06,
     fontSize: 17,
+  },
+  buttonContainer: {
+    marginLeft: "auto",
+    marginVertical: screenHeight * 0.05,
+  },
+  textButton: {
+    fontWeight: "bold",
+    fontSize: 18,
+    paddingRight: 28,
   },
 });
