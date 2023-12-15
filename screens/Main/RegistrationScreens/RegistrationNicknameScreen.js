@@ -11,7 +11,6 @@ import { FontAwesome } from "@expo/vector-icons";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import Colors from "../../../constansts/Colors";
-import TextButton from "../../../components/Button/TextButton";
 import SubTitle from "../../../components/ui/SubTitle";
 import { nicknameData1, nicknameData2 } from "../../../data/nicknameData";
 
@@ -39,15 +38,16 @@ function RegistrationNicknameScreen({ navigation }) {
   function nicknameHandler() {
     setNickname(generateRandomCombination);
   }
-  function nextPageHandler() {
-    navigation.navigate("RegistrationImageScreen");
-  }
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View>
         <RegistrationQueryText>TAKMA ADINIZI SEÇİN</RegistrationQueryText>
-        <View style={styles.nicknameContainer}>
-          <SubTitle>{nickname}</SubTitle>
+        <View style={styles.mainContainer}>
+        <View style={styles.nicknameOuterContainer}>
+          <View style={styles.nicknameInnerContainer}>
+          <SubTitle style={{color: 'white'}}>{nickname}</SubTitle>
+          </View>
         </View>
         <View style={styles.randomPickerContainer}>
           <Pressable
@@ -56,13 +56,7 @@ function RegistrationNicknameScreen({ navigation }) {
           >
             <FontAwesome name="random" size={30} color="gray" />
           </Pressable>
-        </View>
-
-        <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
-            İleri
-          </TextButton>
-        </View>
+        </View></View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -72,26 +66,25 @@ export default RegistrationNicknameScreen;
 
 const styles = StyleSheet.create({
   randomPickerContainer: {
-    marginTop: screenHeight * 0.04,
-    marginHorizontal: screenWidth * 0.45,
+    marginHorizontal: screenWidth * 0.05,
+    marginTop: screenHeight * 0.02,
   },
-  nicknameContainer: {
-    marginTop: screenHeight * 0.04,
+  nicknameOuterContainer: {
     borderWidth: 2,
-    borderColor: "gray",
-    backgroundColor: Colors.accent500,
-    borderRadius: 9,
+    borderColor: Colors.primary600,
+    backgroundColor: Colors.primary500,
+    borderRadius: 15,
     padding: screenWidth * 0.03,
     alignSelf: "center",
   },
-  textButton: {
-    fontWeight: "bold",
-    fontSize: 18,
-    paddingRight: 28,
+  nicknameInnerContainer: {
+    margin: 5,
+    width: screenWidth * 0.5,
   },
-  buttonContainer: {
-    marginTop: 45,
-    marginLeft: "auto",
+  mainContainer: {
+    flexDirection: 'row',
+    marginTop: screenHeight * 0.08,
+    alignSelf: "center",
   },
   pressed: {
     opacity: 0.75,

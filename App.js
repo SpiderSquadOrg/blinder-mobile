@@ -75,77 +75,302 @@ export default function App() {
               <Stack.Screen
                 name="RegistrationNameScreen"
                 component={RegistrationNameScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationSurnameScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationSurnameScreen"
                 component={RegistrationSurnameScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationUsernameScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationUsernameScreen"
                 component={RegistrationUsernameScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationNicknameScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationNicknameScreen"
                 component={RegistrationNicknameScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationImageScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationImageScreen"
                 component={RegistrationImageScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationGenderScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationGenderScreen"
                 component={RegistrationGenderScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationBirthDateScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationBirthDateScreen"
                 component={RegistrationBirthDateScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationPhoneNumberScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationPhoneNumberScreen"
                 component={RegistrationPhoneNumberScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationPartnerGenderScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationPartnerGenderScreen"
                 component={RegistrationPartnerGenderScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationLocationScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationMusicTypeScreen"
                 component={RegistrationMusicTypeScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationFavoriteMusicScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationMovieTypeScreen"
                 component={RegistrationMovieTypeScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationFavoriteMovieScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationSeriesTypeScreen"
                 component={RegistrationSeriesTypeScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationFavoriteSeriesScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationFavoriteMusicScreen"
                 component={RegistrationFavoriteMusicScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationMovieTypeScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationFavoriteMovieScreen"
                 component={RegistrationFavoriteMovieScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationSeriesTypeScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationFavoriteSeriesScreen"
                 component={RegistrationFavoriteSeriesScreen}
-                options={{ title: "" }}
+                options={({ navigation }) => ({
+                  title: "",
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("RegistrationHobbyTypeScreen")
+                      }
+                    >
+                      <Text
+                        style={{ color: Colors.primary600, fontWeight: "600" }}
+                      >
+                        İleri
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                })}
               />
               <Stack.Screen
                 name="RegistrationHobbyTypeScreen"

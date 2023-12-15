@@ -7,27 +7,19 @@ import {
 } from "react-native";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import InputField from "../../../components/ui/InputField";
-import TextButton from "../../../components/Button/TextButton";
 
 function RegistrationNameScreen({ navigation }) {
   const [name, setName] = useState("");
   function nameHandler(name) {
     setName(name);
   }
-  function nextPageHandler() {
-    navigation.navigate("RegistrationSurnameScreen");
-  }
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View>
         <RegistrationQueryText>İSMİN NE ?</RegistrationQueryText>
         <View style={styles.inputFieldContainer}>
           <InputField placeholder={"İsim"} onAddInput={nameHandler} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
-            İleri
-          </TextButton>
         </View>
       </View>
     </TouchableWithoutFeedback>

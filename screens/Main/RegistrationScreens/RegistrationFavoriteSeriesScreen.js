@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
-import TextButton from "../../../components/Button/TextButton";
 import SeriesCard from "../../../components/Card/SeriesCard";
 import SeriesOptionsSearch from "../../../components/Search/SeriesOptionsSearch";
 
@@ -16,10 +15,6 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
     setSelectedSeriesList(
       selectedSeriesList.filter((series) => series.id !== removeItemId)
     );
-  }
-
-  function nextPageHandler() {
-    navigation.navigate("RegistrationHobbyTypeScreen");
   }
 
   return (
@@ -51,12 +46,6 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
           setSelectedSeriesList={setSelectedSeriesList}
         />
       </View>
-
-      <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton}>
-          İleri
-        </TextButton>
-      </View>
     </ScrollView>
   );
 }
@@ -76,14 +65,5 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.04,
     marginHorizontal: screenWidth * 0.06,
     fontSize: 17,
-  },
-  buttonContainer: {
-    marginLeft: "auto",
-    marginVertical: screenHeight * 0.05,
-  },
-  textButton: {
-    fontWeight: "bold",
-    fontSize: 18,
-    paddingRight: 28,
   },
 });
