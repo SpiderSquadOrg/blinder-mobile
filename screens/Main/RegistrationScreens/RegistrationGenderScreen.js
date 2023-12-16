@@ -7,7 +7,7 @@ import GenderPicker from "../../../containers/GenderFilter/GenderPicker";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationGenderScreen({ navigation }) {
+function RegistrationGenderScreen({ navigation, route }) {
   const [gender, setGender] = useState();
 
   const genderHandler = (gender) => {
@@ -15,7 +15,16 @@ function RegistrationGenderScreen({ navigation }) {
   };
 
   function nextPageHandler() {
-    navigation.navigate("RegistrationBirthDateScreen");
+    if(gender === undefined){
+      alert("Please fill in all fields");
+      return;
+    }
+    navigation.navigate("RegistrationBirthDateScreen", {
+      user: {
+        ...route.params.user,
+        genderId: gender.id,
+      },
+    });
   }
 
   return (

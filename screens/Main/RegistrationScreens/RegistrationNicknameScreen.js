@@ -17,7 +17,7 @@ import { nicknameData1, nicknameData2 } from "../../../data/nicknameData";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationNicknameScreen({ navigation }) {
+function RegistrationNicknameScreen({ navigation,route }) {
   const [nickname, setNickname] = useState();
 
   useEffect(() => {
@@ -41,7 +41,13 @@ function RegistrationNicknameScreen({ navigation }) {
   }
 
   function nextPageHandler() {
-    navigation.navigate("RegistrationImageScreen");
+    navigation.navigate("RegistrationImageScreen",
+    {
+      user: {
+        ...route.params.user,
+        nickname: nickname,
+      },
+    });
   }
 
   return (

@@ -7,14 +7,26 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationPhoneNumberScreen({ navigation }) {
+function RegistrationPhoneNumberScreen({ navigation, route }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(null);
 
   useEffect(() => {}, [selectedCountry]);
 
   const nextPageHandler = () => {
-    navigation.navigate("RegistrationPartnerGenderScreen");
+    if (phoneNumber === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    navigation.navigate("RegistrationLocationScreen",
+    {
+      user: {
+        ...route.params.user,
+        phoneNumber: phoneNumber,
+      },
+    }
+    );
   };
 
   return (
