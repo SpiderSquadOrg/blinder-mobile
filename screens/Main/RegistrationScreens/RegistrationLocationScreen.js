@@ -15,10 +15,13 @@ import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import EnterLocationContainer from "../../../containers/EnterLocation";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
+import register from "../../../api/auth/register";
+import fetchChats from "../../../api/chat/fetchChats";
+import { storeData } from "../../../utils/storage";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationLocationScreen({ navigation }) {
+function RegistrationLocationScreen({ navigation, route }) {
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
   const [country, setCountry] = useState(null);
   const [state, setState] = useState(null);
@@ -39,9 +42,38 @@ function RegistrationLocationScreen({ navigation }) {
     }
   }
 
-  function nextPageHandler() {
-    //if(country && state){}
-    navigation.navigate("RegistrationMusicTypeScreen");
+  async function nextPageHandler() {
+    if(!(country && state)){
+      alert("Please fill in all fields");
+      return;
+    }
+
+    let token;
+    await register({
+      ...route.params.user,
+      location: {
+        countryIso2: country.iso2,
+        stateIso2: state.iso2,
+      },
+    }).then((res) => {
+      token = res.data.token;
+    });
+
+    await storeData("token", token);    
+
+    await fetchChats();
+
+    navigation.navigate("RegistrationPartnerGenderScreen",
+    {
+      user: {
+        ...route.params.user,
+        location: {
+          countryIso2: country.iso2,
+          stateIso2: state.iso2,
+        },
+      },
+    }
+    );
   }
 
   return (

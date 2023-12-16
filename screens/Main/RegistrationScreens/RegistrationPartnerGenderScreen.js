@@ -15,7 +15,7 @@ function RegistrationPartnerGenderScreen({ navigation }) {
   };
 
   function nextPageHandler() {
-    navigation.navigate("RegistrationLocationScreen");
+    navigation.navigate("RegistrationMusicTypeScreen");
   }
 
   return (

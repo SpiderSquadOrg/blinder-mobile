@@ -1,5 +1,5 @@
 import { View, StyleSheet, Button, Text } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
@@ -7,7 +7,7 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import TextButton from "../../../components/Button/TextButton";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 
-function RegistrationBirthDateScreen({ navigation }) {
+function RegistrationBirthDateScreen({ navigation,route }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -17,7 +17,13 @@ function RegistrationBirthDateScreen({ navigation }) {
       (selectedDate.getMonth() + 1)
     ).slice(-2)}-${selectedDate.getFullYear()}`;
 
-    navigation.navigate("RegistrationPhoneNumberScreen");
+    navigation.navigate("RegistrationPhoneNumberScreen",
+    {
+      user: {
+        ...route.params.user,
+        birthDate: formattedDate,
+      },
+    });
   }
 
   const toggle = () => showModal(!show);

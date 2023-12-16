@@ -6,7 +6,7 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
@@ -16,14 +16,14 @@ import BlackImg from "../../../assets/blackWallpaper.jpg";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationImageScreen({ navigation }) {
+function RegistrationImageScreen({ navigation,route }) {
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [3, 3],
       quality: 1,
     });
     if (!result.canceled) {
@@ -31,8 +31,17 @@ function RegistrationImageScreen({ navigation }) {
     }
   };
 
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
+
   function nextPageHandler() {
-    navigation.navigate("RegistrationGenderScreen");
+    navigation.navigate("RegistrationGenderScreen",{
+      user: {
+        ...route.params.user,
+        image: image,
+      },
+    });
   }
   return (
     <View>

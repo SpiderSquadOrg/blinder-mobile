@@ -9,14 +9,28 @@ import Title from "../../components/ui/Title";
 import InputField from "../../components/ui/InputField";
 import PasswordField from "../../components/ui/PasswordField";
 import PrimaryButton from "../../components/Button/PrimaryButton";
+import { useState } from "react";
 
 function SignUpScreen({ navigation }) {
-  function nameHandler() {}
-  function mailHandler() {}
-  function passwordHandler() {}
+  const [mail, setMail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function mailHandler(inputText) {
+    setMail(inputText);
+  }
+
+  function passwordHandler(inputText) {
+    setPassword(inputText);
+  }
 
   function signUpHandler() {
-    navigation.navigate("RegistrationNameScreen");
+    if (mail === "" || password === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+    navigation.navigate("RegistrationNameScreen", {
+      user: { mail: mail, password: password },
+    });
   }
 
   return (
@@ -25,7 +39,6 @@ function SignUpScreen({ navigation }) {
         <View style={styles.rootContainer}>
           <Title>Sign Up</Title>
           <View style={styles.fieldContainer}>
-            <InputField placeholder={"Name"} onAddInput={nameHandler} />
             <InputField placeholder={"Email"} onAddInput={mailHandler} />
             <PasswordField
               placeholder={"Password"}

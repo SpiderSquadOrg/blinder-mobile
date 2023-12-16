@@ -9,14 +9,24 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import TextButton from "../../../components/Button/TextButton";
 import InputField from "../../../components/ui/InputField";
 
-function RegistrationNameScreen({ navigation }) {
+function RegistrationNameScreen({ navigation, route }) {
   const [name, setName] = useState("");
   function nameHandler(name) {
     setName(name);
   }
 
   function nextPageHandler() {
-    navigation.navigate("RegistrationSurnameScreen");
+    if (name === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+    
+    navigation.navigate("RegistrationSurnameScreen", {
+      user: {
+        ...route.params.user,
+        name: name,
+      },
+    });
   }
 
   return (
