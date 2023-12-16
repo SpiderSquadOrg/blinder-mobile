@@ -3,61 +3,51 @@ import { View, StyleSheet, Text } from "react-native";
 import Header from "../../components/ui/Header";
 import { ToggleButton } from "react-native-paper";
 
-function GenderFilter() {
-  const [status, setStatus] = useState([]);
-
+function GenderFilter({ genders, selectedGenders, gendersHandler }) {
   const onButtonToggle = (value) => {
-    setStatus(
-      status.includes(value)
-        ? status.filter((v) => v !== value)
-        : [...status, value]
-    );
+    gendersHandler(value);
   };
 
   const getStatus = (value) => {
-    return status.includes(value) ? "checked" : "unchecked";
+    return selectedGenders.some(gender => gender.name === value) ? "checked" : "unchecked";
+  };
+
+  const getIconName = (value) => {
+    if (value === "other") {
+      return "gender-male-female-variant";
+    }
+    return `gender-${value}`;
+  };
+
+  const getButtonText = (value) => {
+    if (value === "male") {
+      return "Erkek";
+    } else if (value === "female") {
+      return "Kadın";
+    }
+    return "Diğer";
   };
 
   return (
     <View style={styles.container}>
       <Header>Cinsiyet</Header>
       <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <ToggleButton
-            icon={"gender-male"}
-            value="male"
-            status={getStatus("male")}
-            onPress={() => onButtonToggle("male")}
-            size={50}
-            style={styles.button}
-            rippleColor={"transparent"}
-          />
-          <Text style={{ marginTop: 5 }}>Erkek</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <ToggleButton
-            icon={"gender-female"}
-            value="female"
-            status={getStatus("female")}
-            onPress={() => onButtonToggle("female")}
-            size={50}
-            style={styles.button}
-            rippleColor={"transparent"}
-          />
-          <Text style={{ marginTop: 5 }}>Kadın</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <ToggleButton
-            icon={"gender-male-female-variant"}
-            value="other"
-            status={getStatus("other")}
-            onPress={() => onButtonToggle("other")}
-            size={50}
-            style={styles.button}
-            rippleColor={"transparent"}
-          />
-          <Text style={{ marginTop: 5 }}>Diğer</Text>
-        </View>
+        {genders.map((gender, index) => (
+          <View key={index} style={styles.buttonContainer}>
+            <ToggleButton
+              icon={getIconName(gender.name)}
+              value={gender.name}
+              status={getStatus(gender.name)}
+              onPress={() => {
+                onButtonToggle(gender);
+              }}
+              size={50}
+              style={styles.button}
+              rippleColor={"transparent"}
+            />
+            <Text style={{ marginTop: 5 }}>{getButtonText(gender.name)}</Text>
+          </View>
+        ))}
       </View>
     </View>
   );

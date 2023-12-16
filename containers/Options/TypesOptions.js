@@ -29,9 +29,9 @@ function TypesOptions({ onTypeSelect, options }) {
     <View style={styles.rootContainer}>
       {chunkArray(options, 2).map((row, rowIndex) => (
         <View key={rowIndex} style={styles.rowContainer}>
-          {row.map((option) => (
+          {row.map((option,index) => (
             <TouchableOpacity
-              key={option}
+              key={index}
               style={[
                 styles.button,
                 selectedOptions.includes(option) && styles.selectedButton,

@@ -17,7 +17,7 @@ import ProfileMovieCard from "../../components/Card/ProfileMovieCard";
 import ProfileSeriesCard from "../../components/Card/ProfileSeriesCard";
 import React, { useState, useEffect } from "react";
 import { useUser } from "../../contexts/UserContext";
-import getMyProfile from "../../api/user/getMyProfile";
+import getProfile from "../../api/user/getProfile";
 import getMyCharacteristics from "../../api/characteristics/getMyCharacteristics";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -71,7 +71,7 @@ function ProfileScreen({ navigation }) {
   };
 
   useEffect(() => {
-    getMyProfile(user.userId).then((response) => {
+    getProfile(user.userId).then((response) => {
       setProfileUser({
         id: response.id,
         email: response.email,

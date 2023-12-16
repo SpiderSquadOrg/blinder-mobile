@@ -51,8 +51,8 @@ function GenderPicker({onGenderSelect}) {
   return (
     <View style={styles.container}>
       <View style={styles.buttonsContainer}>
-        {genders.map((gender) => (
-          <View key={gender.id} style={styles.buttonContainer}>
+        {genders.map((gender,index) => (
+          <View key={index} style={styles.buttonContainer}>
             <ToggleButton
               icon={getIconName(gender.name)}
               value={gender.name}

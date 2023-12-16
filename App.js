@@ -115,7 +115,11 @@ export default function App() {
               <Stack.Screen
                 name="RegistrationPartnerGenderScreen"
                 component={RegistrationPartnerGenderScreen}
-                options={{ title: "" }}
+                options={{
+                  title: "",
+                  headerBackTitleVisible: false,
+                  headerLeft: () => null,
+                }}
               />
               <Stack.Screen
                 name="RegistrationMusicTypeScreen"

@@ -6,22 +6,25 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import TextButton from "../../../components/Button/TextButton";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
+import { useUser } from "../../../contexts/UserContext";
 
-function RegistrationBirthDateScreen({ navigation,route }) {
+function RegistrationBirthDateScreen({ navigation, route }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  function nextPageHandler() {
-    const formattedDate = `${("0" + selectedDate.getDate()).slice(-2)}-${(
-      "0" +
-      (selectedDate.getMonth() + 1)
-    ).slice(-2)}-${selectedDate.getFullYear()}`;
+  /*const { user } = useUser();
 
-    navigation.navigate("RegistrationPhoneNumberScreen",
-    {
+  useEffect(() => {
+    if(user){
+      navigation.navigate("Home");
+    }
+  }, []);*/
+
+  function nextPageHandler() {
+    navigation.navigate("RegistrationPhoneNumberScreen", {
       user: {
         ...route.params.user,
-        birthDate: formattedDate,
+        birthDate: selectedDate,
       },
     });
   }

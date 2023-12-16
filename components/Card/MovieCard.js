@@ -19,12 +19,12 @@ function FilmCard({ movieList, onRemoveItemId }) {
     <ScrollView horizontal>
       {movieList.map((movie, index) => (
         <View key={index} style={styles.container}>
-          <Image source={{ uri: movie.imageUrl }} style={styles.movieImage} />
+          <Image source={{ uri: movie.image }} style={styles.movieImage} />
           <View style={styles.textContainer}>
             <Text style={styles.name}>{movie.name}</Text>
             <Text style={styles.year}>{movie.year}</Text>
           </View>
-          <Pressable onPress={() => handleRemoveMovie(movie.id)}>
+          <Pressable onPress={() => handleRemoveMovie(movie.imdbId)}>
             <Text style={styles.removeButton}>×</Text>
           </Pressable>
         </View>

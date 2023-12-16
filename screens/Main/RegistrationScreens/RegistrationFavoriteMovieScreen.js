@@ -1,16 +1,21 @@
 import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import TextButton from "../../../components/Button/TextButton";
 import SubTitle from "../../../components/ui/SubTitle";
 import MovieCard from "../../../components/Card/MovieCard";
 import MovieOptionsSearch from "../../../components/Search/MovieOptionsSearch";
+import addMovie from "../../../api/characteristics/addMovie";
+import { useUser } from "../../../contexts/UserContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationFavoriteMovieScreen({ navigation }) {
   const [selectedMovieList, setSelectedMovieList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+ 
 
   function removeItemHandler(removeItemId) {
     setSelectedMovieList(
@@ -19,6 +24,11 @@ function RegistrationFavoriteMovieScreen({ navigation }) {
   }
 
   function nextPageHandler() {
+    setIsLoading(true);
+    selectedMovieList.forEach(async (movie) => {
+      await addMovie({ ...movie });
+    });
+    setIsLoading(false);
     navigation.navigate("RegistrationSeriesTypeScreen");
   }
 

@@ -6,12 +6,14 @@ import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import TypesOptions from "../../../containers/Options/TypesOptions";
 import getMovieCategories from "../../../api/characteristics/getMovieCategories";
+import addMovieCategory from "../../../api/characteristics/addMovieCategory";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationMovieTypeScreen({ navigation }) {
   const [selectedMovieTypes, setSelectedMovieTypes] = useState([]);
   const [movieTypes, setMovieTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getMovieCategories().then((data) => {
@@ -24,6 +26,11 @@ function RegistrationMovieTypeScreen({ navigation }) {
   };
 
   function nextPageHandler() {
+    setIsLoading(true);
+    selectedMovieTypes.forEach(async (type) => {
+      await addMovieCategory({ name: type });
+    });
+    setIsLoading(false);
     navigation.navigate("RegistrationFavoriteMovieScreen");
   }
   return (
@@ -43,7 +50,7 @@ function RegistrationMovieTypeScreen({ navigation }) {
           <TypesOptions onTypeSelect={movieTypeHandler} options={movieTypes} />
         </View>
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
             İleri
           </TextButton>
         </View>

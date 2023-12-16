@@ -13,11 +13,20 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import TextButton from "../../../components/Button/TextButton";
 import Colors from "../../../constansts/Colors";
 import BlackImg from "../../../assets/blackWallpaper.jpg";
+import { useUser } from "../../../contexts/UserContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationImageScreen({ navigation,route }) {
   const [image, setImage] = useState(null);
+
+  /*const { user } = useUser();
+
+  useEffect(() => {
+    if(user){
+      navigation.navigate("Home");
+    }
+  }, []);*/
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -31,9 +40,7 @@ function RegistrationImageScreen({ navigation,route }) {
     }
   };
 
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
+
 
   function nextPageHandler() {
     navigation.navigate("RegistrationGenderScreen",{

@@ -1,22 +1,40 @@
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import TypesOptions from "../../../containers/Options/TypesOptions";
-import { hobbyList } from "../../../data/categoryData";
+import addHobby from "../../../api/characteristics/addHobby";
+import getHobbies from "../../../api/characteristics/getHobbies";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationHobbyTypeScreen({ navigation }) {
+function RegistrationHobbyTypeScreen({ navigation,route }) {
   const [selectedHobbyTypes, setSelectedHobbyTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hobbyList,setHobbyList] = useState([])
+
+  useEffect(() => {
+    getHobbies().then((data) => {
+      setHobbyList(data.content.map((hobby) => hobby.name));
+    });
+  }, []);
+
+
 
   const hobbyTypesHandler = (selectedHobbies) => {
     setSelectedHobbyTypes(selectedHobbies);
   };
 
-  function nextPageHandler() {}
+
+  function nextPageHandler() {
+    setIsLoading(true);
+    selectedHobbyTypes.forEach(async (hobby) => {
+      await addHobby({ name: hobby });
+    });
+    setIsLoading(false); 
+  }
 
   return (
     <ScrollView>
@@ -29,7 +47,7 @@ function RegistrationHobbyTypeScreen({ navigation }) {
             Profilinize en az 3 Hobi ekleyin. Bu sayede sizinle aynı fikirde
             olan kişilerle etkileşim kurabilecek ve tanışabileceksiniz.
           </SubTitle>
-          <SubTitle>0/3+</SubTitle>
+          <SubTitle>{selectedHobbyTypes.length}/3+</SubTitle>
         </View>
 
         <View style={styles.hobbiesContainer}>
@@ -37,7 +55,7 @@ function RegistrationHobbyTypeScreen({ navigation }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
             Kaydı Tamamla
           </TextButton>
         </View>

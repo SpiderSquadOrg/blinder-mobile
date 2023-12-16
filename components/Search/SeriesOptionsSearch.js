@@ -23,12 +23,7 @@ function SeriesOptionsSearch({
   useEffect(() => {
     if(searchQuery.length < 3) return;
     searchSeries(searchQuery, 10).then((data) => {
-      setSeriesList(data.map((series) => ({
-        id: series.imdbId,
-        name: series.name,
-        year: series.year,
-        imageUrl: series.image,
-      })));
+      setSeriesList(data);
     });
   }, [searchQuery]);
 
@@ -38,7 +33,7 @@ function SeriesOptionsSearch({
 
   const handleSeriesList = (selectedSeries) => {
     const isSeriesAlreadySelected = selectedSeriesList.some(
-      (series) => series.id === selectedSeries.id
+      (series) => series.imdbId === selectedSeries.imdbId
     );
 
     if (!isSeriesAlreadySelected) {
@@ -77,7 +72,7 @@ function SeriesOptionsSearch({
             <View style={styles.listItems}>
               <View>
                 <Image
-                  source={{ uri: series.imageUrl }}
+                  source={{ uri: series.image }}
                   style={{
                     width: 60,
                     height: 60,

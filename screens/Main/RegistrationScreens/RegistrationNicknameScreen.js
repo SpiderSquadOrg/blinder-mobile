@@ -14,15 +14,25 @@ import Colors from "../../../constansts/Colors";
 import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import { nicknameData1, nicknameData2 } from "../../../data/nicknameData";
+import { useUser } from "../../../contexts/UserContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationNicknameScreen({ navigation,route }) {
   const [nickname, setNickname] = useState();
 
+  /*const { user } = useUser();
+
+  useEffect(() => {
+    if(user){
+      navigation.navigate("Home");
+    }
+  }, []);*/
+
   useEffect(() => {
     setNickname(generateRandomCombination);
   }, []);
+  
 
   generateRandomCombination = () => {
     const randomFirstWord =

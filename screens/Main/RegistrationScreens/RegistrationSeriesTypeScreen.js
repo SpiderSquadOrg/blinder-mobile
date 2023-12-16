@@ -6,12 +6,14 @@ import SubTitle from "../../../components/ui/SubTitle";
 import TypesOptions from "../../../containers/Options/TypesOptions";
 import getSeriesCategories from "../../../api/characteristics/getSeriesCategories";
 import TextButton from "../../../components/Button/TextButton";
+import addTvSeriesCategory from "../../../api/characteristics/addTvSeriesCategory";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationSeriesTypeScreen({ navigation }) {
   const [selectedSeriesTypes, setSelectedSeriesTypes] = useState([]);
   const [seriesTypes, setSeriesTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getSeriesCategories().then((data) => {
@@ -24,6 +26,12 @@ function RegistrationSeriesTypeScreen({ navigation }) {
   };
 
   function nextPageHandler() {
+    setIsLoading(true);
+    selectedSeriesTypes.forEach(async (type) => {
+      await addTvSeriesCategory({ name: type });
+    });
+    setIsLoading(false);
+
     navigation.navigate("RegistrationFavoriteSeriesScreen");
   }
 
@@ -47,7 +55,7 @@ function RegistrationSeriesTypeScreen({ navigation }) {
           />
         </View>
         <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton}>
+        <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
           İleri
         </TextButton>
       </View>
