@@ -1,16 +1,21 @@
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
 import SeriesCard from "../../../components/Card/SeriesCard";
 import SeriesOptionsSearch from "../../../components/Search/SeriesOptionsSearch";
 import TextButton from "../../../components/Button/TextButton";
+import addTvSeries from "../../../api/characteristics/addTvSeries";
+import { useUser } from "../../../contexts/UserContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationFavoriteSeriesScreen({ navigation }) {
   const [selectedSeriesList, setSelectedSeriesList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+
 
   function removeItemHandler(removeItemId) {
     setSelectedSeriesList(
@@ -19,6 +24,11 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
   }
 
   function nextPageHandler() {
+    setIsLoading(true);
+    selectedSeriesList.forEach(async (series) => {
+      await addTvSeries({ ...series });
+    });
+    setIsLoading(false);
     navigation.navigate("RegistrationHobbyTypeScreen");
   }
 
@@ -52,7 +62,7 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton}>
+        <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
           İleri
         </TextButton>
       </View>

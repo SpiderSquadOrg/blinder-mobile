@@ -6,11 +6,16 @@ import SubTitle from "../../../components/ui/SubTitle";
 import TextButton from "../../../components/Button/TextButton";
 import MusicOptionsSearchBar from "../../../components/Search/MusicOptionsSearchBar";
 import MusicCard from "../../../components/Card/MusicCard";
+import addMusic from "../../../api/characteristics/addMusic";
+import { useUser } from "../../../contexts/UserContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationFavoriteMusicScreen({ navigation }) {
+function RegistrationFavoriteMusicScreen({ navigation, route }) {
   const [selectedMusicList, setSelectedMusicList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+ 
 
   function removeItemHandler(removeItemId) {
     setSelectedMusicList(
@@ -19,6 +24,11 @@ function RegistrationFavoriteMusicScreen({ navigation }) {
   }
 
   function nextPageHandler() {
+    setIsLoading(true);
+    selectedMusicList.forEach(async (music) => {
+      await addMusic({ ...music });
+    });
+    setIsLoading(false);
     navigation.navigate("RegistrationMovieTypeScreen");
   }
 
@@ -52,7 +62,7 @@ function RegistrationFavoriteMusicScreen({ navigation }) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton}>
+        <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
           İleri
         </TextButton>
       </View>

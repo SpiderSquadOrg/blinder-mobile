@@ -29,7 +29,7 @@ function SignUpScreen({ navigation }) {
       return;
     }
     navigation.navigate("RegistrationNameScreen", {
-      user: { mail: mail, password: password },
+      user: { email: mail, password: password },
     });
   }
 

@@ -4,12 +4,21 @@ import PhoneInput from "react-native-phone-input";
 
 import TextButton from "../../../components/Button/TextButton";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
+import { useUser } from "../../../contexts/UserContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationPhoneNumberScreen({ navigation, route }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(null);
+
+  /*const { user } = useUser();
+
+  useEffect(() => {
+    if(user){
+      navigation.navigate("Home");
+    }
+  }, []);*/
 
   useEffect(() => {}, [selectedCountry]);
 

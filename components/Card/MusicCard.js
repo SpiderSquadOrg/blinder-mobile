@@ -19,10 +19,10 @@ function MusicCard({ musicList, onRemoveItemId }) {
     <ScrollView horizontal>
       {musicList.map((music, index) => (
         <View key={index} style={styles.container}>
-          <Image source={{ uri: music.imageUrl }} style={styles.musicImage} />
+          <Image source={{ uri: music.image }} style={styles.musicImage} />
           <View style={styles.textContainer}>
-            <Text style={styles.title}>{music.title}</Text>
-            <Text style={styles.artist}>{music.artist}</Text>
+            <Text style={styles.title}>{music.name}</Text>
+            <Text style={styles.artist}>{music.artists[0]}</Text>
           </View>
           <Pressable onPress={() => handleRemoveMusic(music.id)}>
             <Text style={styles.removeButton}>×</Text>

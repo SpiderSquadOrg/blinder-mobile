@@ -23,14 +23,10 @@ function OptionSearchBar({
   useEffect(() => {
     if(searchQuery.length < 1) return;
     searchMusics(searchQuery, 10).then((data) => {
-      setMusicList(data.map((music)=>({
-          id: music.spotifyId,
-          title: music.name,
-          artist: music.artists[0],
-          imageUrl: music.image,
-      })));
+      setMusicList(data);
     });
   }, [searchQuery]);
+
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -38,7 +34,7 @@ function OptionSearchBar({
 
   const handleMusicSelect = (selectedMusic) => {
     const isMusicAlreadySelected = selectedMusicList.some(
-      (music) => music.id === selectedMusic.id
+      (music) => music.spotifyId === selectedMusic.spotifyId
     );
 
     if (!isMusicAlreadySelected) {
@@ -75,7 +71,7 @@ function OptionSearchBar({
             <View style={styles.listItems}>
               <View>
                 <Image
-                  source={{ uri: music.imageUrl }}
+                  source={{ uri: music.image }}
                   style={{
                     width: 60,
                     height: 60,
@@ -85,8 +81,8 @@ function OptionSearchBar({
                 />
               </View>
               <View style={{ marginTop: screenHeight * 0.01 }}>
-                <Text style={styles.titleText}>{music.title}</Text>
-                <Text style={styles.artistText}>{music.artist}</Text>
+                <Text style={styles.titleText}>{music.name}</Text>
+                <Text style={styles.artistText}>{music.artists[0]}</Text>
               </View>
             </View>
           </TouchableOpacity>

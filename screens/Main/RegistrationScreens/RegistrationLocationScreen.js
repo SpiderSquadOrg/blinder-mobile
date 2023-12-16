@@ -7,7 +7,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "../../../constansts/Colors";
@@ -17,7 +17,8 @@ import EnterLocationContainer from "../../../containers/EnterLocation";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import register from "../../../api/auth/register";
 import fetchChats from "../../../api/chat/fetchChats";
-import { storeData } from "../../../utils/storage";
+import { removeData, storeData } from "../../../utils/storage";
+import { useUser } from "../../../contexts/UserContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -27,6 +28,16 @@ function RegistrationLocationScreen({ navigation, route }) {
   const [state, setState] = useState(null);
   const [countryModalVisible, setCountryModalVisible] = useState(false);
   const [stateModalVisible, setStateModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  //const { resetUser } = useUser();
+  /*
+  useEffect(() => {
+    if(user){
+      navigation.navigate("Home");
+    }
+  }, []);*/
+
 
   function handleLocationButtonPress() {
     setIsLocationEnabled(!isLocationEnabled);
@@ -43,37 +54,42 @@ function RegistrationLocationScreen({ navigation, route }) {
   }
 
   async function nextPageHandler() {
-    if(!(country && state)){
+    if (!(country && state)) {
       alert("Please fill in all fields");
       return;
     }
-
-    let token;
-    await register({
-      ...route.params.user,
-      location: {
-        countryIso2: country.iso2,
-        stateIso2: state.iso2,
-      },
-    }).then((res) => {
-      token = res.data.token;
+    setIsLoading(true);
+    //await removeData("userInfo");
+    await register(
+      route.params.user.username,
+      route.params.user.password,
+      route.params.user.email,
+      route.params.user.name,
+      route.params.user.surname,
+      route.params.user.nickname,
+      route.params.user.phoneNumber,
+      route.params.user.genderId,
+      route.params.user.birthDate,
+      route.params.user.images,
+      country.iso2,
+      state.iso2
+    ).then((res) => {
+      let token = res.token;
+      //extract userId from token
+      let userId = token.split(".")[1];
+      userId = JSON.parse(atob(userId)).userId;
+      
+      storeData("userInfo", token);
+     
+      fetchChats();
+      navigation.navigate("RegistrationPartnerGenderScreen", {
+        user: {
+          id: userId,
+        },
+      });
     });
 
-    await storeData("token", token);    
-
-    await fetchChats();
-
-    navigation.navigate("RegistrationPartnerGenderScreen",
-    {
-      user: {
-        ...route.params.user,
-        location: {
-          countryIso2: country.iso2,
-          stateIso2: state.iso2,
-        },
-      },
-    }
-    );
+    setIsLoading(false);
   }
 
   return (
@@ -109,8 +125,12 @@ function RegistrationLocationScreen({ navigation, route }) {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton}>
-          İleri
+        <TextButton
+          onPress={nextPageHandler}
+          style={styles.textButton}
+          disabled={isLoading}
+        >
+          Kaydı Tamamla
         </TextButton>
       </View>
       <View style={styles.locationContainer}>
@@ -126,7 +146,6 @@ function RegistrationLocationScreen({ navigation, route }) {
           setStateModalVisible={setStateModalVisible}
         />
       </View>
-      
     </View>
   );
 }

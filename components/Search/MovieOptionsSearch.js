@@ -23,12 +23,7 @@ function MovieOptionsSearch({
   useEffect(() => {
     if(searchQuery.length < 3) return;
     searchMovies(searchQuery, 10).then((data) => {
-      setMovieList(data.map((movie) => ({
-        id: movie.imdbId,
-        name: movie.name,
-        year: movie.year,
-        imageUrl: movie.image,
-      })));
+      setMovieList(data);
     });
   }, [searchQuery]);
   
@@ -38,7 +33,7 @@ function MovieOptionsSearch({
 
   const handleMovieSelect = (selectedMovie) => {
     const isMovieAlreadySelected = selectedMovieList.some(
-      (movie) => movie.id === selectedMovie.id
+      (movie) => movie.imdbId === selectedMovie.imdbId
     );
 
     if (!isMovieAlreadySelected) {
@@ -75,7 +70,7 @@ function MovieOptionsSearch({
             <View style={styles.listItems}>
               <View>
                 <Image
-                  source={{ uri: movie.imageUrl }}
+                  source={{ uri: movie.image }}
                   style={{
                     width: 60,
                     height: 60,

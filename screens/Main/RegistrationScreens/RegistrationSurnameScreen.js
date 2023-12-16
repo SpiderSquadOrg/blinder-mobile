@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -8,9 +8,19 @@ import {
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import InputField from "../../../components/ui/InputField";
 import TextButton from "../../../components/Button/TextButton";
+import { useUser } from "../../../contexts/UserContext";
 
 function RegistrationSurnameScreen({ navigation ,route}) {
   const [surname, setSurname] = useState("");
+
+  /*const { user } = useUser();
+
+  useEffect(() => {
+    if(user){
+      navigation.navigate("Home");
+    }
+  }, []);*/
+
   function surnameHandler(surname) {
     setSurname(surname);
   }

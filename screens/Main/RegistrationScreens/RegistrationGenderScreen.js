@@ -1,14 +1,23 @@
 import { View, StyleSheet, Dimensions } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 
 import TextButton from "../../../components/Button/TextButton";
 import GenderPicker from "../../../containers/GenderFilter/GenderPicker";
+import { useUser } from "../../../contexts/UserContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationGenderScreen({ navigation, route }) {
   const [gender, setGender] = useState();
+
+  /*const { user } = useUser();
+
+  useEffect(() => {
+    if(user){
+      navigation.navigate("Home");
+    }
+  }, []);*/
 
   const genderHandler = (gender) => {
     setGender(gender);

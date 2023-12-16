@@ -19,12 +19,12 @@ function SeriesCard({ seriesList, onRemoveItemId }) {
     <ScrollView horizontal>
       {seriesList.map((series, index) => (
         <View key={index} style={styles.container}>
-          <Image source={{ uri: series.imageUrl }} style={styles.seriesImage} />
+          <Image source={{ uri: series.image }} style={styles.seriesImage} />
           <View style={styles.textContainer}>
             <Text style={styles.name}>{series.name}</Text>
             <Text style={styles.year}>{series.year}</Text>
           </View>
-          <Pressable onPress={() => handleRemoveSeries(series.id)}>
+          <Pressable onPress={() => handleRemoveSeries(series.imdbId)}>
             <Text style={styles.removeButton}>×</Text>
           </Pressable>
         </View>

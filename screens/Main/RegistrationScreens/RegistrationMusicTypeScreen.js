@@ -6,13 +6,14 @@ import SubTitle from "../../../components/ui/SubTitle";
 import TypesOptions from "../../../containers/Options/TypesOptions";
 import getMusicCategories from "../../../api/characteristics/getMusicCategories";
 import TextButton from "../../../components/Button/TextButton";
-
+import addMusicCategory from "../../../api/characteristics/addMusicCategory";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationMusicTypeScreen({ navigation }) {
+function RegistrationMusicTypeScreen({ navigation, route }) {
   const [selectedMusicTypes, setSelectedMusicTypes] = useState([]);
-  const [musicTypes, setMusicTypes] = useState([])
+  const [musicTypes, setMusicTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getMusicCategories().then((data) => {
@@ -25,7 +26,13 @@ function RegistrationMusicTypeScreen({ navigation }) {
   };
 
   function nextPageHandler() {
+    setIsLoading(true);
+    selectedMusicTypes.forEach(async (type) => {
+      await addMusicCategory({ name: type });
+    });
+    setIsLoading(false);
     navigation.navigate("RegistrationFavoriteMusicScreen");
+
   }
 
   return (
@@ -48,7 +55,7 @@ function RegistrationMusicTypeScreen({ navigation }) {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
             İleri
           </TextButton>
         </View>
