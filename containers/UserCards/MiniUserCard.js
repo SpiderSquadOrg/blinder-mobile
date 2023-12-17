@@ -9,13 +9,14 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "../../constansts/Colors";
-
+import MiniUserCardInformation from "../../components/User/MiniUserCardInformation";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function MiniUserCard({ user, index, withHeart, withTakeBack }) {
   return (
     <Card style={styles.cardContainer}>
-      <Text>{user.name}</Text>
+      
+      <MiniUserCardInformation user={user} match={'%50'}/>
       <View style={styles.iconContainer}></View>
       {withHeart && (
         <TouchableOpacity style={styles.likeIcon} activeOpacity={0.5}>
