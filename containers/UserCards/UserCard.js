@@ -3,7 +3,7 @@ import Card from "../../components/ui/Card";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "../../constansts/Colors";
-
+import UserCardInformation from "../../components/User/UserCardInformation";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function UserCard({
@@ -15,7 +15,7 @@ function UserCard({
 }) {
   return (
     <Card style={styles.cardContainer}>
-      <Text>{card.name}</Text>
+      <UserCardInformation user={card} match={'%50'}/>
       <View style={styles.iconContainer}>
         {index === topCardIndex && (
           <View style={styles.iconContainer}>
