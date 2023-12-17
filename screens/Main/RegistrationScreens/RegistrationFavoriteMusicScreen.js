@@ -15,11 +15,9 @@ function RegistrationFavoriteMusicScreen({ navigation, route }) {
   const [selectedMusicList, setSelectedMusicList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
- 
-
   function removeItemHandler(removeItemId) {
     setSelectedMusicList(
-      selectedMusicList.filter((music) => music.id !== removeItemId)
+      selectedMusicList.filter((music) => music.spotifyId !== removeItemId)
     );
   }
 
@@ -62,7 +60,11 @@ function RegistrationFavoriteMusicScreen({ navigation, route }) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
+        <TextButton
+          onPress={nextPageHandler}
+          style={styles.textButton}
+          disabled={isLoading}
+        >
           İleri
         </TextButton>
       </View>

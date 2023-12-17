@@ -19,7 +19,7 @@ function RegistrationFavoriteMovieScreen({ navigation }) {
 
   function removeItemHandler(removeItemId) {
     setSelectedMovieList(
-      selectedMovieList.filter((movie) => movie.id !== removeItemId)
+      selectedMovieList.filter((movie) => movie.imdbId !== removeItemId)
     );
   }
 
