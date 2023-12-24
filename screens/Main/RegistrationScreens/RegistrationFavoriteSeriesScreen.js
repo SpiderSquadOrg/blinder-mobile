@@ -19,7 +19,7 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
 
   function removeItemHandler(removeItemId) {
     setSelectedSeriesList(
-      selectedSeriesList.filter((series) => series.id !== removeItemId)
+      selectedSeriesList.filter((series) => series.imdbId !== removeItemId)
     );
   }
 

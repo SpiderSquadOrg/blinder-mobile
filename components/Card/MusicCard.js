@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -22,9 +23,14 @@ function MusicCard({ musicList, onRemoveItemId }) {
           <Image source={{ uri: music.image }} style={styles.musicImage} />
           <View style={styles.textContainer}>
             <Text style={styles.title}>{music.name}</Text>
-            <Text style={styles.artist}>{music.artists[0]}</Text>
+            <Text style={styles.artist}>{music.artist}</Text>
           </View>
-          <Pressable onPress={() => handleRemoveMusic(music.id)}>
+          <Pressable
+            onPress={() => {
+              console.log("music.spotifyId");
+              handleRemoveMusic(music.spotifyId);
+            }}
+          >
             <Text style={styles.removeButton}>×</Text>
           </Pressable>
         </View>

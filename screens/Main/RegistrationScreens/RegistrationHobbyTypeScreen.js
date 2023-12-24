@@ -34,6 +34,7 @@ function RegistrationHobbyTypeScreen({ navigation,route }) {
       await addHobby({ name: hobby });
     });
     setIsLoading(false); 
+    navigation.navigate("Home");
   }
 
   return (

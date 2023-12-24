@@ -82,7 +82,7 @@ function OptionSearchBar({
               </View>
               <View style={{ marginTop: screenHeight * 0.01 }}>
                 <Text style={styles.titleText}>{music.name}</Text>
-                <Text style={styles.artistText}>{music.artists[0]}</Text>
+                <Text style={styles.artistText}>{music.artist}</Text>
               </View>
             </View>
           </TouchableOpacity>

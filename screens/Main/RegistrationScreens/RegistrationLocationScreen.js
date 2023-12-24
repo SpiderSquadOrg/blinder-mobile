@@ -70,7 +70,7 @@ function RegistrationLocationScreen({ navigation, route }) {
       route.params.user.phoneNumber,
       route.params.user.genderId,
       route.params.user.birthDate,
-      route.params.user.images,
+      route.params.user.image,
       country.iso2,
       state.iso2
     ).then((res) => {

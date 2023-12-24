@@ -13,12 +13,15 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import TextButton from "../../../components/Button/TextButton";
 import Colors from "../../../constansts/Colors";
 import BlackImg from "../../../assets/blackWallpaper.jpg";
-import { useUser } from "../../../contexts/UserContext";
+import * as ImageManipulator from "expo-image-manipulator";
+import * as FileSystem from "expo-file-system";
+import addImage from "../../../api/user/addImage";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationImageScreen({ navigation,route }) {
+function RegistrationImageScreen({ navigation, route }) {
   const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   /*const { user } = useUser();
 
@@ -36,17 +39,42 @@ function RegistrationImageScreen({ navigation,route }) {
       quality: 1,
     });
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      const { uri } = result.assets[0];
+      const maxFileSize = 1 * 1024 * 1024 / 10 ; // 10 MB
+
+      let resizedUri = uri;
+      let quality = 90; // Start with 90% quality
+
+      let fileSize = await FileSystem.getInfoAsync(resizedUri);
+
+      while (fileSize.size > maxFileSize && quality > 0) {
+        const manipulatedImage = await ImageManipulator.manipulateAsync(
+          uri,
+          [],
+          { compress: quality / 100 }
+        );
+        resizedUri = manipulatedImage.uri;
+        fileSize = await FileSystem.getInfoAsync(resizedUri);
+        quality -= 10; // Reduce quality by 10%
+      }
+
+      setImage(resizedUri);
     }
   };
 
+  async function nextPageHandler() {
+    setIsLoading(true);
 
+    await addImage({
+      publicId: `publicId_${route.params.user.username}`,
+      uri: image,
+    });
 
-  function nextPageHandler() {
-    navigation.navigate("RegistrationGenderScreen",{
+    setIsLoading(false);
+    navigation.navigate("RegistrationGenderScreen", {
       user: {
         ...route.params.user,
-        image: image,
+        image: `publicId_${route.params.user.username}`,
       },
     });
   }
@@ -99,7 +127,7 @@ function RegistrationImageScreen({ navigation,route }) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton}>
+        <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
           İleri
         </TextButton>
       </View>

@@ -3,24 +3,14 @@ import { API } from "@env";
 import env from "../../constansts/env_variables";
 import header from "../header";
 
-const addMusic = async ({ spotifyId, name, artist, album, image }) => {
-  const url = `${env.API}/characteristics/musics`;
+const getImage = async ({ publicId }) => {
+  const url = `${env.API}/images/${publicId}`;
   const headers = await header();
 
   try {
-    const response = await axios.patch(
-      url,
-      {
-        spotifyId: spotifyId,
-        name: name,
-        artist: artist,
-        album: album,
-        image: image,
-      },
-      {
-        headers: headers,
-      }
-    );
+    const response = await axios.get(url, {
+      headers: { headers },
+    });
 
     return response.data;
   } catch (error) {
@@ -34,4 +24,4 @@ const addMusic = async ({ spotifyId, name, artist, album, image }) => {
   }
 };
 
-export default addMusic;
+export default getImage;

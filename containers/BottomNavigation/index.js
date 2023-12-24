@@ -7,11 +7,19 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Colors from "../../constansts/Colors";
 import { DefaultTheme, Provider } from "react-native-paper";
+import { useUser } from "../../contexts/UserContext";
+import { useEffect } from "react";
 
 const Tab = createMaterialBottomTabNavigator();
 
 
 function BottomNavigation() {
+  const { resetUser } = useUser();
+
+  useEffect(() => {
+    resetUser();
+  }, []);
+  
   return (
     <Provider theme={theme}>
       <Tab.Navigator

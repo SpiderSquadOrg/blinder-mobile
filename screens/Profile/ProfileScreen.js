@@ -5,9 +5,9 @@ import {
   Dimensions,
   ScrollView,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 
-import { newUser, profileUser } from "../../data/userData";
 import Colors from "../../constansts/Colors";
 import ProfileHeader from "../../components/ui/ProfileHeader";
 import SubTitle from "../../components/ui/SubTitle";
@@ -19,6 +19,7 @@ import React, { useState, useEffect } from "react";
 import { useUser } from "../../contexts/UserContext";
 import getProfile from "../../api/user/getProfile";
 import getMyCharacteristics from "../../api/characteristics/getMyCharacteristics";
+import getImage from "../../api/user/getImage";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -40,13 +41,15 @@ function ProfileScreen({ navigation }) {
   });
 
   const [refreshing, setRefreshing] = React.useState(false);
-  const [hobbies, setHobbies] = useState([]); 
+  const [hobbies, setHobbies] = useState([]);
   const [musicList, setMusicList] = useState([]);
   const [movieList, setMovielist] = useState(profileUser.favoriteMovies);
   const [seriesList, setSeriesList] = useState(profileUser.favoriteSeries);
   const [musicTypes, setMusicTypes] = useState(profileUser.musicTypes);
   const [movieTypes, setMovieTypes] = useState(profileUser.movieTypes);
   const [seriesTypes, setSeriesTypes] = useState(profileUser.seriesTypes);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -71,52 +74,62 @@ function ProfileScreen({ navigation }) {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getProfile(user.userId).then((response) => {
       setProfileUser({
         id: response.id,
         email: response.email,
         name: response.name,
         surname: response.surname,
+        nickname: response.nickname,
         age: response.age,
-        location: `${response.location.stateName}, ${response.location.countryName}`, 
-        imageUrl: response.images[0],
+        location: `${response.location.stateName}, ${response.location.countryName}`,
+      });
+
+      getImage({ publicId: response.images[0] }).then((response) => {
+        setProfileUser((prev) => ({ ...prev, imageUrl: response }));
       });
     });
 
     getMyCharacteristics().then((response) => {
-      setMusicList(response.musics.map((music) => {
-        return {
-          id: music.spotifyId,
-          title: music.name,
-          artist: music.artists[0],
-          imageUrl: music.image,
-        };
-      }));
+      setMusicList(
+        response.musics.map((music) => {
+          return {
+            id: music.spotifyId,
+            title: music.name,
+            artist: music.artist,
+            imageUrl: music.image,
+          };
+        })
+      );
 
-      setMovielist(response.movies.map((movie) => {
-        return {
-          id: movie.imdbId,
-          name: movie.name,
-          imageUrl: movie.image,
-          year: movie.year,
-        };
-      }));
+      setMovielist(
+        response.movies.map((movie) => {
+          return {
+            id: movie.imdbId,
+            name: movie.name,
+            imageUrl: movie.image,
+            year: movie.year,
+          };
+        })
+      );
 
-      setSeriesList(response.tvSeriesList.map((series) => {
-        return {
-          id: series.imdbId,
-          name: series.name,
-          imageUrl: series.image,
-          year: series.year,
-        };
-      }));
+      setSeriesList(
+        response.tvSeriesList.map((series) => {
+          return {
+            id: series.imdbId,
+            name: series.name,
+            imageUrl: series.image,
+            year: series.year,
+          };
+        })
+      );
 
       setMusicTypes(response.musicCategories);
       setMovieTypes(response.movieCategories);
       setSeriesTypes(response.tvSeriesCategories);
       setHobbies(response.hobbies);
-
-
+      setIsLoading(false);
     });
   }, [user]);
 
@@ -170,80 +183,92 @@ function ProfileScreen({ navigation }) {
   }
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-      <View style={styles.profileUpContainer}>
-        <View style={styles.headerContainer}>
-          <ProfileHeader
-            settings={settingsHandler}
-            logOut={logOutHandler}
-            navigation={navigation}
-          />
+    <>
+      {isLoading && (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
         </View>
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: profileUser.imageUrl }} style={styles.image} />
-        </View>
-      </View>
+      )}
+      {!isLoading && (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View style={styles.profileUpContainer}>
+            <View style={styles.headerContainer}>
+              <ProfileHeader
+                settings={settingsHandler}
+                logOut={logOutHandler}
+                navigation={navigation}
+              />
+            </View>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{ uri: profileUser.imageUrl }}
+                style={styles.image}
+              />
+            </View>
+          </View>
 
-      <View style={styles.profileDownContainer}>
-        <SubTitle style={styles.name}>
-          {profileUser.name} {profileUser.surname}
-        </SubTitle>
-        <SubTitle>
-          {profileUser.location} - {profileUser.age}
-        </SubTitle>
+          <View style={styles.profileDownContainer}>
+            <SubTitle style={styles.name}>
+              {profileUser.name} {profileUser.surname}
+            </SubTitle>
+            <SubTitle>
+              {profileUser.location} - {profileUser.age}
+            </SubTitle>
 
-        <View style={styles.cardItem}>
-          <TypesCard
-            typeList={musicTypes}
-            title={"Müzik Türleri"}
-            handlePressable={handlePressMusicCategory}
-          />
-        </View>
-        <View style={styles.cardItem}>
-          <ProfileMusicCard
-            musicList={musicList}
-            handlePressable={handlePressMusicList}
-          />
-        </View>
-        <View style={styles.cardItem}>
-          <TypesCard
-            typeList={movieTypes}
-            title={"Film Türleri"}
-            handlePressable={handlePressMovieCategory}
-          />
-        </View>
-        <View style={styles.cardItem}>
-          <ProfileMovieCard
-            movieList={movieList}
-            handlePressable={handlePressMovieList}
-          />
-        </View>
-        <View style={styles.cardItem}>
-          <TypesCard
-            typeList={seriesTypes}
-            title={"Dizi Türleri"}
-            handlePressable={handlePressSeriesCategory}
-          />
-        </View>
-        <View style={styles.cardItem}>
-          <ProfileSeriesCard
-            seriesList={seriesList}
-            handlePressable={handlePressSeriesList}
-          />
-        </View>
-        <View style={styles.cardItem}>
-          <TypesCard
-            typeList={hobbies}
-            title={"Hobiler"}
-            handlePressable={handlePress}
-          />
-        </View>
-      </View>
-    </ScrollView>
+            <View style={styles.cardItem}>
+              <TypesCard
+                typeList={musicTypes}
+                title={"Müzik Türleri"}
+                handlePressable={handlePressMusicCategory}
+              />
+            </View>
+            <View style={styles.cardItem}>
+              <ProfileMusicCard
+                musicList={musicList}
+                handlePressable={handlePressMusicList}
+              />
+            </View>
+            <View style={styles.cardItem}>
+              <TypesCard
+                typeList={movieTypes}
+                title={"Film Türleri"}
+                handlePressable={handlePressMovieCategory}
+              />
+            </View>
+            <View style={styles.cardItem}>
+              <ProfileMovieCard
+                movieList={movieList}
+                handlePressable={handlePressMovieList}
+              />
+            </View>
+            <View style={styles.cardItem}>
+              <TypesCard
+                typeList={seriesTypes}
+                title={"Dizi Türleri"}
+                handlePressable={handlePressSeriesCategory}
+              />
+            </View>
+            <View style={styles.cardItem}>
+              <ProfileSeriesCard
+                seriesList={seriesList}
+                handlePressable={handlePressSeriesList}
+              />
+            </View>
+            <View style={styles.cardItem}>
+              <TypesCard
+                typeList={hobbies}
+                title={"Hobiler"}
+                handlePressable={handlePress}
+              />
+            </View>
+          </View>
+        </ScrollView>
+      )}
+    </>
   );
 }
 
@@ -275,7 +300,7 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.03,
   },
   profileDownContainer: {
-    marginTop: screenHeight * 0.05,
+    marginTop: screenHeight * 0.1,
     marginBottom: screenHeight * 0.07,
   },
   name: {
@@ -289,5 +314,11 @@ const styles = StyleSheet.create({
   cardItem: {
     marginVertical: screenHeight * 0.02,
     marginHorizontal: screenWidth * 0.01,
+  },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: 1000, // Ensure it covers the entire screen height
   },
 });
