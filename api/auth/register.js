@@ -29,7 +29,7 @@ const register = async (
       phoneNumber: phoneNumber,
       genderId: genderId,
       birthDate: birthDate,
-      images: images,
+      images: [images],
       location: {
         countryIso2: countryIso2,
         stateIso2: stateIso2,

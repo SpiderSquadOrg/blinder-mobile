@@ -23,7 +23,7 @@ function MusicCard({ musicList, onRemoveItemId }) {
           <Image source={{ uri: music.image }} style={styles.musicImage} />
           <View style={styles.textContainer}>
             <Text style={styles.title}>{music.name}</Text>
-            <Text style={styles.artist}>{music.artists[0]}</Text>
+            <Text style={styles.artist}>{music.artist}</Text>
           </View>
           <Pressable
             onPress={() => {
