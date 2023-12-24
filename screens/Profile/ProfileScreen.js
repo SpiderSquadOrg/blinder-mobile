@@ -205,7 +205,11 @@ function ProfileScreen({ navigation }) {
             </View>
             <View style={styles.imageContainer}>
               <Image
-                source={{ uri: profileUser.imageUrl }}
+                source={{
+                  uri: profileUser?.imageUrl
+                    ? profileUser?.imageUrl
+                    : "https://example.com/default-image.png",
+                }}
                 style={styles.image}
               />
             </View>

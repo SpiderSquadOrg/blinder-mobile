@@ -8,27 +8,24 @@ import SeriesOptionsSearch from "../../../components/Search/SeriesOptionsSearch"
 import TextButton from "../../../components/Button/TextButton";
 import addTvSeries from "../../../api/characteristics/addTvSeries";
 import { useUser } from "../../../contexts/UserContext";
+import removeTvSeries from "../../../api/characteristics/removeTvSeries";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationFavoriteSeriesScreen({ navigation }) {
   const [selectedSeriesList, setSelectedSeriesList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
-
-
-  function removeItemHandler(removeItemId) {
+  const removeItemHandler = async (removeItemId) => {
+    const removedSeries = selectedSeriesList.find(
+      (series) => series.imdbId === removeItemId
+    );
+    await removeTvSeries({ ...removedSeries }); // Kaldırılan diziyi API'den kaldırın
     setSelectedSeriesList(
       selectedSeriesList.filter((series) => series.imdbId !== removeItemId)
     );
-  }
+  };
 
   function nextPageHandler() {
-    setIsLoading(true);
-    selectedSeriesList.forEach(async (series) => {
-      await addTvSeries({ ...series });
-    });
-    setIsLoading(false);
     navigation.navigate("RegistrationHobbyTypeScreen");
   }
 
@@ -62,7 +59,10 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
+        <TextButton
+          onPress={nextPageHandler}
+          style={styles.textButton}
+        >
           İleri
         </TextButton>
       </View>
@@ -89,10 +89,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginLeft: "auto",
     marginVertical: screenHeight * 0.05,
+    marginRight: 23,
   },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
 });

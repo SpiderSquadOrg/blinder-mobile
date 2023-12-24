@@ -7,13 +7,13 @@ import TypesOptions from "../../../containers/Options/TypesOptions";
 import getMusicCategories from "../../../api/characteristics/getMusicCategories";
 import TextButton from "../../../components/Button/TextButton";
 import addMusicCategory from "../../../api/characteristics/addMusicCategory";
+import removeMusicCategory from "../../../api/characteristics/removeMusicCategory";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationMusicTypeScreen({ navigation, route }) {
   const [selectedMusicTypes, setSelectedMusicTypes] = useState([]);
   const [musicTypes, setMusicTypes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getMusicCategories().then((data) => {
@@ -21,18 +21,27 @@ function RegistrationMusicTypeScreen({ navigation, route }) {
     });
   }, []);
 
-  const handleMusicTypeSelect = (selectedTypes) => {
+  const handleMusicTypeSelect = async (selectedTypes) => {
+    const newTypes = selectedTypes.filter(
+      (type) => !selectedMusicTypes.includes(type)
+    );
+    const removedTypes = selectedMusicTypes.filter(
+      (type) => !selectedTypes.includes(type)
+    );
+
+    for (const type of newTypes) {
+      await addMusicCategory({ name: type });
+    }
+
+    for (const type of removedTypes) {
+      await removeMusicCategory({ name: type });
+    }
+
     setSelectedMusicTypes(selectedTypes);
   };
 
   function nextPageHandler() {
-    setIsLoading(true);
-    selectedMusicTypes.forEach(async (type) => {
-      await addMusicCategory({ name: type });
-    });
-    setIsLoading(false);
     navigation.navigate("RegistrationFavoriteMusicScreen");
-
   }
 
   return (
@@ -55,7 +64,7 @@ function RegistrationMusicTypeScreen({ navigation, route }) {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
+          <TextButton onPress={nextPageHandler} style={styles.textButton}>
             İleri
           </TextButton>
         </View>
@@ -81,10 +90,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginLeft: "auto",
     marginVertical: screenHeight * 0.05,
+    marginRight: 23,
   },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
 });

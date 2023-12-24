@@ -1,13 +1,5 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Button,
-  Text,
-  ScrollView,
-  KeyboardAvoidingView,
-} from "react-native";
-import { useEffect, useState } from "react";
+import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "../../../constansts/Colors";
@@ -17,8 +9,8 @@ import EnterLocationContainer from "../../../containers/EnterLocation";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import register from "../../../api/auth/register";
 import fetchChats from "../../../api/chat/fetchChats";
-import { removeData, storeData } from "../../../utils/storage";
-import { useUser } from "../../../contexts/UserContext";
+import { storeData } from "../../../utils/storage";
+import { ActivityIndicator } from "react-native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -37,7 +29,6 @@ function RegistrationLocationScreen({ navigation, route }) {
       navigation.navigate("Home");
     }
   }, []);*/
-
 
   function handleLocationButtonPress() {
     setIsLocationEnabled(!isLocationEnabled);
@@ -78,11 +69,11 @@ function RegistrationLocationScreen({ navigation, route }) {
       //extract userId from token
       let userId = token.split(".")[1];
       userId = JSON.parse(atob(userId)).userId;
-      
+
       storeData("userInfo", token);
-     
+
       fetchChats();
-      navigation.navigate("RegistrationPartnerGenderScreen", {
+      navigation.replace("RegistrationPartnerGenderScreen", {
         user: {
           id: userId,
         },
@@ -93,60 +84,71 @@ function RegistrationLocationScreen({ navigation, route }) {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <SubTitle style={styles.subtitle}>Yakındaki kişilerle tanış</SubTitle>
-        <View style={styles.locationIcon}>
-          <Ionicons name="location-outline" size={24} color="white" />
+    <>
+      {isLoading && (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
         </View>
-      </View>
+      )}
+      {!isLoading && (
+        <View style={styles.container}>
+          <View style={styles.titleContainer}>
+            <SubTitle style={styles.subtitle}>
+              Yakındaki kişilerle tanış
+            </SubTitle>
+            <View style={styles.locationIcon}>
+              <Ionicons name="location-outline" size={24} color="white" />
+            </View>
+          </View>
 
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Seçili Bilgiler</Text>
+          <View style={styles.infoContainer}>
+            <Text style={styles.infoText}>Seçili Bilgiler</Text>
 
-        <View style={styles.infoItem}>
-          <Text style={styles.infoLabel}>Ülke:</Text>
-          <View style={styles.infoValueContainer}>
-            <Text style={styles.infoValue}>{country?.countryName}</Text>
-            <PrimaryButton onPress={handleCountryButtonPress}>
-              Ülke Seç
-            </PrimaryButton>
+            <View style={styles.infoItem}>
+              <Text style={styles.infoLabel}>Ülke:</Text>
+              <View style={styles.infoValueContainer}>
+                <Text style={styles.infoValue}>{country?.countryName}</Text>
+                <PrimaryButton onPress={handleCountryButtonPress}>
+                  Ülke Seç
+                </PrimaryButton>
+              </View>
+            </View>
+
+            <View style={styles.infoItem}>
+              <Text style={styles.infoLabel}>Şehir:</Text>
+              <View style={styles.infoValueContainer}>
+                <Text style={styles.infoValue}>{state?.stateName}</Text>
+                <PrimaryButton onPress={handleStateButtonPress}>
+                  Şehir Seç
+                </PrimaryButton>
+              </View>
+            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TextButton
+              onPress={nextPageHandler}
+              style={styles.textButton}
+              disabled={isLoading}
+            >
+              Kaydı Tamamla
+            </TextButton>
+          </View>
+          <View style={styles.locationContainer}>
+            <EnterLocationContainer
+              country={country}
+              state={state}
+              isLocationEnabled={isLocationEnabled}
+              setCountry={setCountry}
+              setState={setState}
+              countryModalVisible={countryModalVisible}
+              setCountryModalVisible={setCountryModalVisible}
+              stateModalVisible={stateModalVisible}
+              setStateModalVisible={setStateModalVisible}
+            />
           </View>
         </View>
-
-        <View style={styles.infoItem}>
-          <Text style={styles.infoLabel}>Şehir:</Text>
-          <View style={styles.infoValueContainer}>
-            <Text style={styles.infoValue}>{state?.stateName}</Text>
-            <PrimaryButton onPress={handleStateButtonPress}>
-              Şehir Seç
-            </PrimaryButton>
-          </View>
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TextButton
-          onPress={nextPageHandler}
-          style={styles.textButton}
-          disabled={isLoading}
-        >
-          Kaydı Tamamla
-        </TextButton>
-      </View>
-      <View style={styles.locationContainer}>
-        <EnterLocationContainer
-          country={country}
-          state={state}
-          isLocationEnabled={isLocationEnabled}
-          setCountry={setCountry}
-          setState={setState}
-          countryModalVisible={countryModalVisible}
-          setCountryModalVisible={setCountryModalVisible}
-          stateModalVisible={stateModalVisible}
-          setStateModalVisible={setStateModalVisible}
-        />
-      </View>
-    </View>
+      )}
+    </>
   );
 }
 
@@ -157,7 +159,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-
   titleContainer: {
     backgroundColor: Colors.primary600,
     padding: 20,
@@ -212,5 +213,11 @@ const styles = StyleSheet.create({
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
+  },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: 1000, // Ensure it covers the entire screen height
   },
 });

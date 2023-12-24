@@ -93,13 +93,14 @@ const styles = StyleSheet.create({
   submitButton: {
     width: "100%",
   },
-  buttonContainer: {
-    marginTop: 55,
-    marginLeft: "auto",
-  },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding:5,
+  },
+  buttonContainer: {
+    marginTop: 45,
+    marginRight: 23,
+    marginLeft: "auto",
   },
 });

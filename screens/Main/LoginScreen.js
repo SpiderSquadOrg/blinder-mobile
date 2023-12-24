@@ -45,7 +45,7 @@ function FirstLoginPage({ navigation }) {
       removeData("userInfo");
       storeData("userInfo", token);
       resetUser();
-      navigation.navigate("Home");
+      navigation.replace("Home");
       Alert.alert("Giriş Başarılı", "Hoşgeldiniz!");
     } catch (error) {
       Alert.alert("Hata", "Geçersiz email veya şifre");

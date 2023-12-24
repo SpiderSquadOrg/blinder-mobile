@@ -7,13 +7,13 @@ import TypesOptions from "../../../containers/Options/TypesOptions";
 import getSeriesCategories from "../../../api/characteristics/getSeriesCategories";
 import TextButton from "../../../components/Button/TextButton";
 import addTvSeriesCategory from "../../../api/characteristics/addTvSeriesCategory";
+import removeTvSeriesCategory from "../../../api/characteristics/removeTvSeriesCategory";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationSeriesTypeScreen({ navigation }) {
   const [selectedSeriesTypes, setSelectedSeriesTypes] = useState([]);
   const [seriesTypes, setSeriesTypes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getSeriesCategories().then((data) => {
@@ -21,17 +21,26 @@ function RegistrationSeriesTypeScreen({ navigation }) {
     });
   }, []);
 
-  const seriesTypeHandler = (selectedTypes) => {
+  const seriesTypeHandler = async (selectedTypes) => {
+    const newTypes = selectedTypes.filter(
+      (type) => !selectedSeriesTypes.includes(type)
+    );
+    const removedTypes = selectedSeriesTypes.filter(
+      (type) => !selectedTypes.includes(type)
+    );
+
+    for (const type of newTypes) {
+      await addTvSeriesCategory({ name: type });
+    }
+
+    for (const type of removedTypes) {
+      await removeTvSeriesCategory({ name: type });
+    }
+
     setSelectedSeriesTypes(selectedTypes);
   };
 
   function nextPageHandler() {
-    setIsLoading(true);
-    selectedSeriesTypes.forEach(async (type) => {
-      await addTvSeriesCategory({ name: type });
-    });
-    setIsLoading(false);
-
     navigation.navigate("RegistrationFavoriteSeriesScreen");
   }
 
@@ -55,10 +64,10 @@ function RegistrationSeriesTypeScreen({ navigation }) {
           />
         </View>
         <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
-          İleri
-        </TextButton>
-      </View>
+          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+            İleri
+          </TextButton>
+        </View>
       </View>
     </ScrollView>
   );
@@ -81,10 +90,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginVertical: screenHeight * 0.06,
     marginLeft: "auto",
+    marginRight: 23,
   },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
 });

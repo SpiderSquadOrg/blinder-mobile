@@ -7,13 +7,13 @@ import TextButton from "../../../components/Button/TextButton";
 import TypesOptions from "../../../containers/Options/TypesOptions";
 import getMovieCategories from "../../../api/characteristics/getMovieCategories";
 import addMovieCategory from "../../../api/characteristics/addMovieCategory";
+import removeMovieCategory from "../../../api/characteristics/removeMovieCategory";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationMovieTypeScreen({ navigation }) {
   const [selectedMovieTypes, setSelectedMovieTypes] = useState([]);
   const [movieTypes, setMovieTypes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getMovieCategories().then((data) => {
@@ -21,16 +21,26 @@ function RegistrationMovieTypeScreen({ navigation }) {
     });
   }, []);
 
-  const movieTypeHandler = (selectedTypes) => {
+  const handleMovieTypeSelect = async (selectedTypes) => {
+    const newTypes = selectedTypes.filter(
+      (type) => !selectedMovieTypes.includes(type)
+    );
+    const removedTypes = selectedMovieTypes.filter(
+      (type) => !selectedTypes.includes(type)
+    );
+
+    for (const type of newTypes) {
+      await addMovieCategory({ name: type });
+    }
+
+    for (const type of removedTypes) {
+      await removeMovieCategory({ name: type });
+    }
+
     setSelectedMovieTypes(selectedTypes);
   };
 
   function nextPageHandler() {
-    setIsLoading(true);
-    selectedMovieTypes.forEach(async (type) => {
-      await addMovieCategory({ name: type });
-    });
-    setIsLoading(false);
     navigation.navigate("RegistrationFavoriteMovieScreen");
   }
   return (
@@ -47,10 +57,13 @@ function RegistrationMovieTypeScreen({ navigation }) {
           <SubTitle>{selectedMovieTypes.length}/3+</SubTitle>
         </View>
         <View style={styles.movieContainer}>
-          <TypesOptions onTypeSelect={movieTypeHandler} options={movieTypes} />
+          <TypesOptions
+            onTypeSelect={handleMovieTypeSelect}
+            options={movieTypes}
+          />
         </View>
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
+          <TextButton onPress={nextPageHandler} style={styles.textButton}>
             İleri
           </TextButton>
         </View>
@@ -76,10 +89,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginLeft: "auto",
     marginVertical: screenHeight * 0.05,
+    marginRight: 23,
   },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
 });

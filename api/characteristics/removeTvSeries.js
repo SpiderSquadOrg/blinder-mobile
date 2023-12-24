@@ -1,15 +1,19 @@
 import axios from "axios";
 import { API } from "@env";
 import env from "../../constansts/env_variables";
+import header from "../header";
 
-const login = async (username, password) => {
-  const url = `${env.API}/auth/login`;
+const removeTvSeries = async ({ tvSeriesId }) => {
+  const url = `${env.API}/characteristics/tvSeries/${tvSeriesId}`;
+  const headers = await header();
 
   try {
-    const response = await axios.post(url, {
-      username: username,
-      password: password,
-    });
+    const response = await axios.delete(
+      url,
+      {
+        headers: headers,
+      }
+    );
 
     return response.data;
   } catch (error) {
@@ -19,7 +23,8 @@ const login = async (username, password) => {
       console.error("Response Status:", error.response.status);
       console.error("Response Headers:", error.response.headers);
     }
+    throw error;
   }
 };
 
-export default login;
+export default removeTvSeries;

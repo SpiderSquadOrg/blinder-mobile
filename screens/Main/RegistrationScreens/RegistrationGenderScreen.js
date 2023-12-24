@@ -61,10 +61,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: screenHeight * 0.06,
     marginLeft: "auto",
+    marginRight: 23,
   },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
 });

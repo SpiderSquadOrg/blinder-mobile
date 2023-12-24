@@ -18,7 +18,7 @@ import { useUser } from "../../../contexts/UserContext";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationNicknameScreen({ navigation,route }) {
+function RegistrationNicknameScreen({ navigation, route }) {
   const [nickname, setNickname] = useState();
 
   /*const { user } = useUser();
@@ -32,7 +32,6 @@ function RegistrationNicknameScreen({ navigation,route }) {
   useEffect(() => {
     setNickname(generateRandomCombination);
   }, []);
-  
 
   generateRandomCombination = () => {
     const randomFirstWord =
@@ -51,8 +50,7 @@ function RegistrationNicknameScreen({ navigation,route }) {
   }
 
   function nextPageHandler() {
-    navigation.navigate("RegistrationImageScreen",
-    {
+    navigation.navigate("RegistrationImageScreen", {
       user: {
         ...route.params.user,
         nickname: nickname,
@@ -120,10 +118,11 @@ const styles = StyleSheet.create({
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
   buttonContainer: {
     marginTop: screenHeight * 0.1,
     marginLeft: "auto",
+    marginRight: 23,
   },
 });

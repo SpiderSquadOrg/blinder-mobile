@@ -40,7 +40,7 @@ function RegistrationImageScreen({ navigation, route }) {
     });
     if (!result.canceled) {
       const { uri } = result.assets[0];
-      const maxFileSize = 1 * 1024 * 1024 / 10 ; // 10 MB
+      const maxFileSize = (1 * 1024 * 1024) / 10; // 10 MB
 
       let resizedUri = uri;
       let quality = 90; // Start with 90% quality
@@ -64,11 +64,13 @@ function RegistrationImageScreen({ navigation, route }) {
 
   async function nextPageHandler() {
     setIsLoading(true);
-
-    await addImage({
-      publicId: `publicId_${route.params.user.username}`,
-      uri: image,
-    });
+    
+    if (image) {
+      await addImage({
+        publicId: `publicId_${route.params.user.username}`,
+        uri: image,
+      });
+    }
 
     setIsLoading(false);
     navigation.navigate("RegistrationGenderScreen", {
@@ -127,7 +129,11 @@ function RegistrationImageScreen({ navigation, route }) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
+        <TextButton
+          onPress={nextPageHandler}
+          style={styles.textButton}
+          disabled={isLoading}
+        >
           İleri
         </TextButton>
       </View>
@@ -141,11 +147,12 @@ const styles = StyleSheet.create({
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
   buttonContainer: {
     marginTop: screenHeight * 0.1,
     marginLeft: "auto",
+    marginRight: 23,
   },
   imageContainer: {
     marginTop: screenHeight * 0.05,

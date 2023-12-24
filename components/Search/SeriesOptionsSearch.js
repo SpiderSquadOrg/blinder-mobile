@@ -10,18 +10,16 @@ import {
   TextInput,
 } from "react-native";
 import searchSeries from "../../api/characteristics/searchSeries";
+import addTvSeries from "../../api/characteristics/addTvSeries";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function SeriesOptionsSearch({
-  selectedSeriesList,
-  setSelectedSeriesList,
-}) {
+function SeriesOptionsSearch({ selectedSeriesList, setSelectedSeriesList }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [seriesList, setSeriesList] = useState([]);
 
   useEffect(() => {
-    if(searchQuery.length < 3) return;
+    if (searchQuery.length < 3) return;
     searchSeries(searchQuery, 10).then((data) => {
       setSeriesList(data);
     });
@@ -31,12 +29,13 @@ function SeriesOptionsSearch({
     setSearchQuery(query);
   };
 
-  const handleSeriesList = (selectedSeries) => {
+  const handleSeriesSelect = async (selectedSeries) => {
     const isSeriesAlreadySelected = selectedSeriesList.some(
       (series) => series.imdbId === selectedSeries.imdbId
     );
 
     if (!isSeriesAlreadySelected) {
+      await addTvSeries({ ...selectedSeries });
       setSelectedSeriesList((prevList) => [...prevList, selectedSeries]);
     }
   };

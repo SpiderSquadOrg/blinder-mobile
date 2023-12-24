@@ -13,30 +13,28 @@ import searchMovies from "../../api/characteristics/searchMovies";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function MovieOptionsSearch({
-  selectedMovieList,
-  setSelectedMovielist,
-}) {
+function MovieOptionsSearch({ selectedMovieList, setSelectedMovielist }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [movieList, setMovieList] = useState([]);
 
   useEffect(() => {
-    if(searchQuery.length < 3) return;
+    if (searchQuery.length < 3) return;
     searchMovies(searchQuery, 10).then((data) => {
       setMovieList(data);
     });
   }, [searchQuery]);
-  
+
   const handleSearch = (query) => {
     setSearchQuery(query);
   };
 
-  const handleMovieSelect = (selectedMovie) => {
+  const handleMovieSelect = async (selectedMovie) => {
     const isMovieAlreadySelected = selectedMovieList.some(
       (movie) => movie.imdbId === selectedMovie.imdbId
     );
 
     if (!isMovieAlreadySelected) {
+      await addMovie({ ...selectedMovie });
       setSelectedMovielist((prevList) => [...prevList, selectedMovie]);
     }
   };
