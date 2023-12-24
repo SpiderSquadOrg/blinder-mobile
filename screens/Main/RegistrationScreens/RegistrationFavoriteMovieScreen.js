@@ -8,30 +8,26 @@ import MovieCard from "../../../components/Card/MovieCard";
 import MovieOptionsSearch from "../../../components/Search/MovieOptionsSearch";
 import addMovie from "../../../api/characteristics/addMovie";
 import { useUser } from "../../../contexts/UserContext";
+import removeMovie from "../../../api/characteristics/removeMovie";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationFavoriteMovieScreen({ navigation }) {
   const [selectedMovieList, setSelectedMovieList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
- 
-
-  function removeItemHandler(removeItemId) {
+  const removeItemHandler = async (removeItemId) => {
+    const removedMovie = selectedMovieList.find(
+      (movie) => movie.imdbId === removeItemId
+    );
+    await removeMovie({ ...removedMovie }); // Kaldırılan filmi API'den kaldırın
     setSelectedMovieList(
       selectedMovieList.filter((movie) => movie.imdbId !== removeItemId)
     );
-  }
+  };
 
   function nextPageHandler() {
-    setIsLoading(true);
-    selectedMovieList.forEach(async (movie) => {
-      await addMovie({ ...movie });
-    });
-    setIsLoading(false);
     navigation.navigate("RegistrationSeriesTypeScreen");
   }
-
 
   return (
     <ScrollView>
@@ -59,7 +55,7 @@ function RegistrationFavoriteMovieScreen({ navigation }) {
         selectedMovieList={selectedMovieList}
         setSelectedMovielist={setSelectedMovieList}
       />
-       <View style={styles.buttonContainer}>
+      <View style={styles.buttonContainer}>
         <TextButton onPress={nextPageHandler} style={styles.textButton}>
           İleri
         </TextButton>
@@ -82,10 +78,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginLeft: "auto",
     marginVertical: screenHeight * 0.05,
+    marginRight: 23,
   },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
 });

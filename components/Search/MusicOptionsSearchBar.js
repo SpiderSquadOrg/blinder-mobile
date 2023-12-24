@@ -32,12 +32,13 @@ function OptionSearchBar({
     setSearchQuery(query);
   };
 
-  const handleMusicSelect = (selectedMusic) => {
+  const handleMusicSelect = async (selectedMusic) => {
     const isMusicAlreadySelected = selectedMusicList.some(
       (music) => music.spotifyId === selectedMusic.spotifyId
     );
 
     if (!isMusicAlreadySelected) {
+      await addMusic({ ...selectedMusic });
       setSelectedMusicList([...selectedMusicList, selectedMusic]);
     }
   };

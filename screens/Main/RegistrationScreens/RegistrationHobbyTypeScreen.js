@@ -7,13 +7,13 @@ import TextButton from "../../../components/Button/TextButton";
 import TypesOptions from "../../../containers/Options/TypesOptions";
 import addHobby from "../../../api/characteristics/addHobby";
 import getHobbies from "../../../api/characteristics/getHobbies";
+import removeHobby from "../../../api/characteristics/removeHobby";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationHobbyTypeScreen({ navigation,route }) {
+function RegistrationHobbyTypeScreen({ navigation, route }) {
   const [selectedHobbyTypes, setSelectedHobbyTypes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [hobbyList,setHobbyList] = useState([])
+  const [hobbyList, setHobbyList] = useState([]);
 
   useEffect(() => {
     getHobbies().then((data) => {
@@ -21,20 +21,27 @@ function RegistrationHobbyTypeScreen({ navigation,route }) {
     });
   }, []);
 
+  const hobbyTypesHandler = async (selectedHobbies) => {
+    const newHobbies = selectedHobbies.filter(
+      (hobby) => !selectedHobbyTypes.includes(hobby)
+    );
+    const removedHobbies = selectedHobbyTypes.filter(
+      (hobby) => !selectedHobbies.includes(hobby)
+    );
 
+    for (const hobby of newHobbies) {
+      await addHobby({ name: hobby });
+    }
 
-  const hobbyTypesHandler = (selectedHobbies) => {
+    for (const hobby of removedHobbies) {
+      await removeHobby({ name: hobby });
+    }
+
     setSelectedHobbyTypes(selectedHobbies);
   };
 
-
   function nextPageHandler() {
-    setIsLoading(true);
-    selectedHobbyTypes.forEach(async (hobby) => {
-      await addHobby({ name: hobby });
-    });
-    setIsLoading(false); 
-    navigation.navigate("Home");
+    navigation.replace("Home");
   }
 
   return (
@@ -56,7 +63,7 @@ function RegistrationHobbyTypeScreen({ navigation,route }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
+          <TextButton onPress={nextPageHandler} style={styles.textButton}>
             Kaydı Tamamla
           </TextButton>
         </View>
@@ -79,11 +86,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginVertical: screenHeight * 0.06,
     marginLeft: "auto",
+    marginRight: 23
   },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
   hobbiesContainer: {
     marginTop: screenHeight * 0.03,

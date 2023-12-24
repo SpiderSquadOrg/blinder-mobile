@@ -8,25 +8,24 @@ import MusicOptionsSearchBar from "../../../components/Search/MusicOptionsSearch
 import MusicCard from "../../../components/Card/MusicCard";
 import addMusic from "../../../api/characteristics/addMusic";
 import { useUser } from "../../../contexts/UserContext";
+import removeMusic from "../../../api/characteristics/removeMusic";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationFavoriteMusicScreen({ navigation, route }) {
   const [selectedMusicList, setSelectedMusicList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
-  function removeItemHandler(removeItemId) {
+  const removeItemHandler = async (removeItemId) => {
+    const removedMusic = selectedMusicList.find(
+      (music) => music.spotifyId === removeItemId
+    );
+    await removeMusic({ ...removedMusic });
     setSelectedMusicList(
       selectedMusicList.filter((music) => music.spotifyId !== removeItemId)
     );
-  }
+  };
 
   function nextPageHandler() {
-    setIsLoading(true);
-    selectedMusicList.forEach(async (music) => {
-      await addMusic({ ...music });
-    });
-    setIsLoading(false);
     navigation.navigate("RegistrationMovieTypeScreen");
   }
 
@@ -60,11 +59,7 @@ function RegistrationFavoriteMusicScreen({ navigation, route }) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TextButton
-          onPress={nextPageHandler}
-          style={styles.textButton}
-          disabled={isLoading}
-        >
+        <TextButton onPress={nextPageHandler} style={styles.textButton}>
           İleri
         </TextButton>
       </View>
@@ -91,10 +86,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginLeft: "auto",
     marginVertical: screenHeight * 0.05,
+    marginRight: 23,
   },
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding: 5,
   },
 });

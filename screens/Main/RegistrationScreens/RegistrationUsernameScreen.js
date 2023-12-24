@@ -9,7 +9,7 @@ import RegistrationQueryText from "../../../components/ui/RegistrationQueryText"
 import InputField from "../../../components/ui/InputField";
 import TextButton from "../../../components/Button/TextButton";
 
-function RegistrationUsernameScreen({ navigation,route }) {
+function RegistrationUsernameScreen({ navigation, route }) {
   const [username, setUsername] = useState("");
   function usernameHandler(username) {
     setUsername(username);
@@ -19,9 +19,8 @@ function RegistrationUsernameScreen({ navigation,route }) {
       alert("Please fill in all fields");
       return;
     }
-    
-    navigation.navigate("RegistrationNicknameScreen",
-    {
+
+    navigation.navigate("RegistrationNicknameScreen", {
       user: {
         ...route.params.user,
         username: username,
@@ -63,10 +62,11 @@ const styles = StyleSheet.create({
   textButton: {
     fontWeight: "bold",
     fontSize: 18,
-    paddingRight: 28,
+    padding:5,
   },
   buttonContainer: {
     marginTop: 45,
+    marginRight: 23,
     marginLeft: "auto",
   },
 });
