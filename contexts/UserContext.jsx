@@ -10,13 +10,15 @@ global.atob = decode;
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [trigger, resetUser] = useState(false);
+  const [trigger, setTrigger] = useState(false);
   const navigation = useNavigation();
+
+  const resetUser = () => setTrigger(prev => !prev); 
 
   useEffect(() => {
     const fetchUser = async () => {
       const userInfo = await getData("userInfo");
-
+      
       if (userInfo === null) {
         navigation.navigate("MainPage");
         return;

@@ -6,6 +6,7 @@ import {
   ScrollView,
   RefreshControl,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 
 import Colors from "../../constansts/Colors";
@@ -20,11 +21,12 @@ import { useUser } from "../../contexts/UserContext";
 import getProfile from "../../api/user/getProfile";
 import getMyCharacteristics from "../../api/characteristics/getMyCharacteristics";
 import getImage from "../../api/user/getImage";
+import { removeData } from "../../utils/storage";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function ProfileScreen({ navigation }) {
-  const { user } = useUser();
+  const { user, resetUser } = useUser();
   const [profileUser, setProfileUser] = useState({
     name: "",
     surname: "",
@@ -136,8 +138,20 @@ function ProfileScreen({ navigation }) {
   function settingsHandler() {
     //navigation.navigate("");
   }
-  function logOutHandler() {
-    //navigation.navigate("");
+  async function logOutHandler() {
+    Alert.alert("Çıkış Yap", "Çıkış yapmak istediğinize emin misiniz?", [
+      {
+        text: "Evet",
+        onPress: async () => {
+          await removeData("userInfo");
+          await resetUser();
+        },
+      },
+      {
+        text: "Hayır",
+        style: "cancel",
+      },
+    ]);
   }
 
   function handlePress() {

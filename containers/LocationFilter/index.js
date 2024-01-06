@@ -3,9 +3,14 @@ import { View, StyleSheet } from "react-native";
 import Header from "../../components/ui/Header";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 import { Ionicons } from "@expo/vector-icons";
+import { useLocation } from "../../contexts/LocationContext";
 
-function LocationFilter({ style,selectedLocation,navigation }) {
+function LocationFilter({ style, selectedLocation, navigation }) {
+  const { country, state, setCountry, setState } = useLocation();
+
   const onPress = () => {
+    setCountry(null);
+    setState(null);
     navigation.navigate("LocationPreferencesScreen");
   };
   return (
@@ -17,10 +22,14 @@ function LocationFilter({ style,selectedLocation,navigation }) {
             fontWeight: 400,
           }}
         >
-          {selectedLocation.name ? selectedLocation.name : ""}
+          {country && state
+            ? country?.countryName + ", " + state?.stateName
+            : ""}
+          {country && !state ? country?.countryName : ""}
+          {!country && !state ? "Seçilmedi" : ""}
         </Header>
       </View>
-      <PrimaryButton style={{ marginTop: 20 }} onPress={()=>onPress()}>
+      <PrimaryButton style={{ marginTop: 20 }} onPress={() => onPress()}>
         <Ionicons name="earth" size={24} color="white" />
         {"   "}
         Konum Seç
