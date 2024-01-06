@@ -1,14 +1,20 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import ProfileScreen from '../../screens/Profile/ProfileScreen';
-import BottomNavigation from '../BottomNavigation';
-import Colors from '../../constansts/Colors';
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import ProfileScreen from "../../screens/Profile/ProfileScreen";
+import BottomNavigation from "../BottomNavigation";
+import Colors from "../../constansts/Colors";
+import { useUser } from "../../contexts/UserContext";
+import { useNavigation } from "@react-navigation/native";
 
 const Drawer = createDrawerNavigator();
 
 function DrawerContainer() {
+  const { resetUser } = useUser();
+  const navigation = useNavigation();
+
+
   return (
-    <Drawer.Navigator 
-      screenOptions={{ 
+    <Drawer.Navigator
+      screenOptions={{
         headerShown: false,
         drawerActiveTintColor: Colors.primary800, // Active item color
         drawerStyle: {

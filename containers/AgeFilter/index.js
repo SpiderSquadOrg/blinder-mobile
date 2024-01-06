@@ -3,8 +3,8 @@ import { View, StyleSheet } from "react-native";
 import Header from "../../components/ui/Header";
 import RangeSlider from "../../components/ui/RangeSlider";
 
-function AgeFilter({ style }) {
-  const [values, setValues] = useState([25, 45]);
+function AgeFilter({ style,values,setValues }) {
+
 
   return (
     <View style={[styles.container, style]}>

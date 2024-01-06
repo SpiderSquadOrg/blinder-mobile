@@ -1,222 +1,105 @@
-import React, { useEffect, useState } from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-} from "react-native";
-import Tabs from "../../components/ui/Tabs";
-import { Searchbar } from "react-native-paper";
-import Header from "../../components/ui/Header";
-import { FlatList, Text } from "react-native";
+import React, { useState } from "react";
+import { Dimensions, StyleSheet, View, ActivityIndicator } from "react-native";
+import { Text } from "react-native";
+import Colors from "../../constansts/Colors";
+import SubTitle from "../../components/ui/SubTitle";
+import PrimaryButton from "../../components/Button/PrimaryButton";
+import EnterLocationContainer from "../../containers/EnterLocation";
+import { Ionicons } from "@expo/vector-icons";
+import { useLocation } from "../../contexts/LocationContext";
 
 // Define your state variable
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function LocationPreferencesScreen({ navigation }) {
-  const [selectedTab, setselectedTab] = useState("city");
-  const [selectedLocation, setSelectedLocation] = useState({
-    type: selectedTab,
-    id: -1,
-    name: "",
-  }); // ["city", "country", "region"
-  const [searchQuery, setSearchQuery] = useState("");
-  const [cityData, setCityData] = useState([
-    "Adana",
-    "Adıyaman",
-    "Afyonkarahisar",
-    "Ağrı",
-    "Amasya",
-    "Ankara",
-    "Antalya",
-    "Artvin",
-    "Aydın",
-    "Balıkesir",
-    "Bilecik",
-    "Bingöl",
-    "Bitlis",
-    "Bolu",
-    "Burdur",
-    "Bursa",
-  ]);
-  const [countryData, setCountryData] = useState([
-    "Türkiye",
-    "Almanya",
-    "İngiltere",
-    "Fransa",
-    "İtalya",
-    "İspanya",
-    "Portekiz",
-    "Yunanistan",
-    "Bulgaristan",
-    "Rusya",
-    "Amerika",
-    "Çin",
-    "Japonya",
-    "Hindistan",
-    "Pakistan",
-    "İran",
-    "Irak",
-    "Suriye",
-    "Mısır",
-    "Libya",
-    "Tunus",
-    "Cezayir",
-    "Fas",
-    "Nijerya",
-    "Gana",
-    "Güney Afrika",
-    "Avustralya",
-    "Yeni Zelanda",
-    "Kanada",
-    "Meksika",
-    "Arjantin",
-    "Brezilya",
-    "Şili",
-    "Peru",
-    "Kolombiya",
-    "Venezuela",
-    "Küba",
-    "Honduras",
-    "Guatemala",
-    "Panama",
-    "Kosta Rika",
-    "Nikaragua",
-    "El Salvador",
-    "Belize",
-    "Haiti",
-    "Dominik Cumhuriyeti",
-    "Porto Riko",
-    "Küba",
-    "Jamaika",
-    "Bahamalar",
-    "Trinidad ve Tobago",
-    "Barbados",
-    "Dominika",
-    "Saint Lucia",
-    "Antigua ve Barbuda",
-    "Saint Vincent ve Grenadinler",
-    "Grenada",
-    "Saint Kitts ve Nevis",
-    "Haiti",
-    "Dominik Cumhuriyeti",
-    "Porto Riko",
-    "Küba",
-    "Jamaika",
-    "Bahamalar",
-    "Trinidad ve Tobago",
-    "Barbados",
-    "Dominika",
-    "Saint Lucia",
-    "Antigua ve Barbuda",
-    "Saint Vincent ve Grenadinler",
-    "Grenada",
-    "Saint Kitts ve Nevis",
-  ]);
-  const [regionData, setRegionData] = useState([]);
-  const [listData, setListData] = useState([]);
-  const onChangeSearch = (query) => setSearchQuery(query);
+function LocationPreferencesScreen({ navigation, route }) {
+  const [isLocationEnabled, setIsLocationEnabled] = useState(false);
+  const [countryModalVisible, setCountryModalVisible] = useState(false);
+  const [stateModalVisible, setStateModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    let filteredData = [];
-    if (selectedTab === "city") {
-      filteredData = cityData.filter((city) =>
-        city.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    } else if (selectedTab === "country") {
-      filteredData = countryData.filter((country) =>
-        country.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    } else if (selectedTab === "region") {
-      filteredData = regionData.filter((region) =>
-        region.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+  const { country, state, setCountry, setState } = useLocation();
+
+  function handleLocationButtonPress() {
+    setIsLocationEnabled(!isLocationEnabled);
+  }
+
+  function handleCountryButtonPress() {
+    setCountryModalVisible(true);
+  }
+
+  function handleStateButtonPress() {
+    if (country != null) {
+      setStateModalVisible(true);
     }
-    setListData(filteredData);
-  }, [selectedTab, searchQuery]);
+  }
 
-  useEffect(() => {
-    setSelectedLocation({
-      type: selectedTab,
-      id: -1,
-      name: "",
-    });
-  }, [selectedTab]);
-
-  const getHeader = () => {
-    switch (selectedTab) {
-      case "city":
-        return "Şehir";
-      case "country":
-        return "Ülke";
-      case "region":
-        return "Kıta";
-    }
-  };
-
-  const onPressListItem = (index, item) => {
-    setSelectedLocation({
-      type: selectedTab,
-      id: index,
-      name: item,
-    });
-  };
-
-  useEffect(() => {
-    if (selectedLocation.id !== -1) {
-      navigation.navigate("FilterScreen", {
-        selectedLocation: selectedLocation,
-      });
-    }
-  }, [selectedLocation]);
+  function handleCompleteButtonPress() {
+    navigation.goBack();
+  }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.tabs}>
-        <Tabs
-          buttons={[
-            {
-              value: "city",
-              label: "Şehir",
-            },
-            {
-              value: "country",
-              label: "Ülke",
-            },
-            {
-              value: "region",
-              label: "Kıta",
-            },
-          ]}
-          value={selectedTab}
-          setValue={setselectedTab}
-          style={{width:screenWidth*0.9}}
-        />
-      </View>
-      <Header style={styles.header}>{getHeader()}</Header>
-      <View style={styles.searchbar}>
-        <Searchbar
-          placeholder={`Seçmek istediğiniz ${
-            getHeader().charAt(0).toLowerCase() + getHeader().slice(1)
-          } adını giriniz`}
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-        />
-      </View>
-      <FlatList
-        style={{ width: "90%" }}
-        data={listData}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            style={styles.listItem}
-            onPress={() => onPressListItem(index, item)}
-          >
-            <Text style={styles.listItemText}>{item}</Text>
-          </TouchableOpacity>
-        )}
-      />
-    </View>
+    <>
+      {isLoading && (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
+        </View>
+      )}
+      {!isLoading && (
+        <View style={styles.container}>
+          <View style={styles.titleContainer}>
+            <SubTitle style={styles.subtitle}>
+              Yakındaki kişilerle tanış
+            </SubTitle>
+            <View style={styles.locationIcon}>
+              <Ionicons name="location-outline" size={24} color="white" />
+            </View>
+          </View>
+
+          <View style={styles.infoContainer}>
+            <Text style={styles.infoText}>Seçili Bilgiler</Text>
+
+            <View style={styles.infoItem}>
+              <Text style={styles.infoLabel}>Ülke:</Text>
+              <View style={styles.infoValueContainer}>
+                <Text style={styles.infoValue}>{country?.countryName}</Text>
+                <PrimaryButton onPress={handleCountryButtonPress}>
+                  Ülke Seç
+                </PrimaryButton>
+              </View>
+            </View>
+
+            <View style={styles.infoItem}>
+              <Text style={styles.infoLabel}>Şehir:</Text>
+              <View style={styles.infoValueContainer}>
+                <Text style={styles.infoValue}>{state?.stateName}</Text>
+                <PrimaryButton onPress={handleStateButtonPress}>
+                  Şehir Seç
+                </PrimaryButton>
+              </View>
+            </View>
+          </View>
+          <View style={styles.completeButton}>
+            <PrimaryButton onPress={handleCompleteButtonPress}>
+              Tamamla
+            </PrimaryButton>
+          </View>
+
+          <View style={styles.locationContainer}>
+            <EnterLocationContainer
+              country={country}
+              state={state}
+              isLocationEnabled={isLocationEnabled}
+              setCountry={setCountry}
+              setState={setState}
+              countryModalVisible={countryModalVisible}
+              setCountryModalVisible={setCountryModalVisible}
+              stateModalVisible={stateModalVisible}
+              setStateModalVisible={setStateModalVisible}
+            />
+          </View>
+        </View>
+      )}
+    </>
   );
 }
 
@@ -224,39 +107,71 @@ export default LocationPreferencesScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
-    alignItems: "center",
-    marginVertical: screenHeight * 0.05,
-    height: "100%",
-  },
-  button: {
-    width: "80%",
-    alignSelf: "center",
-  },
-  tabs: {
-    width: "90%",
-    height: screenHeight * 0.1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-  },
-  searchbar: {
-    width: "90%",
-    minHeight: screenHeight * 0.05,
-    marginBottom: screenHeight * 0.05,
-  },
-  header: {
-    width: "90%",
-    marginBottom: screenHeight * 0.02,
-    backgroundColor: "#fff",
-    alignItems: "center",
-  },
-  listItem: {
+    flex: 1,
     padding: 20,
-    backgroundColor: "#f8f8f8",
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
   },
-  listItemText: {
+  titleContainer: {
+    backgroundColor: Colors.primary600,
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  locationIcon: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  subtitle: {
+    color: "white",
+  },
+  infoContainer: {
+    marginTop: 20,
+    backgroundColor: "#f0f0f0",
+    padding: 20,
+    borderRadius: 10,
+  },
+  infoText: {
     fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  infoItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+  infoValueContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginLeft: 10,
+  },
+  infoLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  infoValue: {
+    fontSize: 16,
+  },
+  locationContainer: {
+    marginTop: 20,
+  },
+  buttonContainer: {
+    marginTop: 55,
+    marginLeft: "auto",
+  },
+  textButton: {
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: 1000, // Ensure it covers the entire screen height
+  },
+  completeButton: {
+    marginTop: 20,
   },
 });

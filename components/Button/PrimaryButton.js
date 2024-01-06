@@ -9,7 +9,8 @@ function PrimaryButton({
   textColor,
   fontSize,
   height,
-  width
+  width,
+  disabled,
 }) {
   return (
     <View style={[styles.outerContainer, style]}>
@@ -29,14 +30,16 @@ function PrimaryButton({
               ]
             : {
                 ...styles.innerContainer,
+                opacity: disabled ? 0.5 : 1,
                 backgroundColor: backgroundColor
                   ? backgroundColor
                   : styles.innerContainer.backgroundColor,
-                  height: height ? height : styles.innerContainer.height,
-                  width: width ? width : styles.innerContainer.width,
+                height: height ? height : styles.innerContainer.height,
+                width: width ? width : styles.innerContainer.width,
               }
         }
         onPress={onPress}
+        disabled={disabled}
       >
         <Text
           style={{
