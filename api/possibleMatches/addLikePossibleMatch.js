@@ -8,11 +8,14 @@ const addLikePossibleMatch = async (possibleMatchId) => {
   const headers = await header();
 
   try {
-    console.log(possibleMatchId);
-    const response = await axios.post(url, {}, {
-      headers: headers,
-    });
-    
+    const response = await axios.post(
+      url,
+      null,
+      {
+        headers: headers,
+      }
+    );
+
     return response.data;
   } catch (error) {
     console.error("Error:", error.message);
