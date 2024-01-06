@@ -13,9 +13,14 @@ function UserCard({
   isLikeIconActive,
   isDislikeIconActive,
 }) {
+  //console.log(card);
   return (
     <Card style={styles.cardContainer}>
-      <UserCardInformation user={card} match={'%50'}/>
+      <View>
+      {card.map((card, index) => (
+        <UserCardInformation key={card.id} user={card} match={card.similarityScore} />
+      ))}
+    </View>
       <View style={styles.iconContainer}>
         {index === topCardIndex && (
           <View style={styles.iconContainer}>
