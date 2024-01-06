@@ -24,7 +24,6 @@ function MatchCard({ style }) {
       });
   }, []);
 
-
   const handleSwipe = () => {
     setTopCardIndex(topCardIndex + 1);
     setIsLikeIconActive(false);
@@ -35,16 +34,12 @@ function MatchCard({ style }) {
     setCardPosition(0);
   };
   const handleSwipeLeft = async (possibleMatchId) => {
-    await addDislikePossibleMatch({
-      possibleMatchId: possibleMatchId ,
-    });
+    await addDislikePossibleMatch(possibleMatchId);
   };
 
   const handleSwipeRight = async (possibleMatchId) => {
     console.log(possibleMatchId);
-    await addLikePossibleMatch({
-      possibleMatchId: possibleMatchId ,
-    });
+    await addLikePossibleMatch(possibleMatchId);
   };
 
   const handleOnSwiping = (position) => {
@@ -74,7 +69,7 @@ function MatchCard({ style }) {
       }}
       cardIndex={cardIndex}
       style={styles.swiper}
-      cards={cards} 
+      cards={cards}
       renderCard={(card, index) => (
         <UserCard
           card={cards}
@@ -87,7 +82,7 @@ function MatchCard({ style }) {
       backgroundColor={"transparent"}
       onSwiped={handleSwipe}
       onSwipedAborted={handleSwipeAborted}
-      onSwipedLeft={() =>handleSwipeLeft(cards[topCardIndex].id)} 
+      onSwipedLeft={() => handleSwipeLeft(cards[topCardIndex].id)}
       onSwipedRight={() => handleSwipeRight(cards[topCardIndex].id)}
       onSwipedAll={() => {}}
       stackSize={2}
