@@ -4,51 +4,37 @@ import Tabs from "../../components/ui/Tabs";
 import { Appbar } from "react-native-paper";
 import LikesCards from "../../containers/LikesCards";
 import Colors from "../../constansts/Colors";
+import getUsersWhoLike from "../../api/possibleMatches/getUsersWhoLike";
+import getLikedUsers from "../../api/possibleMatches/getLikedUsers";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function LikesScreen({ navigation, route }) {
   const [selectedTab, setselectedTab] = useState("whoLikesMe");
-  const [whoLikesMeList, setWhoLikesMeList] = useState([
-    {
-      id: "1",
-      name: "Batuhan",
-    },
-    {
-      id: "2",
-      name: "Oscar",
-    },
-    {
-      id: "3",
-      name: "Cem",
-    },
-    {
-      id: "4",
-      name: "Batuhan",
-    },
-    {
-      id: "5",
-      name: "Oscar",
-    },
-    {
-      id: "6",
-      name: "Cem",
-    },
-  ]);
-  const [whoILikeList, setWhoILikeList] = useState([
-    {
-      id: "1",
-      name: "Batuhan",
-    },
-    {
-      id: "2",
-      name: "Oscar",
-    },
-    {
-      id: "3",
-      name: "Cem",
-    },
-  ]);
+  const [whoLikesMeList, setWhoLikesMeList] = useState([]);
+  const [whoILikeList, setWhoILikeList] = useState([]);
+
+  useEffect(() => {
+    getUsersWhoLike()
+      .then((res) => {
+        setWhoLikesMeList(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    getLikedUsers()
+      .then((res) => {
+        setWhoILikeList(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  console.log(whoILikeList);
 
   return (
     <View style={styles.container}>

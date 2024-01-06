@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import UserCard from "../UserCards/UserCard";
+import getPossibleMatches from "../../api/possibleMatches/getPossibleMatches";
+import addLikePossibleMatch from "../../api/possibleMatches/addLikePossibleMatch";
+import addDislikePossibleMatch from "../../api/possibleMatches/addDislikePossibleMatch";
 
 function MatchCard({ style }) {
   const [cardIndex, setCardIndex] = useState(0);
@@ -9,6 +12,18 @@ function MatchCard({ style }) {
   const [isDislikeIconActive, setIsDislikeIconActive] = useState(false);
   const [cardPosition, setCardPosition] = useState(0);
   const [topCardIndex, setTopCardIndex] = useState(0);
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    getPossibleMatches()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
 
   const handleSwipe = () => {
     setTopCardIndex(topCardIndex + 1);
@@ -19,9 +34,18 @@ function MatchCard({ style }) {
   const handleSwipeAborted = () => {
     setCardPosition(0);
   };
-  const handleSwipeLeft = () => {};
+  const handleSwipeLeft = async (possibleMatchId) => {
+    await addDislikePossibleMatch({
+      possibleMatchId: possibleMatchId ,
+    });
+  };
 
-  const handleSwipeRight = () => {};
+  const handleSwipeRight = async (possibleMatchId) => {
+    console.log(possibleMatchId);
+    await addLikePossibleMatch({
+      possibleMatchId: possibleMatchId ,
+    });
+  };
 
   const handleOnSwiping = (position) => {
     setCardPosition(position);
@@ -50,17 +74,10 @@ function MatchCard({ style }) {
       }}
       cardIndex={cardIndex}
       style={styles.swiper}
-      cards={[
-        { name: "Batuhan" },
-        { name: "Oscar" },
-        { name: "John" },
-        { name: "Doe" },
-        { name: "Jane" },
-        { name: "Smith" },
-      ]} // replace with your actual data
+      cards={cards} 
       renderCard={(card, index) => (
         <UserCard
-          card={card}
+          card={cards}
           index={index}
           topCardIndex={topCardIndex}
           isDislikeIconActive={isDislikeIconActive}
@@ -70,8 +87,8 @@ function MatchCard({ style }) {
       backgroundColor={"transparent"}
       onSwiped={handleSwipe}
       onSwipedAborted={handleSwipeAborted}
-      onSwipedLeft={handleSwipeLeft}
-      onSwipedRight={handleSwipeRight}
+      onSwipedLeft={() =>handleSwipeLeft(cards[topCardIndex].id)} 
+      onSwipedRight={() => handleSwipeRight(cards[topCardIndex].id)}
       onSwipedAll={() => {}}
       stackSize={2}
       verticalSwipe={false}
