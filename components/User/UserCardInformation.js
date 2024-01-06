@@ -28,7 +28,7 @@ function UserCardInformation({ user, match }) {
         <SubTitle style={styles.title}>Profil eşleşme oranı</SubTitle>
         <View style={styles.outerContainer}>
           <View style={styles.innerContainer}>
-            <Text style={{ color: "white" }}>%{match.toFixed(2)}</Text>
+            <Text style={{ color: "white" }}>%{(match * 100).toFixed(2)}</Text>
           </View>
         </View>
       </View>

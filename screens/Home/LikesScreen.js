@@ -34,7 +34,7 @@ function LikesScreen({ navigation, route }) {
       });
   }, []);
 
-  console.log(whoILikeList);
+  console.log(whoLikesMeList);
 
   return (
     <View style={styles.container}>
