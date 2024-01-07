@@ -11,19 +11,31 @@ import { AntDesign } from "@expo/vector-icons";
 import Colors from "../../constansts/Colors";
 import MiniUserCardInformation from "../../components/User/MiniUserCardInformation";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+import addLikePossibleMatch from "../../api/possibleMatches/addLikePossibleMatch";
 
 function MiniUserCard({ user, index, withHeart, withTakeBack }) {
+
+  async function handleHeartPress(matchId) {
+    console.log("Heart is pressed");
+    await addLikePossibleMatch(matchId);
+  }
+
+  async function handleTakeBackPress(matchId) {
+    console.log("Take back is pressed");
+    console.log(matchId);
+  }
+
   return (
     <Card style={styles.cardContainer}>
       <MiniUserCardInformation user={user} />
       <View style={styles.iconContainer}></View>
       {withHeart && (
-        <TouchableOpacity style={styles.likeIcon} activeOpacity={0.5}>
+        <TouchableOpacity style={styles.likeIcon} activeOpacity={0.5} onPress={() => handleHeartPress(user.id)}>
           <AntDesign name="heart" size={28} color={"white"} />
         </TouchableOpacity>
       )}
       {withTakeBack && (
-        <TouchableOpacity style={styles.takeBackIcon} activeOpacity={0.5}>
+        <TouchableOpacity style={styles.takeBackIcon} activeOpacity={0.5} onPress={() => handleTakeBackPress(user.id)}>
           <AntDesign name="back" size={28} color={"white"} />
         </TouchableOpacity>
       )}
