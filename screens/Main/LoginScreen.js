@@ -8,6 +8,7 @@ import {
   Pressable,
   Text,
   Alert,
+  Image
 } from "react-native";
 import { UserList } from "../../data/data";
 
@@ -21,6 +22,7 @@ import TextButton from "../../components/Button/TextButton";
 import login from "../../api/auth/login";
 import { storeData, removeData } from "../../utils/storage";
 import { useUser } from "../../contexts/UserContext";
+import logo from "../../assets/logo.png";
 
 function FirstLoginPage({ navigation }) {
   const [email, setEmail] = useState("");
@@ -48,7 +50,7 @@ function FirstLoginPage({ navigation }) {
       navigation.replace("Home");
       Alert.alert("Giriş Başarılı", "Hoşgeldiniz!");
     } catch (error) {
-      Alert.alert("Hata", "Geçersiz email veya şifre");
+      Alert.alert("Hata", "Geçersiz kullanıcı adı veya şifre");
     }
   }
 
@@ -58,34 +60,34 @@ function FirstLoginPage({ navigation }) {
       <ScrollView style={styles.screen}>
         <KeyboardAvoidingView style={styles.screen} behavior="position">
           <View style={styles.rootContainer}>
-            <Title>Log In</Title>
-            <Card style={styles.cardContainer}></Card>
+            <Title>Giriş Yap</Title>
+            <Image style={styles.cardContainer} source={logo}></Image>
             <View style={styles.informationContainer}>
               <InputField
-                placeholder={"Email"}
+                placeholder={"Kullanıcı Adı"}
                 onAddInput={emailHandler}
               ></InputField>
               <PasswordField
-                placeholder={"Password"}
+                placeholder={"Şifre"}
                 onAddInput={passwordHandler}
               ></PasswordField>
             </View>
             <View style={styles.textButtonContainer}>
-              <Text>Don't you have an account?</Text>
+              <Text>Hesabınız yok mu?</Text>
               <TextButton
                 style={styles.createAccountButton}
                 onPress={createAccountHandler}
               >
-                Create account
+                Hesap Oluştur
               </TextButton>
             </View>
             <View style={styles.buttonContainer}>
               <PrimaryButton style={styles.button} onPress={loginHandler}>
-                Log in
+                Giriş Yap
               </PrimaryButton>
             </View>
             <Pressable>
-              <Text style={styles.pressableText}>Forgot your password?</Text>
+              <Text style={styles.pressableText}>Şifrenizi mi unuttunuz?</Text>
             </Pressable>
           </View>
         </KeyboardAvoidingView>
@@ -101,8 +103,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardContainer: {
-    width: 175,
-    height: 175,
+    width: '60%',
+    height: '30%',
     marginBottom: 18,
   },
   button: {
