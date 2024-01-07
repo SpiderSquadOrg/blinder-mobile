@@ -21,10 +21,10 @@ function LikesScreen({ navigation, route }) {
         .then((res) => {
           const unmatchedUsers = res
             .map((match) => {
-              match.to.similarityScore = match.similarityScore;
-              return match.to;
+              match.from.similarityScore = match.similarityScore;
+              match.from.id = match.id;
+              return match.from;
             })
-            .filter((user) => user.to.matched === false);
           setWhoLikesMeList(unmatchedUsers);
 
           console.log(whoLikesMeList);
@@ -39,25 +39,20 @@ function LikesScreen({ navigation, route }) {
     useCallback(() => {
       getLikedUsers()
         .then((res) => {
-          // Filter the array based on the condition user.to.matched === false
-          const filteredList = res.filter((user) => user.to.matched === false);
-  
-          // Update the state with the filtered list
           setWhoILikeList(
-            filteredList.map((match) => {
+            res.map((match) => {
+              //console.log(match.id);
               match.to.similarityScore = match.similarityScore;
+              match.to.id = match.id;
               return match.to;
             })
           );
-          console.log(whoILikeList);
         })
         .catch((err) => {
           console.log(err);
         });
     }, [])
   );
-
-  
 
   return (
     <View style={styles.container}>
