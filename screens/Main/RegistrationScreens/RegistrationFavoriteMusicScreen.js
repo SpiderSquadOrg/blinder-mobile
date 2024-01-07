@@ -22,19 +22,20 @@ function RegistrationFavoriteMusicScreen({ navigation, route }) {
 
   async function nextPageHandler() {
     setIsLoading(true);
-    selectedMusicList.forEach(async (music) => {
-      await addMusic({
-        spotifyId: music.spotifyId,
-        name: music.name,
-        artist: music.artists[0],
-        album: music.album,
-        image: music.image,
-      })
-        .then(() => console.log("Added"))
-        .catch((err) => {
-          console.log(err);
+    try {
+      await Promise.all(selectedMusicList.map(async (music) => {
+        return addMusic({
+          spotifyId: music.spotifyId,
+          name: music.name,
+          artist: music.artists[0],
+          album: music.album,
+          image: music.image,
         });
-    });
+      }));
+      console.log("All music added");
+    } catch (err) {
+      console.log(err);
+    }
     setIsLoading(false);
     navigation.replace("RegistrationMovieTypeScreen");
   }

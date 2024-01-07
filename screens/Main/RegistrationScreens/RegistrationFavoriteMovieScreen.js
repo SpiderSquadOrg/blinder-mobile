@@ -22,18 +22,19 @@ function RegistrationFavoriteMovieScreen({ navigation }) {
 
   async function nextPageHandler() {
     setIsLoading(true);
-    selectedMovieList.forEach(async (movie) => {
-      await addMovie({
-        imdbId: movie.imdbId,
-        name: movie.name,
-        year: movie.year,
-        image: movie.image,
-      })
-        .then(() => console.log("Added"))
-        .catch((err) => {
-          console.log(err);
+    try {
+      await Promise.all(selectedMovieList.map(async (movie) => {
+        return addMovie({
+          imdbId: movie.imdbId,
+          name: movie.name,
+          year: movie.year,
+          image: movie.image,
         });
-    });
+      }));
+      console.log("All movies added");
+    } catch (err) {
+      console.log(err);
+    }
     setIsLoading(false);
     navigation.replace("RegistrationSeriesTypeScreen");
   }

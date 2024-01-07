@@ -22,18 +22,19 @@ function RegistrationFavoriteSeriesScreen({ navigation, route }) {
 
   async function nextPageHandler() {
     setIsLoading(true);
-    selectedSeriesList.forEach(async (series) => {
-      await addTvSeries({
-        imdbId: series.imdbId,
-        name: series.name,
-        year: series.year,
-        image: series.image,
-      })
-        .then(() => console.log("Added"))
-        .catch((err) => {
-          console.log(err);
+    try {
+      await Promise.all(selectedSeriesList.map(async (series) => {
+        return addTvSeries({
+          imdbId: series.imdbId,
+          name: series.name,
+          year: series.year,
+          image: series.image,
         });
-    });
+      }));
+      console.log("All series added");
+    } catch (err) {
+      console.log(err);
+    }
     setIsLoading(false);
     navigation.replace("RegistrationHobbyTypeScreen");
   }

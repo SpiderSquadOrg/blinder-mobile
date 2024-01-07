@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Tabs from "../../components/ui/Tabs";
 import { Appbar } from "react-native-paper";
@@ -6,6 +6,7 @@ import LikesCards from "../../containers/LikesCards";
 import Colors from "../../constansts/Colors";
 import getUsersWhoLike from "../../api/possibleMatches/getUsersWhoLike";
 import getLikedUsers from "../../api/possibleMatches/getLikedUsers";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -14,27 +15,42 @@ function LikesScreen({ navigation, route }) {
   const [whoLikesMeList, setWhoLikesMeList] = useState([]);
   const [whoILikeList, setWhoILikeList] = useState([]);
 
-  useEffect(() => {
-    getUsersWhoLike()
-      .then((res) => {
-      const unmatchedUsers = res.filter(user => user.status === false);
-      setWhoLikesMeList(unmatchedUsers);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getUsersWhoLike()
+        .then((res) => {
+          const unmatchedUsers = res
+            .map((match) => {
+              match.to.similarityScore = match.similarityScore;
+              console.log(match.to);
+              return match.to;
+            })
+            .filter((user) => user.status === false);
+          setWhoLikesMeList(unmatchedUsers);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [])
+  );
 
-  useEffect(() => {
-    getLikedUsers()
-      .then((res) => {
-        setWhoILikeList(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      getLikedUsers()
+        .then((res) => {
+          setWhoILikeList(
+            res.map((match) => {
+              match.to.similarityScore = match.similarityScore;
+              
+              return match.to;
+            })
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [])
+  );
 
   return (
     <View style={styles.container}>

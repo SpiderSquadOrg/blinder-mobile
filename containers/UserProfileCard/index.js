@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { StyleSheet } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import UserCard from "../UserCards/UserCard";
@@ -6,31 +12,49 @@ import getPossibleMatches from "../../api/possibleMatches/getPossibleMatches";
 import addLikePossibleMatch from "../../api/possibleMatches/addLikePossibleMatch";
 import addDislikePossibleMatch from "../../api/possibleMatches/addDislikePossibleMatch";
 
-function MatchCard({ style }) {
+const UserProfileCard = forwardRef((props, ref) => {
   const [cardIndex, setCardIndex] = useState(0);
+  const [renderIndex, setRenderIndex] = useState(0);
   const [isLikeIconActive, setIsLikeIconActive] = useState(false);
   const [isDislikeIconActive, setIsDislikeIconActive] = useState(false);
   const [cardPosition, setCardPosition] = useState(0);
   const [topCardIndex, setTopCardIndex] = useState(0);
   const [cards, setCards] = useState([]);
+  const swiperRef = useRef(null);
 
-
-  useEffect(() => {
+  const fetchUserProfile = () => {
     getPossibleMatches()
       .then((res) => {
-
         setCards(res);
+        console.log(cards);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
 
+  useEffect(() => {
+    if(topCardIndex === cards.length) {
+      setTopCardIndex(0);
+      setCardIndex(0);
+      fetchUserProfile();
+      setRenderIndex((prevKey) => prevKey + 1);
+    }
+  }, [topCardIndex]);
+
+  useImperativeHandle(ref, () => ({
+    fetchUserProfile,
+  }));
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
 
   const handleSwipe = () => {
     setTopCardIndex(topCardIndex + 1);
     setIsLikeIconActive(false);
     setIsDislikeIconActive(false);
+    
   };
 
   const handleSwipeAborted = () => {
@@ -66,9 +90,8 @@ function MatchCard({ style }) {
 
   return (
     <Swiper
-      ref={(swiper) => {
-        this.swiper = swiper;
-      }}
+      key={`swiper-${renderIndex}`}
+      ref={swiperRef}
       cardIndex={cardIndex}
       style={styles.swiper}
       cards={cards}
@@ -84,15 +107,15 @@ function MatchCard({ style }) {
       backgroundColor={"transparent"}
       onSwiped={handleSwipe}
       onSwipedAborted={handleSwipeAborted}
-      onSwipedLeft={() => handleSwipeLeft(cards[topCardIndex].id)}
-      onSwipedRight={() => handleSwipeRight(cards[topCardIndex].id)}
+      onSwipedLeft={() => handleSwipeLeft(cards[topCardIndex]?.id)}
+      onSwipedRight={() => handleSwipeRight(cards[topCardIndex]?.id)}
       onSwipedAll={() => {}}
       stackSize={2}
       verticalSwipe={false}
       onSwiping={(position) => handleOnSwiping(position)}
     />
   );
-}
+});
 
 const styles = StyleSheet.create({
   swiper: {
@@ -105,4 +128,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MatchCard;
+export default UserProfileCard;
