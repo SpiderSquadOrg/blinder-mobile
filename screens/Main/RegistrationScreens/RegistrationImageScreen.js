@@ -73,7 +73,7 @@ function RegistrationImageScreen({ navigation, route }) {
     }
 
     setIsLoading(false);
-    navigation.navigate("RegistrationGenderScreen", {
+    navigation.replace("RegistrationGenderScreen", {
       user: {
         ...route.params.user,
         image: `publicId_${route.params.user.username}`,

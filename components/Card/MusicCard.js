@@ -27,7 +27,6 @@ function MusicCard({ musicList, onRemoveItemId }) {
           </View>
           <Pressable
             onPress={() => {
-              console.log("music.spotifyId");
               handleRemoveMusic(music.spotifyId);
             }}
           >

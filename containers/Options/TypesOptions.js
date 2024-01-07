@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 import Colors from "../../constansts/Colors";
 
-function TypesOptions({ onTypeSelect, options }) {
+function TypesOptions({ onTypeSelect, options, isLoading }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   useEffect(() => {
@@ -37,6 +37,7 @@ function TypesOptions({ onTypeSelect, options }) {
                 selectedOptions.includes(option) && styles.selectedButton,
               ]}
               onPress={() => toggleOption(option)}
+              disabled={isLoading}
             >
               <Text style={styles.buttonText}>{option}</Text>
             </TouchableOpacity>

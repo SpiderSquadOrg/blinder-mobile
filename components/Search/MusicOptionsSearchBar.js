@@ -10,6 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import searchMusics from "../../api/characteristics/searchMusics";
+import addMusic from "../../api/characteristics/addMusic";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -38,7 +39,6 @@ function OptionSearchBar({
     );
 
     if (!isMusicAlreadySelected) {
-      await addMusic({ ...selectedMusic });
       setSelectedMusicList([...selectedMusicList, selectedMusic]);
     }
   };

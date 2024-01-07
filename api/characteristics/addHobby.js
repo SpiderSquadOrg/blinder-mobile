@@ -10,6 +10,7 @@ const addHobby = async ({ name }) => {
   try {
     const response = await axios.patch(
       url,
+      {},
       {
         headers: headers,
       }

@@ -35,7 +35,6 @@ function SeriesOptionsSearch({ selectedSeriesList, setSelectedSeriesList }) {
     );
 
     if (!isSeriesAlreadySelected) {
-      await addTvSeries({ ...selectedSeries });
       setSelectedSeriesList((prevList) => [...prevList, selectedSeries]);
     }
   };
@@ -60,7 +59,7 @@ function SeriesOptionsSearch({ selectedSeriesList, setSelectedSeriesList }) {
         {seriesList.map((series, index) => (
           <TouchableOpacity
             key={index}
-            onPress={() => handleSeriesList(series)}
+            onPress={() => handleSeriesSelect(series)}
             style={[
               styles.seriesContainer,
               selectedSeriesList.includes(series)
