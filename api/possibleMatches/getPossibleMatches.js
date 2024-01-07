@@ -6,7 +6,7 @@ import header from "../header";
 const getPossibleMatches = async () => {
     const url = `${env.API}/possibleMatches`;
     const headers = await header();
-  
+
     try {
       const response = await axios.get(url, {
         headers: headers,
