@@ -17,7 +17,7 @@ function UserCard({
   return (
     <Card style={styles.cardContainer}>
       <View>
-      {card.map((card, index) => (
+      {card.filter((card,i)=>index==i).map((card, index) => (
         <UserCardInformation key={card.id} user={card} match={card.similarityScore} />
       ))}
     </View>

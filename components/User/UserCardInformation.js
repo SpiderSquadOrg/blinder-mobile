@@ -16,7 +16,7 @@ function UserCardInformation({ user, match }) {
     }
   }
   return (
-    <View>
+    <View style={styles.mainContainer}>
       <View style={styles.userInformation}>
         <SubTitle style={styles.mainTitle}>{user.to.username}</SubTitle>
 
@@ -75,4 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight * 0.05,
     alignItems: "center",
   },
+  mainContainer: {
+    marginVertical: screenWidth* 0.32,
+  }
 });

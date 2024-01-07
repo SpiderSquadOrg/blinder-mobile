@@ -14,15 +14,18 @@ function MatchCard({ style }) {
   const [topCardIndex, setTopCardIndex] = useState(0);
   const [cards, setCards] = useState([]);
 
+
   useEffect(() => {
     getPossibleMatches()
       .then((res) => {
+
         setCards(res);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
 
   const handleSwipe = () => {
     setTopCardIndex(topCardIndex + 1);
@@ -38,7 +41,6 @@ function MatchCard({ style }) {
   };
 
   const handleSwipeRight = async (possibleMatchId) => {
-    console.log(possibleMatchId);
     await addLikePossibleMatch(possibleMatchId);
   };
 
