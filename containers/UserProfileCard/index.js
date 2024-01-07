@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import UserCard from "../UserCards/UserCard";
 import getPossibleMatches from "../../api/possibleMatches/getPossibleMatches";
@@ -26,7 +26,6 @@ const UserProfileCard = forwardRef((props, ref) => {
     getPossibleMatches()
       .then((res) => {
         setCards(res);
-        console.log(cards);
       })
       .catch((err) => {
         console.log(err);
@@ -34,7 +33,7 @@ const UserProfileCard = forwardRef((props, ref) => {
   };
 
   useEffect(() => {
-    if(topCardIndex === cards.length) {
+    if (topCardIndex === cards.length) {
       setTopCardIndex(0);
       setCardIndex(0);
       fetchUserProfile();
@@ -54,7 +53,6 @@ const UserProfileCard = forwardRef((props, ref) => {
     setTopCardIndex(topCardIndex + 1);
     setIsLikeIconActive(false);
     setIsDislikeIconActive(false);
-    
   };
 
   const handleSwipeAborted = () => {
@@ -88,32 +86,36 @@ const UserProfileCard = forwardRef((props, ref) => {
     forceRerender();
   }, [cardPosition]);
 
-  return (
+  return cards.length > 0 ? (
     <Swiper
       key={`swiper-${renderIndex}`}
       ref={swiperRef}
       cardIndex={cardIndex}
       style={styles.swiper}
       cards={cards}
-      renderCard={(card, index) => (
-        <UserCard
-          card={cards}
-          index={index}
-          topCardIndex={topCardIndex}
-          isDislikeIconActive={isDislikeIconActive}
-          isLikeIconActive={isLikeIconActive}
-        />
-      )}
+      renderCard={(card, index) => {
+        return (
+          <UserCard
+            card={cards[index - 1]}
+            index={index}
+            topCardIndex={topCardIndex}
+            isDislikeIconActive={isDislikeIconActive}
+            isLikeIconActive={isLikeIconActive}
+          />
+        );
+      }}
       backgroundColor={"transparent"}
       onSwiped={handleSwipe}
       onSwipedAborted={handleSwipeAborted}
       onSwipedLeft={() => handleSwipeLeft(cards[topCardIndex]?.id)}
       onSwipedRight={() => handleSwipeRight(cards[topCardIndex]?.id)}
       onSwipedAll={() => {}}
-      stackSize={2}
+      stackSize={1}
       verticalSwipe={false}
       onSwiping={(position) => handleOnSwiping(position)}
     />
+  ) : (
+    <Text>Loading...</Text>
   );
 });
 

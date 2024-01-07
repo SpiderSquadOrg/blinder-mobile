@@ -13,14 +13,21 @@ function UserCard({
   isLikeIconActive,
   isDislikeIconActive,
 }) {
-  //console.log(card);
+
+  if (!card) {
+    return null; // or return a loading spinner, or some fallback UI
+  }
   return (
     <Card style={styles.cardContainer}>
       <View>
-      {card.filter((card,i)=>index==i).map((card, index) => (
-        <UserCardInformation key={card.id} user={card} match={card.similarityScore} />
-      ))}
-    </View>
+        <View>
+          <UserCardInformation
+            key={card.id}
+            user={card.to}
+            match={card.similarityScore}
+          />
+        </View>
+      </View>
       <View style={styles.iconContainer}>
         {index === topCardIndex && (
           <View style={styles.iconContainer}>

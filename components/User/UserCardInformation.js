@@ -18,11 +18,11 @@ function UserCardInformation({ user, match }) {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.userInformation}>
-        <SubTitle style={styles.mainTitle}>{user.to.username}</SubTitle>
+        <SubTitle style={styles.mainTitle}>{user.username}</SubTitle>
 
-        <View style={styles.genderIcon}>{checkGender(user.to.gender.name)}</View>
-        <SubTitle style={styles.informationTitle}>{user.to.age}</SubTitle>
-        <SubTitle style={styles.informationTitle}>{user.to.location.stateName} , {user.to.location.countryName}</SubTitle>
+        <View style={styles.genderIcon}>{checkGender(user.gender.name)}</View>
+        <SubTitle style={styles.informationTitle}>{user.age}</SubTitle>
+        <SubTitle style={styles.informationTitle}>{user.location.stateName} , {user.location.countryName}</SubTitle>
       </View>
       <View style={styles.matchingPart}>
         <SubTitle style={styles.title}>Profil eşleşme oranı</SubTitle>
