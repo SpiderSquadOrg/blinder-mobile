@@ -23,11 +23,12 @@ function RegistrationFavoriteMusicScreen({ navigation, route }) {
   async function nextPageHandler() {
     setIsLoading(true);
     try {
+      console.log(selectedMusicList);
       await Promise.all(selectedMusicList.map(async (music) => {
         return addMusic({
           spotifyId: music.spotifyId,
           name: music.name,
-          artist: music.artists[0],
+          artist: music.artists,
           album: music.album,
           image: music.image,
         });
