@@ -15,12 +15,11 @@ import addLikePossibleMatch from "../../api/possibleMatches/addLikePossibleMatch
 
 function MiniUserCard({ user, index, withHeart, withTakeBack }) {
 
-  async function handleHeartPress(matchId) {
-    console.log("Heart is pressed");
+  const handleHeartPress = async (matchId) => {
     await addLikePossibleMatch(matchId);
   }
 
-  async function handleTakeBackPress(matchId) {
+  const handleTakeBackPress = async (matchId) => {
     console.log("Take back is pressed");
     console.log(matchId);
   }
