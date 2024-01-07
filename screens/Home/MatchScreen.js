@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Title from "../../components/ui/Title";
-import UserProfileCard from "../../containers/MatchCard";
+import UserProfileCard from "../../containers/UserProfileCard/index";
 import { Appbar } from "react-native-paper";
 import Colors from "../../constansts/Colors";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function MatchScreen({ navigation, route }) {
+  const userProfileCardRef = useRef();
+
+  useFocusEffect(
+    useCallback(() => {
+      userProfileCardRef.current.fetchUserProfile();
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.appbar}>
@@ -28,7 +37,7 @@ function MatchScreen({ navigation, route }) {
 
       <View style={styles.content}>
         <Title>BLINDER</Title>
-        <UserProfileCard />
+        <UserProfileCard ref={userProfileCardRef} />
       </View>
     </View>
   );

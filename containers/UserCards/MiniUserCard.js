@@ -15,8 +15,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function MiniUserCard({ user, index, withHeart, withTakeBack }) {
   return (
     <Card style={styles.cardContainer}>
-      
-      <MiniUserCardInformation user={user} match={'%50'}/>
+      <MiniUserCardInformation user={user} />
       <View style={styles.iconContainer}></View>
       {withHeart && (
         <TouchableOpacity style={styles.likeIcon} activeOpacity={0.5}>

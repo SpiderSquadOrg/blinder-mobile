@@ -23,14 +23,17 @@ function MiniUserCardInformation({ user }) {
 
         <View style={styles.genderIcon}>{checkGender(user.gender.name)}</View>
         <SubTitle style={styles.informationTitle}>{user.age}</SubTitle>
-        <SubTitle style={styles.informationTitle}>{user.location.stateName} , {user.location.countryName}</SubTitle>
+        <SubTitle style={styles.informationTitle}>
+          {user.location.stateName} , {user.location.countryName}
+        </SubTitle>
       </View>
       <View style={styles.matchingPart}>
         <SubTitle style={styles.title}>Profil eşleşme oranı</SubTitle>
         <View style={styles.outerContainer}>
           <View style={styles.innerContainer}>
-            <Text style={{ color: "white", fontSize: screenWidth* 0.035 }}>%50</Text> 
-            {/*<Text style={{ color: "white", fontSize: screenWidth* 0.035 }}>{card.similarityScore} </Text> */}
+            <Text style={{ color: "white", fontSize: screenWidth * 0.035 }}>
+              %{(user.similarityScore * 100).toFixed(2)}
+            </Text>
           </View>
         </View>
       </View>
