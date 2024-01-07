@@ -34,6 +34,7 @@ import UpdateMusicCategoryScreen from "./screens/UpdateOptions/UpdateMusicCatego
 import UpdateMovieCategoryScreen from "./screens/UpdateOptions/UpdateMovieCategoryScreen";
 import UpdateSeriesCategoryScreen from "./screens/UpdateOptions/UpdateSeriesCategoryScreen";
 import UpdateHobbyScreen from "./screens/UpdateOptions/UpdateHobbyScreen";
+import ProfileScreen from "./screens/Profile/ProfileScreen";
 import { UserProvider } from "./contexts/UserContext";
 import { ActiveChatProvider } from "./contexts/ActiveChatContext";
 import DrawerContainer from "./containers/Drawer";
@@ -72,6 +73,11 @@ export default function App() {
                 <Stack.Screen
                   name="SignUpScreen"
                   component={SignUpScreen}
+                  options={{ title: "" }}
+                />
+                <Stack.Screen
+                  name="ProfileScreen"
+                  component={ProfileScreen}
                   options={{ title: "" }}
                 />
                 <Stack.Screen

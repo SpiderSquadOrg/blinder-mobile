@@ -17,7 +17,8 @@ function LikesScreen({ navigation, route }) {
   useEffect(() => {
     getUsersWhoLike()
       .then((res) => {
-        setWhoLikesMeList(res);
+      const unmatchedUsers = res.filter(user => user.status === false);
+      setWhoLikesMeList(unmatchedUsers);
       })
       .catch((err) => {
         console.log(err);
@@ -34,7 +35,6 @@ function LikesScreen({ navigation, route }) {
       });
   }, []);
 
-  console.log(whoLikesMeList);
 
   return (
     <View style={styles.container}>
