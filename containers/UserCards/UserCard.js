@@ -13,10 +13,8 @@ function UserCard({
   isLikeIconActive,
   isDislikeIconActive,
 }) {
-  console.log(card);
-  console.log(index);
+
   if (!card) {
-    console.log("card is null");
     return null; // or return a loading spinner, or some fallback UI
   }
   return (
