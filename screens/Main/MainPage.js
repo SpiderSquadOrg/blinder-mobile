@@ -1,11 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, Image } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
 import Title from "../../components/ui/Title";
 import SubTitle from "../../components/ui/SubTitle";
 import Card from "../../components/ui/Card";
 import PrimaryButton from "../../components/Button/PrimaryButton";
+import logo from "../../assets/logo.png";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -23,9 +24,10 @@ function MainPage({ navigation }) {
       <StatusBar style="auto" />
       <View style={styles.rootScreen}>
         <View style={styles.screen}>
-          <Title style={styles.mainTitle}>BLINDER</Title>
+         
+          
+          <Image style={styles.cardContainer} source={logo}></Image>
           <SubTitle>Görmeden Kaydır</SubTitle>
-          <Card style={styles.cardContainer}></Card>
           <SubTitle style={styles.textStyle}>
             Oturum açarak Koşullar ve Gizlilik Politikası şartlarını kabul etmiş
             olursunuz.
@@ -72,8 +74,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardContainer: {
-    width: screenWidth * 0.4,
-    height: screenWidth * 0.4,
+    marginTop: screenHeight * 0.15,
+    width: '60%',
+    height: '30%',
     marginBottom: screenHeight * 0.023,
   },
   textStyle: {
