@@ -26,8 +26,6 @@ function LikesScreen({ navigation, route }) {
               return match.from;
             })
           setWhoLikesMeList(unmatchedUsers);
-
-          console.log(whoLikesMeList);
         })
         .catch((err) => {
           console.log(err);
