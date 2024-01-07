@@ -1,5 +1,5 @@
 import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import TextButton from "../../../components/Button/TextButton";
@@ -7,26 +7,35 @@ import SubTitle from "../../../components/ui/SubTitle";
 import MovieCard from "../../../components/Card/MovieCard";
 import MovieOptionsSearch from "../../../components/Search/MovieOptionsSearch";
 import addMovie from "../../../api/characteristics/addMovie";
-import { useUser } from "../../../contexts/UserContext";
-import removeMovie from "../../../api/characteristics/removeMovie";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationFavoriteMovieScreen({ navigation }) {
   const [selectedMovieList, setSelectedMovieList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const removeItemHandler = async (removeItemId) => {
-    const removedMovie = selectedMovieList.find(
-      (movie) => movie.imdbId === removeItemId
-    );
-    await removeMovie({ ...removedMovie }); // Kaldırılan filmi API'den kaldırın
     setSelectedMovieList(
       selectedMovieList.filter((movie) => movie.imdbId !== removeItemId)
     );
   };
 
-  function nextPageHandler() {
-    navigation.navigate("RegistrationSeriesTypeScreen");
+  async function nextPageHandler() {
+    setIsLoading(true);
+    selectedMovieList.forEach(async (movie) => {
+      await addMovie({
+        imdbId: movie.imdbId,
+        name: movie.name,
+        year: movie.year,
+        image: movie.image,
+      })
+        .then(() => console.log("Added"))
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    setIsLoading(false);
+    navigation.replace("RegistrationSeriesTypeScreen");
   }
 
   return (
@@ -56,7 +65,11 @@ function RegistrationFavoriteMovieScreen({ navigation }) {
         setSelectedMovielist={setSelectedMovieList}
       />
       <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton}>
+        <TextButton
+          onPress={nextPageHandler}
+          style={styles.textButton}
+          disabled={isLoading}
+        >
           İleri
         </TextButton>
       </View>

@@ -14,6 +14,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationMusicTypeScreen({ navigation, route }) {
   const [selectedMusicTypes, setSelectedMusicTypes] = useState([]);
   const [musicTypes, setMusicTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getMusicCategories().then((data) => {
@@ -22,26 +23,20 @@ function RegistrationMusicTypeScreen({ navigation, route }) {
   }, []);
 
   const handleMusicTypeSelect = async (selectedTypes) => {
-    const newTypes = selectedTypes.filter(
-      (type) => !selectedMusicTypes.includes(type)
-    );
-    const removedTypes = selectedMusicTypes.filter(
-      (type) => !selectedTypes.includes(type)
-    );
-
-    for (const type of newTypes) {
-      await addMusicCategory({ name: type });
-    }
-
-    for (const type of removedTypes) {
-      await removeMusicCategory({ name: type });
-    }
-
     setSelectedMusicTypes(selectedTypes);
   };
 
-  function nextPageHandler() {
-    navigation.navigate("RegistrationFavoriteMusicScreen");
+  async function nextPageHandler() {
+    setIsLoading(true);
+    selectedMusicTypes.forEach(async (music) => {
+      await addMusicCategory({ name: music })
+        .then(()=>console.log("Added"))
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    navigation.replace("RegistrationFavoriteMusicScreen");
+    setIsLoading(false);
   }
 
   return (
@@ -64,7 +59,7 @@ function RegistrationMusicTypeScreen({ navigation, route }) {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          <TextButton onPress={nextPageHandler} style={styles.textButton} disabled={isLoading}>
             İleri
           </TextButton>
         </View>

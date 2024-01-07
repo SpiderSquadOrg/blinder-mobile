@@ -12,13 +12,26 @@ import { useUser } from "../../contexts/UserContext";
 import io from "socket.io-client";
 import env from "../../constansts/env_variables";
 import getUserByUserName from "../../api/chat/getUserByUsername";
+import accessChats from "../../api/chat/accessChats";
+import getPossibleMatchesByStatus from "../../api/possibleMatches/getPossibleMatchesByStatus";
 
 function Chats({ navigation, route }) {
   const { user } = useUser();
   const [chats, setChats] = useState([]);
   const [socket, setSocket] = useState(null);
   const [chatUserId, setChatUserId] = useState(null);
+  const [currentMatchedUser, setCurrentMatchedUser] = useState(null);
 
+  useEffect(() => {
+    getPossibleMatchesByStatus("MATCHED")
+      .then((res) => {
+        setCurrentMatchedUser(res[0].to);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  
   useEffect(() => {
     const newSocket = io(env.CHAT_API);
     setSocket(newSocket);
@@ -44,6 +57,10 @@ function Chats({ navigation, route }) {
   };
 
   const fetchData = async () => {
+    if (currentMatchedUser) {
+      await accessChats(currentMatchedUser.username);
+    }
+
     const data = await fetchChats();
     const newChats = data?.map((chat) => ({
       id: chat._id,
@@ -59,6 +76,10 @@ function Chats({ navigation, route }) {
         isMe: chat?.latestMessage?.sender?.username === user.username,
       },
     }));
+
+    if (currentMatchedUser) {
+      newChats = newChats.filter(chat => chat.user.name === currentMatchedUser.username);
+    }
 
     setChats(newChats);
   };

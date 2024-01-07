@@ -7,26 +7,36 @@ import TextButton from "../../../components/Button/TextButton";
 import MusicOptionsSearchBar from "../../../components/Search/MusicOptionsSearchBar";
 import MusicCard from "../../../components/Card/MusicCard";
 import addMusic from "../../../api/characteristics/addMusic";
-import { useUser } from "../../../contexts/UserContext";
-import removeMusic from "../../../api/characteristics/removeMusic";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 function RegistrationFavoriteMusicScreen({ navigation, route }) {
   const [selectedMusicList, setSelectedMusicList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const removeItemHandler = async (removeItemId) => {
-    const removedMusic = selectedMusicList.find(
-      (music) => music.spotifyId === removeItemId
-    );
-    await removeMusic({ ...removedMusic });
     setSelectedMusicList(
       selectedMusicList.filter((music) => music.spotifyId !== removeItemId)
     );
   };
 
-  function nextPageHandler() {
-    navigation.navigate("RegistrationMovieTypeScreen");
+  async function nextPageHandler() {
+    setIsLoading(true);
+    selectedMusicList.forEach(async (music) => {
+      await addMusic({
+        spotifyId: music.spotifyId,
+        name: music.name,
+        artist: music.artists[0],
+        album: music.album,
+        image: music.image,
+      })
+        .then(() => console.log("Added"))
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    setIsLoading(false);
+    navigation.replace("RegistrationMovieTypeScreen");
   }
 
   return (
@@ -59,7 +69,11 @@ function RegistrationFavoriteMusicScreen({ navigation, route }) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TextButton onPress={nextPageHandler} style={styles.textButton}>
+        <TextButton
+          onPress={nextPageHandler}
+          style={styles.textButton}
+          disabled={isLoading}
+        >
           İleri
         </TextButton>
       </View>

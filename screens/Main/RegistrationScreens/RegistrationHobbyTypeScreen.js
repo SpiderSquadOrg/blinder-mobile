@@ -14,6 +14,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationHobbyTypeScreen({ navigation, route }) {
   const [selectedHobbyTypes, setSelectedHobbyTypes] = useState([]);
   const [hobbyList, setHobbyList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getHobbies().then((data) => {
@@ -22,26 +23,20 @@ function RegistrationHobbyTypeScreen({ navigation, route }) {
   }, []);
 
   const hobbyTypesHandler = async (selectedHobbies) => {
-    const newHobbies = selectedHobbies.filter(
-      (hobby) => !selectedHobbyTypes.includes(hobby)
-    );
-    const removedHobbies = selectedHobbyTypes.filter(
-      (hobby) => !selectedHobbies.includes(hobby)
-    );
-
-    for (const hobby of newHobbies) {
-      await addHobby({ name: hobby });
-    }
-
-    for (const hobby of removedHobbies) {
-      await removeHobby({ name: hobby });
-    }
-
     setSelectedHobbyTypes(selectedHobbies);
   };
 
-  function nextPageHandler() {
+  async function nextPageHandler() {
+    setIsLoading(true);
+    selectedHobbyTypes.forEach(async (hobby) => {
+      await addHobby({ name: hobby })
+        .then(()=>console.log("Added"))
+        .catch((err) => {
+          console.log(err);
+        });
+    });
     navigation.replace("Home");
+    setIsLoading(false);
   }
 
   return (
@@ -63,7 +58,11 @@ function RegistrationHobbyTypeScreen({ navigation, route }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          <TextButton
+            onPress={nextPageHandler}
+            style={styles.textButton}
+            disabled={isLoading}
+          >
             Kaydı Tamamla
           </TextButton>
         </View>
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginVertical: screenHeight * 0.06,
     marginLeft: "auto",
-    marginRight: 23
+    marginRight: 23,
   },
   textButton: {
     fontWeight: "bold",

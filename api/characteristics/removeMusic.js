@@ -3,8 +3,8 @@ import { API } from "@env";
 import env from "../../constansts/env_variables";
 import header from "../header";
 
-const removeMusic = async ({ musicId }) => {
-  const url = `${env.API}/characteristics/musics/${musicId}`;
+const removeMusic = async ({ spotifyId }) => {
+  const url = `${env.API}/characteristics/musics/${spotifyId}`;
   const headers = await header();
 
   try {

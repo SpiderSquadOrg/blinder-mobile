@@ -14,6 +14,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationMovieTypeScreen({ navigation }) {
   const [selectedMovieTypes, setSelectedMovieTypes] = useState([]);
   const [movieTypes, setMovieTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getMovieCategories().then((data) => {
@@ -22,27 +23,22 @@ function RegistrationMovieTypeScreen({ navigation }) {
   }, []);
 
   const handleMovieTypeSelect = async (selectedTypes) => {
-    const newTypes = selectedTypes.filter(
-      (type) => !selectedMovieTypes.includes(type)
-    );
-    const removedTypes = selectedMovieTypes.filter(
-      (type) => !selectedTypes.includes(type)
-    );
-
-    for (const type of newTypes) {
-      await addMovieCategory({ name: type });
-    }
-
-    for (const type of removedTypes) {
-      await removeMovieCategory({ name: type });
-    }
-
     setSelectedMovieTypes(selectedTypes);
   };
 
-  function nextPageHandler() {
-    navigation.navigate("RegistrationFavoriteMovieScreen");
+  async function nextPageHandler() {
+    setIsLoading(true);
+    selectedMovieTypes.forEach(async (movie) => {
+      await addMovieCategory({ name: movie })
+        .then(()=>console.log("Added"))
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    navigation.replace("RegistrationFavoriteMovieScreen");
+    setIsLoading(false);
   }
+
   return (
     <ScrollView>
       <View>
@@ -63,7 +59,11 @@ function RegistrationMovieTypeScreen({ navigation }) {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          <TextButton
+            onPress={nextPageHandler}
+            style={styles.textButton}
+            disabled={isLoading}
+          >
             İleri
           </TextButton>
         </View>

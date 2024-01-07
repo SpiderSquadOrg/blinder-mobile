@@ -126,37 +126,37 @@ export default function App() {
                 <Stack.Screen
                   name="RegistrationMusicTypeScreen"
                   component={RegistrationMusicTypeScreen}
-                  options={{ title: "" }}
+                  options={{ title: "", headerLeft: null }}
                 />
                 <Stack.Screen
                   name="RegistrationMovieTypeScreen"
                   component={RegistrationMovieTypeScreen}
-                  options={{ title: "" }}
+                  options={{ title: "", headerLeft: null }}
                 />
                 <Stack.Screen
                   name="RegistrationSeriesTypeScreen"
                   component={RegistrationSeriesTypeScreen}
-                  options={{ title: "" }}
+                  options={{ title: "", headerLeft: null }}
                 />
                 <Stack.Screen
                   name="RegistrationFavoriteMusicScreen"
                   component={RegistrationFavoriteMusicScreen}
-                  options={{ title: "" }}
+                  options={{ title: "", headerLeft: null }}
                 />
                 <Stack.Screen
                   name="RegistrationFavoriteMovieScreen"
                   component={RegistrationFavoriteMovieScreen}
-                  options={{ title: "" }}
+                  options={{ title: "", headerLeft: null }}
                 />
                 <Stack.Screen
                   name="RegistrationFavoriteSeriesScreen"
                   component={RegistrationFavoriteSeriesScreen}
-                  options={{ title: "" }}
+                  options={{ title: "", headerLeft: null }}
                 />
                 <Stack.Screen
                   name="RegistrationHobbyTypeScreen"
                   component={RegistrationHobbyTypeScreen}
-                  options={{ title: "" }}
+                  options={{ title: "", headerLeft: null }}
                 />
                 <Stack.Screen
                   name="RegistrationLocationScreen"

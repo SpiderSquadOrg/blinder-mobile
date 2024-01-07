@@ -1,36 +1,45 @@
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 import RegistrationQueryText from "../../../components/ui/RegistrationQueryText";
 import SubTitle from "../../../components/ui/SubTitle";
-import SeriesCard from "../../../components/Card/SeriesCard";
-import SeriesOptionsSearch from "../../../components/Search/SeriesOptionsSearch";
 import TextButton from "../../../components/Button/TextButton";
+import SeriesOptionsSearch from "../../../components/Search/SeriesOptionsSearch";
+import SeriesCard from "../../../components/Card/SeriesCard";
 import addTvSeries from "../../../api/characteristics/addTvSeries";
-import { useUser } from "../../../contexts/UserContext";
-import removeTvSeries from "../../../api/characteristics/removeTvSeries";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-function RegistrationFavoriteSeriesScreen({ navigation }) {
+function RegistrationFavoriteSeriesScreen({ navigation, route }) {
   const [selectedSeriesList, setSelectedSeriesList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const removeItemHandler = async (removeItemId) => {
-    const removedSeries = selectedSeriesList.find(
-      (series) => series.imdbId === removeItemId
-    );
-    await removeTvSeries({ ...removedSeries }); // Kaldırılan diziyi API'den kaldırın
     setSelectedSeriesList(
       selectedSeriesList.filter((series) => series.imdbId !== removeItemId)
     );
   };
 
-  function nextPageHandler() {
-    navigation.navigate("RegistrationHobbyTypeScreen");
+  async function nextPageHandler() {
+    setIsLoading(true);
+    selectedSeriesList.forEach(async (series) => {
+      await addTvSeries({
+        imdbId: series.imdbId,
+        name: series.name,
+        year: series.year,
+        image: series.image,
+      })
+        .then(() => console.log("Added"))
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    setIsLoading(false);
+    navigation.replace("RegistrationHobbyTypeScreen");
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <RegistrationQueryText style={styles.title}>
         SEVDİĞİNİZ DİZİLER
       </RegistrationQueryText>
@@ -40,7 +49,6 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
           kişilerle etkileşim kurabilecek ve tanışabileceksiniz.
         </SubTitle>
       </View>
-
       <View>
         <SubTitle style={styles.seriesListTitle}>Seçilen Diziler</SubTitle>
         <SubTitle>{selectedSeriesList.length}</SubTitle>
@@ -58,10 +66,12 @@ function RegistrationFavoriteSeriesScreen({ navigation }) {
           setSelectedSeriesList={setSelectedSeriesList}
         />
       </View>
+
       <View style={styles.buttonContainer}>
         <TextButton
           onPress={nextPageHandler}
           style={styles.textButton}
+          disabled={isLoading}
         >
           İleri
         </TextButton>

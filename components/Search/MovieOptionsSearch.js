@@ -34,7 +34,6 @@ function MovieOptionsSearch({ selectedMovieList, setSelectedMovielist }) {
     );
 
     if (!isMovieAlreadySelected) {
-      await addMovie({ ...selectedMovie });
       setSelectedMovielist((prevList) => [...prevList, selectedMovie]);
     }
   };

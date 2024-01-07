@@ -14,6 +14,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 function RegistrationSeriesTypeScreen({ navigation }) {
   const [selectedSeriesTypes, setSelectedSeriesTypes] = useState([]);
   const [seriesTypes, setSeriesTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getSeriesCategories().then((data) => {
@@ -22,26 +23,20 @@ function RegistrationSeriesTypeScreen({ navigation }) {
   }, []);
 
   const seriesTypeHandler = async (selectedTypes) => {
-    const newTypes = selectedTypes.filter(
-      (type) => !selectedSeriesTypes.includes(type)
-    );
-    const removedTypes = selectedSeriesTypes.filter(
-      (type) => !selectedTypes.includes(type)
-    );
-
-    for (const type of newTypes) {
-      await addTvSeriesCategory({ name: type });
-    }
-
-    for (const type of removedTypes) {
-      await removeTvSeriesCategory({ name: type });
-    }
-
     setSelectedSeriesTypes(selectedTypes);
   };
 
-  function nextPageHandler() {
-    navigation.navigate("RegistrationFavoriteSeriesScreen");
+  async function nextPageHandler() {
+    setIsLoading(true);
+    selectedSeriesTypes.forEach(async (series) => {
+      await addTvSeriesCategory({ name: series })
+        .then(()=>console.log("Added"))
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    navigation.replace("RegistrationFavoriteSeriesScreen");
+    setIsLoading(false);
   }
 
   return (
@@ -64,7 +59,11 @@ function RegistrationSeriesTypeScreen({ navigation }) {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <TextButton onPress={nextPageHandler} style={styles.textButton}>
+          <TextButton
+            onPress={nextPageHandler}
+            style={styles.textButton}
+            disabled={isLoading}
+          >
             İleri
           </TextButton>
         </View>
