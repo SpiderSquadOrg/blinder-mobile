@@ -13,7 +13,6 @@ function UserCard({
   isLikeIconActive,
   isDislikeIconActive,
 }) {
-
   if (!card) {
     return null; // or return a loading spinner, or some fallback UI
   }
@@ -29,7 +28,7 @@ function UserCard({
         </View>
       </View>
       <View style={styles.iconContainer}>
-        {index === topCardIndex && (
+        {
           <View style={styles.iconContainer}>
             {isLikeIconActive && (
               <AntDesign
@@ -48,7 +47,7 @@ function UserCard({
               />
             )}
           </View>
-        )}
+        }
       </View>
     </Card>
   );

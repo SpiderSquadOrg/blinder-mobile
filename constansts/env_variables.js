@@ -4,8 +4,9 @@ const env = {
   CHAT_API: "http://51.20.75.47:5000",
   CHAT_API2: "http://localhost:5000",
   API: "http://ec2-13-53-134-234.eu-north-1.compute.amazonaws.com",
+
   //API: "http://v2966i-ip-95-173-231-205.tunnelmole.net",
-  API2: "http://localhost:8080",
+
 };
 
 export default env;
