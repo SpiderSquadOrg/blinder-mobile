@@ -25,7 +25,7 @@ const UserProfileCard = forwardRef((props, ref) => {
   const fetchUserProfile = () => {
     getPossibleMatches()
       .then((res) => {
-        setCards(res);
+        setCards(res.filter((card) => card.status === "UNMATCHED"));
       })
       .catch((err) => {
         console.log(err);

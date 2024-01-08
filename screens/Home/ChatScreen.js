@@ -22,6 +22,10 @@ import io from "socket.io-client";
 import { useActiveChat } from "../../contexts/ActiveChatContext";
 import getUserByUserName from "../../api/chat/getUserByUsername";
 import env from "../../constansts/env_variables";
+import image from "../../assets/unknown_user.jpg";
+import getUserBasic from "../../api/user/getUserBasic";
+import getRemainingTime from "../../api/user/getRemainingTime";
+
 let activeChatCompare;
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -34,12 +38,18 @@ function ChatScreen({ navigation, route }) {
   const [messages, setMessages] = useState([]);
 
   const [socket, setSocket] = useState(null);
-  const {activeChat, setActiveChat } = useActiveChat();
+  const { activeChat, setActiveChat } = useActiveChat();
   const [chatUserId, setChatUserId] = useState(null);
   const [socketConnected, setSocketConnected] = useState(false);
   const [prevActiveChatId, setPrevActiveChatId] = useState(null);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [remainigTime, setRemainingTime] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   useEffect(() => {
     const newSocket = io(env.CHAT_API);
@@ -76,7 +86,7 @@ function ChatScreen({ navigation, route }) {
     }
 
     activeChatCompare = activeChat;
-  }, [activeChat,socket]);
+  }, [activeChat, socket]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,7 +115,7 @@ function ChatScreen({ navigation, route }) {
         setIsTyping(false);
       });
     }
-  }, [user,socket]);
+  }, [user, socket]);
 
   useEffect(() => {
     if (!socket) return;
@@ -213,6 +223,35 @@ function ChatScreen({ navigation, route }) {
     navigation.navigate("ChatScreen");
   };
 
+  useEffect(() => {
+    if (!userInChat) return;
+    if (userInChat.nickname) return;
+    getUserBasic(userInChat.name).then((data) => {
+      setUserInChat({ ...userInChat, nickname: data.nickname });
+    });
+  }, [userInChat]);
+
+  const updateRemainingTime = async () => {
+    getRemainingTime(activeChat._id).then((data) => {
+      setRemainingTime(data);
+    });
+  };
+
+  useEffect(() => {
+    updateRemainingTime();
+  }, [activeChat]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      updateRemainingTime();
+    }, 60000); // 60000 milliseconds = 1 minute
+
+    // Clear interval on component unmount
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <View style={[styles.container]}>
       <View style={styles.appbar}>
@@ -221,8 +260,14 @@ function ChatScreen({ navigation, route }) {
           size={32}
           onPress={goBackAction}
         />
-        <Text style={styles.username}>{userInChat.name}</Text>
-        <Avatar.Image size={40} source={{}} style={styles.avatar} />
+        <View >
+          <Text style={styles.username}>{userInChat?.nickname}</Text>
+          <Text style={styles.remainingTime}>
+            {remainigTime.days} days, {remainigTime.hours} hours,{" "}
+            {remainigTime.minutes} minutes
+          </Text>
+        </View>
+        <Avatar.Image size={40} source={image} style={styles.avatar} />
       </View>
       <View style={styles.chatDialog}>
         <ChatDialog messages={messages} />
@@ -270,7 +315,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   appbar: {
-    marginTop: screenHeight * 0.04,
+    marginTop: screenHeight * 0.06,
     marginBottom: screenHeight * 0.02,
     width: "100%",
     height: 50,
