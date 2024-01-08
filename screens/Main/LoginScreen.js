@@ -61,7 +61,7 @@ function FirstLoginPage({ navigation }) {
         <KeyboardAvoidingView style={styles.screen} behavior="position">
           <View style={styles.rootContainer}>
             <Title>Giriş Yap</Title>
-            <Image style={styles.cardContainer} source={logo}></Image>
+            {/*<Image style={styles.cardContainer} source={logo}></Image>*/}
             <View style={styles.informationContainer}>
               <InputField
                 placeholder={"Kullanıcı Adı"}
