@@ -18,7 +18,7 @@ function UserCardInformation({ user, match }) {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.userInformation}>
-        <SubTitle style={styles.mainTitle}>{user.username}</SubTitle>
+        <SubTitle style={styles.mainTitle}>{user.nickname}</SubTitle>
 
         <View style={styles.genderIcon}>{checkGender(user.gender.name)}</View>
         <SubTitle style={styles.informationTitle}>{user.age}</SubTitle>
