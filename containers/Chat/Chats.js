@@ -14,6 +14,7 @@ import env from "../../constansts/env_variables";
 import getUserByUserName from "../../api/chat/getUserByUsername";
 import accessChats from "../../api/chat/accessChats";
 import getPossibleMatchesByStatus from "../../api/possibleMatches/getPossibleMatchesByStatus";
+import image from "../../assets/unknown_user.jpg";
 
 function Chats({ navigation, route }) {
   const { user } = useUser();
@@ -22,15 +23,19 @@ function Chats({ navigation, route }) {
   const [chatUserId, setChatUserId] = useState(null);
   const [currentMatchedUser, setCurrentMatchedUser] = useState(null);
 
+
   useEffect(() => {
     getPossibleMatchesByStatus("MATCHED")
       .then((res) => {
         setCurrentMatchedUser(res[0].to);
+        fetchData();
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+
   
   useEffect(() => {
     const newSocket = io(env.CHAT_API);
@@ -62,7 +67,7 @@ function Chats({ navigation, route }) {
     }
 
     const data = await fetchChats();
-    const newChats = data?.map((chat) => ({
+    let newChats = data?.map((chat) => ({
       id: chat._id,
       user: {
         name: chat.users.filter((u) => u.username !== user.username)[0]
@@ -118,7 +123,7 @@ function Chats({ navigation, route }) {
         onPress={() => onPressChatHandler(item)}
         activeOpacity={0.8}
       >
-        <Avatar.Image size={52} source={{}} style={styles.avatar} />
+        <Avatar.Image size={52} source={image} style={styles.avatar} />
         <View>
           <Text style={styles.userName}>{item.user.name}</Text>
           <View style={styles.lastMessageContiner}>

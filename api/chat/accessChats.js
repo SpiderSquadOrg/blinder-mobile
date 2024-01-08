@@ -6,7 +6,7 @@ import env from "../../constansts/env_variables";
 const accessChats = async (username) => {
   const url = `${env.CHAT_API}/chats`;
   const headers = await header();
-
+  console.log(username);
   // Ensure headers are ready before making the request
   if (headers) {
     try {
