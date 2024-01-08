@@ -53,9 +53,9 @@ function FilterScreen({ navigation, route }) {
   }, [filter]);
 
   const gendersHandler = (gender) => {
-    if (selectedGenders.includes(gender)) {
+    if (selectedGenders.map((s) => s.name).includes(gender.name)) {
       setSelectedGenders((prevGenders) =>
-        prevGenders.filter((g) => g != gender)
+        prevGenders.filter((g) => g.name != gender.name)
       );
       return;
     }
